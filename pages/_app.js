@@ -8,13 +8,17 @@ import Header from "../components/Header";
 const theme = extendTheme({
   colors: {
     main: {
-      ocean: "#7298D9",
-      purple: "#7659FF",
-      yellow: "#ffb83f",
-      yellow2: "#F6AE2D",
-      orange: "#F9B384",
-      blue: "#2dc9dc",
+      gradient: "linear(main.600, main.500)",
+      500: "#7659FF",
+      600: "#7298D9",
+      yellow: {
+        500: "#ffb83f",
+        600: "#e5a02b",
+      },
     },
+
+    orange: "#F9B384",
+    blue: "#2dc9dc",
   },
   config: {
     initialColorMode: "light",

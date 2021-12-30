@@ -13,7 +13,7 @@ import Image from "../Image";
 
 export default function About({ title, text }) {
   return (
-    <Box bgGradient="linear(main.ocean, main.purple)" w="100%" color="white">
+    <Box bgGradient="linear(main.600, main.500)" w="100%" color="white">
       <div className={styles.wave}>
         <svg
           data-name="Layer 1"
@@ -31,13 +31,13 @@ export default function About({ title, text }) {
       <Stack
         align={"center"}
         spacing={{ base: 8, md: 24 }}
-        mx={{ base: 8, md: 32 }}
+        mx={{ base: 8, lg: 32 }}
         pb={{ base: 20, md: 24 }}
         pt={{ base: 10, md: 14 }}
         direction={{ base: "column", md: "row" }}
       >
         <Flex flex={1}>
-          <Box position={"relative"}>
+          <Box boxSize={{ base: "xs", lg: "md" }}>
             <Image src={studying} />
           </Box>
         </Flex>
@@ -59,7 +59,7 @@ export default function About({ title, text }) {
               size={"lg"}
               fontWeight={"normal"}
               px={6}
-              bg={"main.yellow"}
+              colorScheme={"main.yellow"}
             >
               Get started
             </Button>

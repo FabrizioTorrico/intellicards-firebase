@@ -23,17 +23,15 @@ export default function Hero({ title, text }) {
         >
           {title}
         </Heading>
-        <Text color={"gray.500"} maxW={"3xl"} fontSize={"2xl"}>
+        <Text
+          color={"gray.500"}
+          maxW={"3xl"}
+          fontSize={{ base: "md", md: "2xl" }}
+        >
           {text}
         </Text>
         <Stack spacing={6} direction={"row"}>
-          <Button
-            rounded={"full"}
-            px={6}
-            colorScheme={"main"} //not defined
-            bg={"main.purple"}
-            _hover={{ bg: "main.100" }}
-          >
+          <Button rounded={"full"} px={6} colorScheme={"main"}>
             Start now
           </Button>
           <Button rounded={"full"} px={6}>

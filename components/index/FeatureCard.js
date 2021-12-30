@@ -8,7 +8,8 @@ export default function FeatureCard({ text }) {
       boxShadow={"lg"}
       rounded={"md"}
       align={"center"}
-      bg="main.purple"
+      bg="main.500"
+      data-aos="fade-left"
     >
       <Center h="3rem" bg="white" p="2rem" mr="1.5rem">
         <CheckIcon />

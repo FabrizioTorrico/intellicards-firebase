@@ -9,7 +9,7 @@ import {
 } from "@chakra-ui/react";
 import FeatureCard from "./FeatureCard";
 
-export default function Features({ title, text }) {
+export default function Features({ title, text, featureCardsText }) {
   return (
     <Box
       position={"relative"}
@@ -28,7 +28,7 @@ export default function Features({ title, text }) {
       <Stack
         align={"center"}
         spacing={{ base: 8, md: 16 }}
-        mx={{ base: 8, md: 40 }}
+        mx={{ base: 16, lg: 40 }}
         py={{ base: 20, md: 24 }}
         direction={{ base: "column", md: "row" }}
       >
@@ -37,15 +37,17 @@ export default function Features({ title, text }) {
             lineHeight={1.1}
             fontWeight={600}
             fontSize={{ base: "3xl", sm: "4xl", lg: "6xl" }}
+            data-aos="fade-down"
           >
-            Optimized <br />
-            <Text as={"span"} color={"main.purple"}>
-              Features
-            </Text>
+            {title}
           </Heading>
-          <Text fontSize={"2xl"} as="h3" color={"gray.500"}>
-            We dispose of a lot of useful features you can opt to get your
-            results faster!
+          <Text
+            fontSize={"2xl"}
+            as="h3"
+            color={"gray.500"}
+            data-aos="fade-right"
+          >
+            {text}
           </Text>
           <Stack direction={{ base: "column", sm: "row" }}>
             <Spacer />
@@ -53,11 +55,9 @@ export default function Features({ title, text }) {
           </Stack>
         </Stack>
         <Stack flex={1} spacing={{ base: 4 }}>
-          <FeatureCard text="Create and Edit Cards" />
-          <FeatureCard text="Share and download resumes" />
-          <FeatureCard text="Pomodoro technique for concentration" />
-          <FeatureCard text="Communities for your subjects" />
-          <FeatureCard text="Blog and comments for decks" />
+          {featureCardsText.map((cardText) => (
+            <FeatureCard text={cardText} />
+          ))}
         </Stack>
       </Stack>
     </Box>

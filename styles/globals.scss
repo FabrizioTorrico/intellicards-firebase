@@ -12,8 +12,13 @@ body {
 
 [data-aos="example"] {
   background: red;
-  transition-property: background;
-  &.aos-animate {
+  transform: rotate(360deg);
+  opacity: 0;
+  transition-property: transform, opacity, background, position;
+  aos-animate {
     background: green;
+    position: absolute;
+    transform: rotate(0);
+    opacity: 1;
   }
 }

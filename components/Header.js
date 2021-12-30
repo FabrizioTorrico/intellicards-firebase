@@ -2,7 +2,7 @@ import { Flex, Spacer, Text, Button, Heading } from "@chakra-ui/react";
 
 export default function Header() {
   return (
-    <Flex py={6} px={32} as="nav">
+    <Flex py={6} px={{ base: 6, md: 32 }} as="nav">
       <Heading size="md" color="main.purple">
         Intellicards
       </Heading>
