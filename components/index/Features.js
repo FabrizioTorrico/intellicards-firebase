@@ -55,8 +55,8 @@ export default function Features({ title, text, featureCardsText }) {
           </Stack>
         </Stack>
         <Stack flex={1} spacing={{ base: 4 }}>
-          {featureCardsText.map((cardText) => (
-            <FeatureCard text={cardText} />
+          {featureCardsText.map((cardText, i) => (
+            <FeatureCard text={cardText} key={i} />
           ))}
         </Stack>
       </Stack>

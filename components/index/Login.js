@@ -48,33 +48,35 @@ export default function Login() {
         </Stack>
         <Box rounded={"lg"} bg={"white"} boxShadow={"2xl"} p={8}>
           <Stack spacing={4}>
-            <FormControl id="email">
-              <FormLabel>Email address</FormLabel>
-              <Input type="email" />
-            </FormControl>
-            <FormControl id="password">
-              <FormLabel>Password</FormLabel>
-              <Input type="password" />
-            </FormControl>
-            <Stack spacing={10}>
-              <Stack
-                direction={{ base: "column", sm: "row" }}
-                align={"start"}
-                justify={"space-between"}
-              >
-                <Checkbox>Remember me</Checkbox>
-                <NextLink href="/#">
-                  <Link color={"main.600"}>Forgot password?</Link>
-                </NextLink>
+            <form>
+              <FormControl id="email">
+                <FormLabel>Email address</FormLabel>
+                <Input type="email" />
+              </FormControl>
+              <FormControl id="password">
+                <FormLabel>Password</FormLabel>
+                <Input type="password" autoComplete="off" />
+              </FormControl>
+              <Stack spacing={10}>
+                <Stack
+                  direction={{ base: "column", sm: "row" }}
+                  align={"start"}
+                  justify={"space-between"}
+                >
+                  <Checkbox>Remember me</Checkbox>
+                  <NextLink href="/#">
+                    <Link color={"main.600"}>Forgot password?</Link>
+                  </NextLink>
+                </Stack>
+                <Button colorScheme={"main.yellow"} color={"white"}>
+                  Log in
+                </Button>
+                <hr className="solid" />
+                <Button colorScheme={"main"} color={"white"}>
+                  Create new account
+                </Button>
               </Stack>
-              <Button colorScheme={"main.yellow"} color={"white"}>
-                Log in
-              </Button>
-              <hr class="solid" />
-              <Button colorScheme={"main"} color={"white"}>
-                Create new account
-              </Button>
-            </Stack>
+            </form>
           </Stack>
         </Box>
       </Stack>
