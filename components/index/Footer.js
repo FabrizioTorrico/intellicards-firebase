@@ -15,7 +15,6 @@ export default function Footer() {
     <>
       <Center bgGradient="linear(main.600, main.500)" h={200}>
         {" "}
-        Alguna imagen de fondo fijada
       </Center>
       <Box bg="gray.900" color="gray.200">
         <Container

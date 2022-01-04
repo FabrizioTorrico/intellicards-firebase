@@ -10,10 +10,16 @@ import {
 } from "@chakra-ui/react";
 import studying from "../../img/studying2/learning-image.png";
 import Image from "../Image";
+import scroll from "../scroll";
 
 export default function About({ title, text }) {
   return (
-    <Box bgGradient="linear(main.600, main.500)" w="100%" color="white">
+    <Box
+      bgGradient="linear(main.600, main.500)"
+      w="100%"
+      color="white"
+      id="about"
+    >
       <div className={styles.wave}>
         <svg
           data-name="Layer 1"
@@ -54,15 +60,17 @@ export default function About({ title, text }) {
             spacing={{ base: 4, sm: 6 }}
             direction={{ base: "column", sm: "row" }}
           >
-            <Button
-              rounded={"full"}
-              size={"lg"}
-              fontWeight={"normal"}
-              px={6}
-              colorScheme={"main.yellow"}
-            >
-              Get started
-            </Button>
+            <a href="/" onClick={(e) => scroll("start", e)}>
+              <Button
+                rounded={"full"}
+                size={"lg"}
+                fontWeight={"normal"}
+                px={6}
+                colorScheme={"main.yellow"}
+              >
+                Get started
+              </Button>
+            </a>
           </Stack>
         </Stack>
       </Stack>

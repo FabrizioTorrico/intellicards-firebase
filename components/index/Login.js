@@ -30,6 +30,7 @@ export default function Login() {
         position: "absolute",
         zIndex: "-1",
       }}
+      id="start"
     >
       <Stack spacing={8} maxW={"lg"} py={{ base: 0, md: 12 }} px={6}>
         <Stack align={"center"} textAlign={"center"}>
@@ -63,7 +64,7 @@ export default function Login() {
                   align={"start"}
                   justify={"space-between"}
                 >
-                  <Checkbox>Remember me</Checkbox>
+                  <Checkbox colorScheme={"main"}>Remember me</Checkbox>
                   <NextLink href="/#">
                     <Link color={"main.600"}>Forgot password?</Link>
                   </NextLink>
