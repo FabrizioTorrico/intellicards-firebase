@@ -44,7 +44,7 @@ export default function About({ title, text }) {
       >
         <Flex flex={1}>
           <Box boxSize={{ base: "xs", lg: "md" }}>
-            <Image src={studying} />
+            <Image src={studying} alt="studying chill" />
           </Box>
         </Flex>
         <Stack flex={1} spacing={{ base: 5, md: 10 }}>
@@ -60,17 +60,16 @@ export default function About({ title, text }) {
             spacing={{ base: 4, sm: 6 }}
             direction={{ base: "column", sm: "row" }}
           >
-            <a href="/" onClick={(e) => scroll("start", e)}>
-              <Button
-                rounded={"full"}
-                size={"lg"}
-                fontWeight={"normal"}
-                px={6}
-                colorScheme={"main.yellow"}
-              >
-                Get started
-              </Button>
-            </a>
+            <Button
+              onClick={(e) => scroll("start", e)}
+              rounded={"full"}
+              size={"lg"}
+              fontWeight={"normal"}
+              px={6}
+              colorScheme={"main.yellow"}
+            >
+              Get started
+            </Button>
           </Stack>
         </Stack>
       </Stack>

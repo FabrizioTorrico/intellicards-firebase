@@ -6,6 +6,7 @@ import {
   Button,
   Heading,
 } from "@chakra-ui/react";
+import Link from "next/link";
 import scroll from "../scroll";
 
 export default function Hero({ title, text }) {
@@ -32,16 +33,18 @@ export default function Hero({ title, text }) {
           {text}
         </Text>
         <Stack spacing={6} direction={"row"}>
-          <a href="/" onClick={(e) => scroll("start", e)}>
-            <Button rounded={"full"} px={6} colorScheme={"main"}>
-              Start now
-            </Button>
-          </a>
-          <a href="/" onClick={(e) => scroll("about", e)}>
-            <Button rounded={"full"} px={6}>
-              Learn more
-            </Button>
-          </a>
+          <Button
+            rounded={"full"}
+            px={6}
+            colorScheme={"main"}
+            onClick={(e) => scroll("start", e)}
+          >
+            Start now
+          </Button>
+
+          <Button rounded={"full"} px={6} onClick={(e) => scroll("about", e)}>
+            Learn more
+          </Button>
         </Stack>
         <Flex w={"full"}></Flex>
       </Stack>

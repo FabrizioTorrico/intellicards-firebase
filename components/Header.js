@@ -69,11 +69,13 @@ export default function Header() {
           {Links.map((link) => (
             <NavLink key={link}>{link}</NavLink>
           ))}
-          <a href="/" onClick={(e) => scroll("start", e)}>
-            <Button rounded={"full"} colorScheme={"main"}>
-              Start now
-            </Button>
-          </a>
+          <Button
+            rounded={"full"}
+            colorScheme={"main"}
+            onClick={(e) => scroll("start", e)}
+          >
+            Start now
+          </Button>
         </Stack>
       </Flex>
       {isOpen ? (
