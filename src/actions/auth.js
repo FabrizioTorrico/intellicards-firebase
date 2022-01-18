@@ -9,6 +9,8 @@ import {
   LOGOUT_SUCCESS,
   LOAD_USER_FAIL,
   LOAD_USER_SUCCESS,
+  AUTHENTICATED_FAIL,
+  AUTHENTICATED_SUCCESS,
   SET_AUTH_LOADING,
   REMOVE_AUTH_LOADING,
 } from "./types";
@@ -34,6 +36,30 @@ export const loadUser = () => async (dispatch) => {
   } catch (err) {
     dispatch({ type: LOAD_USER_FAIL });
   }
+};
+
+export const checkAuthStatus = () => async (dispatch) => {
+  dispatch({ type: SET_AUTH_LOADING });
+  try {
+    console.log("checking");
+    await axios
+      .get("/api/account/verify/", {
+        headers: {
+          Accept: "application/json",
+        },
+      })
+      .then((res) => {
+        console.log(res);
+        if (res.status === 200) {
+          dispatch({ type: AUTHENTICATED_SUCCESS });
+          dispatch(loadUser());
+        }
+      })
+      .catch(() => dispatch({ type: AUTHENTICATED_FAIL }));
+  } catch (err) {
+    dispatch({ type: AUTHENTICATED_FAIL });
+  }
+  dispatch({ type: REMOVE_AUTH_LOADING });
 };
 
 export const signup = (formData) => async (dispatch) => {

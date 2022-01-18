@@ -41,7 +41,7 @@ export default function Login() {
     if (dispatch && dispatch !== null && dispatch !== undefined) {
       dispatch(resetRegisterSuccess());
     }
-  }, []);
+  }, [dispatch]);
 
   const onSubmit = (data) => {
     console.log("data on logInPage: ", data);

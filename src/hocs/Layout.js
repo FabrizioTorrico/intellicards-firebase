@@ -1,7 +1,19 @@
 import Head from "next/head";
 import NavBar from "../components/NavBar";
 import Footer from "../components/index/disconnected/Footer";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { checkAuthStatus } from "../actions/auth";
+
 export default function Layout({ title, description, children }) {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (dispatch && dispatch !== "null" && dispatch !== "undefined") {
+      dispatch(checkAuthStatus());
+    }
+  }, [dispatch]);
+
   return (
     <>
       <Head>
