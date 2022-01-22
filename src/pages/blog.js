@@ -9,13 +9,13 @@ import {
   Tag,
   Wrap,
   WrapItem,
-  Container,
   Divider,
 } from "@chakra-ui/react";
 import NextLink from "next/link";
 import studyingImage from "../../public/img/celebration.jpg";
 import Image from "../components/Image";
 import Header from "../components/Header";
+import Container from "../hocs/Container";
 
 const blogFeaturesData = [
   {
@@ -102,58 +102,41 @@ export default function Blog() {
 
   return (
     <Layout title="blog">
-      <Header
-        title={
-          <>
-            Our{" "}
-            <Text as={"span"} color={"main.500"}>
-              Blog
-            </Text>
-          </>
-        }
-        description="Welcome to the Intellicards blog. Get updated on the latest news in
+      <Container>
+        <Header
+          title={
+            <>
+              Our{" "}
+              <Text as={"span"} color={"main.500"}>
+                Blog
+              </Text>
+            </>
+          }
+          description="Welcome to the Intellicards blog. Get updated on the latest news in
               education, trends and best practices in your industry and practical
               tips from our experts."
-      />
-      <Box>
-        <Container maxW={"5xl"}>
-          <Stack
-            color={"gray.900"}
-            pb={{ base: 8, md: 14 }}
-            spacing={{ base: 8, md: 10 }}
-          >
-            <Heading fontSize={"2xl"} as="h3">
-              Featured stories
-            </Heading>
-            <Wrap spacing="30px" marginTop="5">
-              {blogFeaturesData.map((data) => (
-                <WrapItem
-                  width={{ base: "100%", sm: "45%", md: "45%", lg: "30%" }}
-                >
-                  <BlogItem key={data.title} data={data} />
-                </WrapItem>
-              ))}
-            </Wrap>
-          </Stack>
-        </Container>
-      </Box>
-      <Box bg="white" py={{ base: 8, md: 24 }}>
-        <Container maxWidth="5xl">
-          <Heading fontSize={"2xl"} as="h3">
-            Latest stories
-          </Heading>
-          <Stack
-            color={"gray.900"}
-            justify={{ lg: "center" }}
-            py={{ base: 8, md: 14 }}
-            spacing={{ base: 8, md: 10 }}
-          >
-            {blogLatestData.map((data) => (
-              <BlogItem data={data} key={data.title} flex />
-            ))}
-          </Stack>
-        </Container>
-      </Box>
+        />
+
+        <Heading fontSize={"2xl"} as="h3" mb="5">
+          Featured stories
+        </Heading>
+        <Wrap spacing="30px">
+          {blogFeaturesData.map((data) => (
+            <WrapItem width={{ base: "100%", sm: "45%", md: "45%", lg: "30%" }}>
+              <BlogItem key={data.title} data={data} />
+            </WrapItem>
+          ))}
+        </Wrap>
+      </Container>
+      <Container bg="gray.100">
+        <Heading fontSize={"2xl"} as="h3" mb="5">
+          Latest stories
+        </Heading>
+
+        {blogLatestData.map((data) => (
+          <BlogItem data={data} key={data.title} flex />
+        ))}
+      </Container>
     </Layout>
   );
 }
