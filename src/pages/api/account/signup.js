@@ -9,7 +9,10 @@ export default async (req, res) => {
     try {
       await backend
         .post("/api/account/signup", body)
-        .then((res) => res.status(201).json(res.data))
+        .then((apiRes) => {
+          console.log(apiRes);
+          return res.status(201).json(apiRes.data);
+        })
         .catch((err) =>
           res.status(err.response.status).json(err.response.data)
         );

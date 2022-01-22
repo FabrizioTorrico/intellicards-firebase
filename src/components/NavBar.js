@@ -16,10 +16,10 @@ import NextLink from "next/link";
 import scroll from "./scroll";
 import { logout } from "../actions/auth";
 
-const Links = ["Blog", "Help", "Team"];
+const Links = ["Blog", "Help", "About"];
 
-const NavLink = ({ children }) => (
-  <NextLink href={"/#"}>
+const NavLink = ({ children, link }) => (
+  <NextLink href={link.toLowerCase()}>
     <Link
       px={2}
       py={1}
@@ -34,7 +34,7 @@ const NavLink = ({ children }) => (
   </NextLink>
 );
 
-export default function NavBar() {
+export default function NavBar({ home }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const dispatch = useDispatch();
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
@@ -52,7 +52,8 @@ export default function NavBar() {
       w="100%"
       pos="fixed"
       bg="white"
-      zIndex="10"
+      zIndex="9999"
+      boxShadow={home ? "" : "lg"}
     >
       <Flex alignItems={"center"}>
         <NextLink href={"/#"}>
@@ -81,7 +82,9 @@ export default function NavBar() {
           alignItems={"center"}
         >
           {Links.map((link) => (
-            <NavLink key={link}>{link}</NavLink>
+            <NavLink key={link} link={link}>
+              {link}
+            </NavLink>
           ))}
 
           {isAuthenticated ? (
@@ -93,13 +96,19 @@ export default function NavBar() {
               Logout
             </Button>
           ) : (
-            <Button
-              rounded={"full"}
-              colorScheme={"main"}
-              onClick={(e) => scroll("login", e)}
-            >
-              Start now
-            </Button>
+            <NextLink href="/#login">
+              <a>
+                <Button
+                  rounded={"full"}
+                  colorScheme={"main"}
+                  onClick={(e) => {
+                    home && scroll("login", e);
+                  }}
+                >
+                  Start now
+                </Button>
+              </a>
+            </NextLink>
           )}
         </Stack>
       </Flex>

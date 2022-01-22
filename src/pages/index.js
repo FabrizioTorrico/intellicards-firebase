@@ -7,8 +7,8 @@ import {
   Center,
 } from "@chakra-ui/react";
 import Layout from "../hocs/Layout";
-import DisconnectedPage from "../components/index/disconnected/DisconnectedPage";
-import ConnectedPage from "../components/index/connected/ConnectedPage";
+import DisconnectedPage from "../components/index/DisconnectedPage";
+import ConnectedPage from "../components/index/ConnectedPage";
 
 export default function Home() {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
@@ -23,7 +23,7 @@ export default function Home() {
   } else {
     return (
       <>
-        <Layout>
+        <Layout home>
           <DisconnectedPage />
         </Layout>
 

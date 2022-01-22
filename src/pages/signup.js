@@ -31,7 +31,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import Layout from "../hocs/Layout";
 import { signup } from "../actions/auth";
 
-const SignupPage = () => {
+export default function SignupPage() {
   const dispatch = useDispatch();
   const router = useRouter();
   const loading = useSelector((state) => state.auth.loading);
@@ -235,6 +235,4 @@ const SignupPage = () => {
       </Modal>
     </>
   );
-};
-
-export default SignupPage;
+}

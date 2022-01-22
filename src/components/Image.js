@@ -8,6 +8,7 @@ const Image = chakra(NextImage, {
       "width",
       "height",
       "src",
+      "layout",
       "alt",
       "quality",
       "placeholder",

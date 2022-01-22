@@ -11,6 +11,8 @@ import {
   LOAD_USER_SUCCESS,
   AUTHENTICATED_FAIL,
   AUTHENTICATED_SUCCESS,
+  REFRESH_FAIL,
+  REFRESH_SUCCESS,
   SET_AUTH_LOADING,
   REMOVE_AUTH_LOADING,
 } from "./types";
@@ -39,7 +41,6 @@ export const loadUser = () => async (dispatch) => {
 };
 
 export const checkAuthStatus = () => async (dispatch) => {
-  dispatch({ type: SET_AUTH_LOADING });
   try {
     console.log("checking");
     await axios
@@ -58,6 +59,33 @@ export const checkAuthStatus = () => async (dispatch) => {
       .catch(() => dispatch({ type: AUTHENTICATED_FAIL }));
   } catch (err) {
     dispatch({ type: AUTHENTICATED_FAIL });
+  }
+};
+
+export const requestRefresh = () => async (dispatch) => {
+  dispatch({ type: SET_AUTH_LOADING });
+  try {
+    const res = await fetch("/api/account/refresh", {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+      },
+    });
+
+    if (res.status === 200) {
+      dispatch({
+        type: REGISTER_SUCCESS,
+      });
+      dispatch(checkAuthStatus());
+    } else {
+      dispatch({
+        type: REGISTER_FAIL,
+      });
+    }
+  } catch (err) {
+    dispatch({
+      type: REGISTER_FAIL,
+    });
   }
   dispatch({ type: REMOVE_AUTH_LOADING });
 };
