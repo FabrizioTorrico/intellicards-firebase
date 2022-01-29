@@ -9,7 +9,6 @@ import {
   Tag,
   Wrap,
   WrapItem,
-  Divider,
 } from "@chakra-ui/react";
 import NextLink from "next/link";
 import studyingImage from "../../public/img/celebration.jpg";
@@ -117,24 +116,24 @@ export default function Blog() {
               tips from our experts."
         />
 
-        <Heading fontSize={"2xl"} as="h3" mb="5">
+        <Heading fontSize={"3xl"} as="h3" mb="5">
           Featured stories
         </Heading>
         <Wrap spacing="30px">
-          {blogFeaturesData.map((data) => (
+          {blogFeaturesData.map((data, i) => (
             <WrapItem width={{ base: "100%", sm: "45%", md: "45%", lg: "30%" }}>
-              <BlogItem key={data.title} data={data} />
+              <BlogItem key={i} data={data} />
             </WrapItem>
           ))}
         </Wrap>
       </Container>
       <Container bg="gray.100">
-        <Heading fontSize={"2xl"} as="h3" mb="5">
+        <Heading fontSize={"3xl"} as="h3" mb="5">
           Latest stories
         </Heading>
 
-        {blogLatestData.map((data) => (
-          <BlogItem data={data} key={data.title} flex />
+        {blogLatestData.map((data, i) => (
+          <BlogItem key={i} data={data} flex />
         ))}
       </Container>
     </Layout>

@@ -26,9 +26,7 @@ export const loadUser = () => async (dispatch) => {
       },
     });
 
-    console.log("status: ", res.status);
     const data = await res.json();
-    console.log("data: ", data);
 
     if (res.status === 200) {
       dispatch({ type: LOAD_USER_SUCCESS, payload: data });
@@ -42,7 +40,6 @@ export const loadUser = () => async (dispatch) => {
 
 export const checkAuthStatus = () => async (dispatch) => {
   try {
-    console.log("checking");
     await axios
       .get("/api/account/verify/", {
         headers: {
@@ -50,13 +47,14 @@ export const checkAuthStatus = () => async (dispatch) => {
         },
       })
       .then((res) => {
-        console.log(res);
         if (res.status === 200) {
           dispatch({ type: AUTHENTICATED_SUCCESS });
           dispatch(loadUser());
         }
       })
-      .catch(() => dispatch({ type: AUTHENTICATED_FAIL }));
+      .catch((err) => {
+        dispatch({ type: AUTHENTICATED_FAIL });
+      });
   } catch (err) {
     dispatch({ type: AUTHENTICATED_FAIL });
   }

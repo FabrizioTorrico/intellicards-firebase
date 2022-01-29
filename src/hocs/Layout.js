@@ -3,15 +3,14 @@ import NavBar from "../components/NavBar";
 import Footer from "../components/index/disconnected/Footer";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { checkAuthStatus } from "../actions/auth";
+import { checkAuthStatus, requestRefresh } from "../actions/auth";
 
 export default function Layout({ title, description, children, home }) {
   const dispatch = useDispatch();
-  console.log(home);
   useEffect(() => {
     if (dispatch && dispatch !== "null" && dispatch !== "undefined") {
-      dispatch(checkAuthStatus());
-      // dispatch(requestRefresh());
+      // dispatch(checkAuthStatus());
+      dispatch(requestRefresh());
     }
   }, [dispatch]);
 

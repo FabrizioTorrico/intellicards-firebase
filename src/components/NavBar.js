@@ -16,7 +16,7 @@ import NextLink from "next/link";
 import scroll from "./scroll";
 import { logout } from "../actions/auth";
 
-const Links = ["Blog", "Help", "About"];
+const links = ["Blog", "Help", "About"];
 
 const NavLink = ({ children, link }) => (
   <NextLink href={link.toLowerCase()}>
@@ -81,7 +81,7 @@ export default function NavBar({ home }) {
           direction={"row"}
           alignItems={"center"}
         >
-          {Links.map((link) => (
+          {links.map((link) => (
             <NavLink key={link} link={link}>
               {link}
             </NavLink>
@@ -115,8 +115,10 @@ export default function NavBar({ home }) {
       {isOpen ? (
         <Box pb={4} display={{ md: "none" }}>
           <Stack as={"nav"} spacing={4}>
-            {Links.map((link) => (
-              <NavLink key={link}>{link}</NavLink>
+            {links.map((link) => (
+              <NavLink key={link} link={link}>
+                {link}
+              </NavLink>
             ))}
           </Stack>
         </Box>

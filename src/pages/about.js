@@ -2,7 +2,7 @@ import Header from "../components/Header";
 import Layout from "../hocs/Layout";
 import Container from "../hocs/Container";
 import Image from "../components/Image";
-import { Box, Text, Stack } from "@chakra-ui/react";
+import { Box, Text, Stack, Heading } from "@chakra-ui/react";
 import aboutImage from "../../public/img/friends.jpg";
 export default function AboutPage() {
   return (
@@ -22,16 +22,9 @@ export default function AboutPage() {
         <Image src={aboutImage} borderRadius="2xl" />
       </Container>
       <Container bg="gray.100">
-        <Header
-          title={
-            <>
-              Our{" "}
-              <Text as={"span"} color={"main.500"}>
-                Vision
-              </Text>
-            </>
-          }
-        ></Header>
+        <Heading fontSize={"3xl"} as="h3" mb="5" color="main.500">
+          Our Story
+        </Heading>
       </Container>
     </Layout>
   );
