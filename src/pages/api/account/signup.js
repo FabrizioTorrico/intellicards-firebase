@@ -4,13 +4,11 @@ import backend from "../../../apis/backend";
 export default async (req, res) => {
   if (req.method === "POST") {
     const body = JSON.stringify(req.body);
-    console.log(body);
 
     try {
       await backend
         .post("/api/account/signup", body)
         .then((apiRes) => {
-          console.log(apiRes);
           return res.status(201).json(apiRes.data);
         })
         .catch((err) =>

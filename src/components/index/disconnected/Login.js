@@ -18,7 +18,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import NextLink from "next/link";
-import { login, resetRegisterSuccess } from "../../../actions/auth";
+import { login, resetRegisterSuccess } from "../../../state/auth/authActions";
 import { useEffect } from "react";
 
 export default function Login() {

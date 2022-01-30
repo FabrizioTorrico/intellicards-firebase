@@ -3,7 +3,7 @@ import NavBar from "../components/NavBar";
 import Footer from "../components/index/disconnected/Footer";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { checkAuthStatus, requestRefresh } from "../actions/auth";
+import { checkAuthStatus, requestRefresh } from "../state/auth/authActions";
 
 export default function Layout({ title, description, children, home }) {
   const dispatch = useDispatch();

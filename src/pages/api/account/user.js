@@ -7,8 +7,6 @@ export default async (req, res) => {
     const cookies = cookie.parse(req.headers.cookie ?? "");
     const access = cookies.access ?? false;
 
-    console.log("cookies: ", cookies);
-    console.log("access: ", access);
     if (access === false) {
       return res
         .status(401)
@@ -16,7 +14,6 @@ export default async (req, res) => {
     }
 
     try {
-      console.log("on the try");
       const backendRes = await backend.get("/api/account/user", {
         headers: {
           Accept: "application/json",
@@ -24,7 +21,6 @@ export default async (req, res) => {
         },
       });
       console.log(backendRes.data);
-      console.log(backendRes.status);
 
       if (backendRes.status === 200) {
         return res.status(200).json(backendRes.data);
@@ -36,7 +32,6 @@ export default async (req, res) => {
         .status(500)
         .json({ user: "Something went wrong when retrieving user" });
     }
-    // const cookies = cookie.parse(req.headers.cookie);
 
     return res.status(200).json({ success: "Success" });
   } else {

@@ -14,7 +14,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 import NextLink from "next/link";
 import scroll from "./scroll";
-import { logout } from "../actions/auth";
+import { logout } from "../state/auth/authActions";
 
 const links = ["Blog", "Help", "About"];
 

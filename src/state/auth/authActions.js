@@ -7,36 +7,15 @@ import {
   LOGIN_SUCCESS,
   LOGOUT_FAIL,
   LOGOUT_SUCCESS,
-  LOAD_USER_FAIL,
-  LOAD_USER_SUCCESS,
   AUTHENTICATED_FAIL,
   AUTHENTICATED_SUCCESS,
   REFRESH_FAIL,
   REFRESH_SUCCESS,
   SET_AUTH_LOADING,
   REMOVE_AUTH_LOADING,
-} from "./types";
-
-export const loadUser = () => async (dispatch) => {
-  try {
-    const res = await fetch("api/account/user", {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-      },
-    });
-
-    const data = await res.json();
-
-    if (res.status === 200) {
-      dispatch({ type: LOAD_USER_SUCCESS, payload: data });
-    } else {
-      dispatch({ type: LOAD_USER_FAIL });
-    }
-  } catch (err) {
-    dispatch({ type: LOAD_USER_FAIL });
-  }
-};
+} from "./authTypes";
+import { LOAD_USER_DENIED } from "../user/userTypes";
+import { loadUser } from "../user/userAction";
 
 export const checkAuthStatus = () => async (dispatch) => {
   try {
@@ -54,9 +33,11 @@ export const checkAuthStatus = () => async (dispatch) => {
       })
       .catch((err) => {
         dispatch({ type: AUTHENTICATED_FAIL });
+        dispatch({ type: LOAD_USER_DENIED });
       });
   } catch (err) {
     dispatch({ type: AUTHENTICATED_FAIL });
+    dispatch({ type: LOAD_USER_DENIED });
   }
 };
 
@@ -72,17 +53,23 @@ export const requestRefresh = () => async (dispatch) => {
 
     if (res.status === 200) {
       dispatch({
-        type: REGISTER_SUCCESS,
+        type: REFRESH_SUCCESS,
       });
       dispatch(checkAuthStatus());
     } else {
       dispatch({
-        type: REGISTER_FAIL,
+        type: REFRESH_FAIL,
+      });
+      dispatch({
+        type: LOAD_USER_DENIED,
       });
     }
   } catch (err) {
     dispatch({
-      type: REGISTER_FAIL,
+      type: REFRESH_FAIL,
+    });
+    dispatch({
+      type: LOAD_USER_DENIED,
     });
   }
   dispatch({ type: REMOVE_AUTH_LOADING });
@@ -156,9 +143,12 @@ export const logout = () => async (dispatch) => {
     .then((res) => {
       if (res.status === 200) {
         dispatch({ type: LOGOUT_SUCCESS });
+        dispatch({ type: LOAD_USER_DENIED });
       }
     })
-    .catch(() => dispatch({ type: LOGOUT_FAIL }));
+    .catch(() => {
+      dispatch({ type: LOGOUT_FAIL });
+    });
 
   dispatch({ type: REMOVE_AUTH_LOADING });
 };

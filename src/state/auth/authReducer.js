@@ -6,19 +6,16 @@ import {
   LOGIN_SUCCESS,
   LOGOUT_FAIL,
   LOGOUT_SUCCESS,
-  LOAD_USER_FAIL,
-  LOAD_USER_SUCCESS,
   AUTHENTICATED_FAIL,
   AUTHENTICATED_SUCCESS,
   REFRESH_FAIL,
   REFRESH_SUCCESS,
   SET_AUTH_LOADING,
   REMOVE_AUTH_LOADING,
-} from "../actions/types";
+} from "./authTypes";
 
 const initialState = {
   isAuthenticated: false,
-  user: null,
   loading: false,
   register_success: false,
 };
@@ -58,24 +55,11 @@ const authReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         isAuthenticated: false,
-        user: false,
       };
       break;
     case LOGOUT_FAIL:
       return {
         ...state,
-      };
-      break;
-    case LOAD_USER_SUCCESS:
-      return {
-        ...state,
-        user: payload.user,
-      };
-      break;
-    case LOAD_USER_FAIL:
-      return {
-        ...state,
-        user: null,
       };
       break;
     case AUTHENTICATED_SUCCESS:
@@ -88,7 +72,6 @@ const authReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         isAuthenticated: false,
-        user: null,
       };
       break;
     case REFRESH_SUCCESS:
@@ -100,7 +83,6 @@ const authReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         isAuthenticated: false,
-        user: null,
       };
       break;
     case SET_AUTH_LOADING:

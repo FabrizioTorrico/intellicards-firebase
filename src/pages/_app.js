@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import { useStore } from "../store";
+import { useStore } from "../state/store";
 import { Provider } from "react-redux";
 
 const theme = extendTheme({
