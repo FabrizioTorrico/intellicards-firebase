@@ -7,8 +7,8 @@ import Login from "./disconnected/Login";
 
 export default function DisconnectedPage() {
   const featureCardsText = [
-    "Create and Edit Cards",
-    "Share and download resumes",
+    "Create and Edit Flash Cards",
+    "Share and download summaries",
     "Pomodoro technique",
     "Communities for your subjects",
     "Blog and comments for decks",

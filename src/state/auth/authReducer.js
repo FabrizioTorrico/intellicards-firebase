@@ -14,6 +14,8 @@ import {
   REMOVE_AUTH_LOADING,
 } from "./authTypes";
 
+import { LOAD_USER_DENIED } from "../user/userTypes";
+
 const initialState = {
   isAuthenticated: false,
   loading: false,
@@ -95,6 +97,12 @@ const authReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         loading: false,
+      };
+      break;
+    case LOAD_USER_DENIED:
+      return {
+        ...state,
+        isAuthenticated: false,
       };
       break;
     default:

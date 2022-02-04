@@ -20,7 +20,9 @@ export default async (req, res) => {
           Authorization: `Bearer ${access}`,
         },
       });
-      console.log(backendRes.data);
+
+      console.log("hola");
+      console.log(backendRes);
 
       if (backendRes.status === 200) {
         return res.status(200).json(backendRes.data);
