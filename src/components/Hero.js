@@ -8,25 +8,11 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { Search2Icon } from "@chakra-ui/icons";
-import Container from "../../../hocs/Container";
-export default function MainDecks({ title, text }) {
+import Container from "../hocs/Container";
+export default function Hero({ title, text }) {
   return (
-    <Box bgGradient="linear(main.600, main.500)" w="100%" h="40vh">
-      <Container>
-        <InputGroup colorScheme="main">
-          <InputLeftElement
-            pointerEvents="none"
-            children={<Search2Icon color="main.600" />}
-          />
-          <Input
-            type="search"
-            placeholder="Search for Decks"
-            bg="white"
-            color={"main.600"}
-          />
-        </InputGroup>
-      </Container>
-      <Container pt={"0"}>
+    <Box bgGradient="linear(main.600, main.500)" w="100%" h="20vh">
+      <Container maxW="2xl">
         <Box
           bg="white"
           w="100%"
@@ -44,8 +30,7 @@ export default function MainDecks({ title, text }) {
               {title}
             </Heading>
             <Text color="gray.500" fontSize={"xl"}>
-              {" "}
-              Ready for another studying lesson?
+              {text}
             </Text>
           </Stack>
         </Box>

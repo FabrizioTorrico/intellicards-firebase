@@ -25,10 +25,10 @@ export const checkAuthStatus = () => async (dispatch) => {
           Accept: "application/json",
         },
       })
-      .then((res) => {
+      .then(async (res) => {
         if (res.status === 200) {
+          await dispatch(loadUser());
           dispatch({ type: AUTHENTICATED_SUCCESS });
-          dispatch(loadUser());
         }
       })
       .catch((err) => {
@@ -55,7 +55,7 @@ export const requestRefresh = () => async (dispatch) => {
       dispatch({
         type: REFRESH_SUCCESS,
       });
-      dispatch(checkAuthStatus());
+      await dispatch(checkAuthStatus());
     } else {
       dispatch({
         type: REFRESH_FAIL,

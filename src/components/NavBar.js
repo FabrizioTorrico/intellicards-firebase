@@ -9,9 +9,12 @@ import {
   Stack,
   Link,
   Box,
+  InputGroup,
+  Input,
+  InputLeftElement,
 } from "@chakra-ui/react";
 import { useSelector, useDispatch } from "react-redux";
-import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
+import { HamburgerIcon, CloseIcon, Search2Icon } from "@chakra-ui/icons";
 import NextLink from "next/link";
 import scroll from "./scroll";
 import { logout } from "../state/auth/authActions";
@@ -64,7 +67,17 @@ export default function NavBar({ home }) {
           </a>
         </NextLink>
 
-        <Spacer />
+        {isAuthenticated ? (
+          <InputGroup mx="4rem">
+            <InputLeftElement
+              pointerEvents="none"
+              children={<Search2Icon color="main.600" />}
+            />
+            <Input type="search" placeholder="Search for Decks" />
+          </InputGroup>
+        ) : (
+          <Spacer />
+        )}
 
         <IconButton
           size={"md"}

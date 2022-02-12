@@ -1,6 +1,6 @@
 import { Stack, Container } from "@chakra-ui/react";
 
-export default function ({ children, bg, pt, pb }) {
+export default function ({ children, bg, pt, pb, maxW }) {
   return (
     <Stack
       align={"center"}
@@ -8,7 +8,7 @@ export default function ({ children, bg, pt, pb }) {
       pb={pb ? pb : { base: 8, md: 16 }}
       bg={bg}
     >
-      <Container maxW={"5xl"}>{children}</Container>
+      <Container maxW={maxW ? maxW : "5xl"}>{children}</Container>
     </Stack>
   );
 }

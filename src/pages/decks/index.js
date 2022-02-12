@@ -1,13 +1,17 @@
+import Layout from "../../hocs/Layout";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import Router, { useRouter } from "next/router";
 import { Text } from "@chakra-ui/react";
-import Hero from "../Hero";
-export default function ConnectedPage() {
+import Hero from "../../components/Hero";
+import DeckList from "../../components/decks/DeckList";
+
+export default function Decks() {
   const user = useSelector((state) => state.user);
+  const userDecks = user.decks;
 
   return (
-    <>
+    <Layout>
       <Hero
         title={
           <>
@@ -20,7 +24,7 @@ export default function ConnectedPage() {
         text="Ready for another studying lesson?"
       ></Hero>
 
-      <DeckList />
-    </>
+      <DeckList userDecks={userDecks} />
+    </Layout>
   );
 }
