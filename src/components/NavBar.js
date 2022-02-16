@@ -22,7 +22,7 @@ import { logout } from "../state/auth/authActions";
 const links = ["Blog", "Help", "About"];
 
 const NavLink = ({ children, link }) => (
-  <NextLink href={link.toLowerCase()}>
+  <NextLink href={`/${link.toLowerCase()}`}>
     <Link
       px={2}
       py={1}
@@ -59,7 +59,7 @@ export default function NavBar({ home }) {
       boxShadow={home ? "" : "lg"}
     >
       <Flex alignItems={"center"}>
-        <NextLink href={"/#"}>
+        <NextLink href={isAuthenticated ? "/decks" : "/#"}>
           <a>
             <Heading size="md" color="main.500">
               Intellicards

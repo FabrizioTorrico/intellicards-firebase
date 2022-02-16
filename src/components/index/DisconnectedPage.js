@@ -1,6 +1,6 @@
 import { Text, Heading } from "@chakra-ui/react";
 import Image from "next/image";
-import Hero from "./disconnected/Hero";
+import MainHero from "./disconnected/MainHero";
 import About from "./disconnected/About";
 import Features from "./disconnected/Features";
 import Login from "./disconnected/Login";
@@ -16,7 +16,7 @@ export default function DisconnectedPage() {
 
   return (
     <>
-      <Hero
+      <MainHero
         title={
           <>
             Learn fast with{" "}
@@ -26,7 +26,7 @@ export default function DisconnectedPage() {
           </>
         }
         text="A simple and light web application to learn getting fun"
-      ></Hero>
+      ></MainHero>
 
       <About
         title="Use the best part of yourself "

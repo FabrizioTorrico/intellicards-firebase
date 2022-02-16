@@ -12,12 +12,11 @@ import ConnectedPage from "../components/index/ConnectedPage";
 import { useRouter } from "next/router";
 
 export default function Home() {
-  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const loading = useSelector((state) => state.auth.loading);
   const router = useRouter();
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
   if (typeof window !== "undefined" && isAuthenticated) router.push("/decks");
-
   return (
     <>
       <Layout home>

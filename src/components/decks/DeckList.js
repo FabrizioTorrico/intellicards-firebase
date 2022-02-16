@@ -6,7 +6,7 @@ export default function DeckList({ userDecks }) {
     console.log(userDecks);
     if (!userDecks || userDecks === []) return;
     return userDecks.map((deck, i) => (
-      <Deck key={deck.creation_date} i={i + 1} title={deck.title} />
+      <Deck key={deck.creation_date} id={i} title={deck.title} />
     ));
   };
 

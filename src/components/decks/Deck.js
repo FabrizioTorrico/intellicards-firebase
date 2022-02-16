@@ -1,8 +1,8 @@
 import { Box, Flex, Text, transition } from "@chakra-ui/react";
 import NextLink from "next/link";
-export default function Deck({ title, i }) {
+export default function Deck({ title, id }) {
   return (
-    <NextLink href="decks/[id]" as={`decks/${title}`}>
+    <NextLink href="decks/[id]" as={`decks/${id}`}>
       <a>
         <Box
           border="2px"
@@ -25,7 +25,7 @@ export default function Deck({ title, i }) {
               lineHeight={"110%"}
               color="gray.500"
             >
-              {i}
+              {id + 1}
             </Text>
             <Text fontWeight={600} fontSize={"2xl"}>
               {title}

@@ -9,7 +9,7 @@ import {
 import Link from "next/link";
 import scroll from "../../scroll";
 
-export default function Hero({ title, text }) {
+export default function MainHero({ title, text }) {
   return (
     <Container maxW={"5xl"} pt="7vh">
       <Stack

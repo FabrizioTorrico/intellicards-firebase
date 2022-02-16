@@ -3,7 +3,7 @@ import { LOAD_USER_DENIED, LOAD_USER_SUCCESS } from "./userTypes";
 export const loadUser = () => async (dispatch) => {
   try {
     console.log("loadUser in");
-    const res = await fetch("api/account/user", {
+    const res = await fetch("/api/account/user", {
       method: "GET",
       headers: {
         Accept: "application/json",

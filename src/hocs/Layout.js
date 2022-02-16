@@ -1,12 +1,15 @@
 import Head from "next/head";
 import NavBar from "../components/NavBar";
 import Footer from "../components/index/disconnected/Footer";
+import Priv from "../components/Priv";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { checkAuthStatus, requestRefresh } from "../state/auth/authActions";
-
+import { useSelector } from "react-redux";
 export default function Layout({ title, description, children, home }) {
   const dispatch = useDispatch();
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+
   useEffect(() => {
     if (dispatch && dispatch !== "null" && dispatch !== "undefined") {
       // dispatch(checkAuthStatus());
