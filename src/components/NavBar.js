@@ -9,17 +9,18 @@ import {
   Stack,
   Link,
   Box,
+  InputGroup,
+  Input,
+  InputLeftElement,
 } from "@chakra-ui/react";
-import { useSelector, useDispatch } from "react-redux";
-import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
+import { HamburgerIcon, CloseIcon, Search2Icon } from "@chakra-ui/icons";
 import NextLink from "next/link";
 import scroll from "./scroll";
-import { logout } from "../actions/auth";
 
 const links = ["Blog", "Help", "About"];
 
 const NavLink = ({ children, link }) => (
-  <NextLink href={link.toLowerCase()}>
+  <NextLink href={`/${link.toLowerCase()}`}>
     <Link
       px={2}
       py={1}
@@ -36,14 +37,7 @@ const NavLink = ({ children, link }) => (
 
 export default function NavBar({ home }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const dispatch = useDispatch();
-  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
-
-  const logoutHandler = () => {
-    if (dispatch && dispatch !== null && dispatch !== "undefined") {
-      dispatch(logout());
-    }
-  };
+  const isAuthenticated = false;
 
   return (
     <Box
@@ -56,7 +50,7 @@ export default function NavBar({ home }) {
       boxShadow={home ? "" : "lg"}
     >
       <Flex alignItems={"center"}>
-        <NextLink href={"/#"}>
+        <NextLink href={isAuthenticated ? "/decks" : "/#"}>
           <a>
             <Heading size="md" color="main.500">
               Intellicards
@@ -64,7 +58,17 @@ export default function NavBar({ home }) {
           </a>
         </NextLink>
 
-        <Spacer />
+        {isAuthenticated ? (
+          <InputGroup mx="4rem">
+            <InputLeftElement
+              pointerEvents="none"
+              children={<Search2Icon color="main.600" />}
+            />
+            <Input type="search" placeholder="Search for Decks" />
+          </InputGroup>
+        ) : (
+          <Spacer />
+        )}
 
         <IconButton
           size={"md"}

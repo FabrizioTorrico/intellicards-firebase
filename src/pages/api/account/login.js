@@ -5,7 +5,7 @@ import { NODE_ENV } from "../../../config";
 export default async (req, res) => {
   if (req.method === "POST") {
     const body = JSON.stringify(req.body);
-
+    console.log(body);
     try {
       await backend
         .post("/api/token/", body)

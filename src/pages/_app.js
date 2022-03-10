@@ -2,8 +2,6 @@ import { useEffect } from "react";
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import { useStore } from "../store";
-import { Provider } from "react-redux";
 
 const theme = extendTheme({
   colors: {
@@ -35,13 +33,10 @@ function MyApp({ Component, pageProps }) {
     });
   }, []);
 
-  const store = useStore(pageProps.initialReduxState);
   return (
-    <Provider store={store}>
-      <ChakraProvider theme={theme}>
-        <Component {...pageProps} />
-      </ChakraProvider>
-    </Provider>
+    <ChakraProvider theme={theme}>
+      <Component {...pageProps} />
+    </ChakraProvider>
   );
 }
 

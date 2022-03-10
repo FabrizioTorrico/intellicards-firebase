@@ -1,14 +1,14 @@
 import { Text, Heading } from "@chakra-ui/react";
 import Image from "next/image";
-import Hero from "./disconnected/Hero";
+import MainHero from "./disconnected/MainHero";
 import About from "./disconnected/About";
 import Features from "./disconnected/Features";
 import Login from "./disconnected/Login";
 
 export default function DisconnectedPage() {
   const featureCardsText = [
-    "Create and Edit Cards",
-    "Share and download resumes",
+    "Create and Edit Flash Cards",
+    "Share and download summaries",
     "Pomodoro technique",
     "Communities for your subjects",
     "Blog and comments for decks",
@@ -16,7 +16,7 @@ export default function DisconnectedPage() {
 
   return (
     <>
-      <Hero
+      <MainHero
         title={
           <>
             Learn fast with{" "}
@@ -26,7 +26,7 @@ export default function DisconnectedPage() {
           </>
         }
         text="A simple and light web application to learn getting fun"
-      ></Hero>
+      ></MainHero>
 
       <About
         title="Use the best part of yourself "

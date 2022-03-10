@@ -1,19 +1,10 @@
-import Head from "next/head";
+import Head from "next/Head";
 import NavBar from "../components/NavBar";
 import Footer from "../components/index/disconnected/Footer";
+import Priv from "../components/Priv";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { checkAuthStatus, requestRefresh } from "../actions/auth";
 
 export default function Layout({ title, description, children, home }) {
-  const dispatch = useDispatch();
-  useEffect(() => {
-    if (dispatch && dispatch !== "null" && dispatch !== "undefined") {
-      // dispatch(checkAuthStatus());
-      dispatch(requestRefresh());
-    }
-  }, [dispatch]);
-
   return (
     <>
       <Head>

@@ -1,4 +1,3 @@
-import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -18,12 +17,9 @@ import {
   Text,
 } from "@chakra-ui/react";
 import NextLink from "next/link";
-import { login, resetRegisterSuccess } from "../../../actions/auth";
 import { useEffect } from "react";
 
 export default function Login() {
-  const dispatch = useDispatch();
-
   const validationSchema = Yup.object().shape({
     username: Yup.string().required("Username is required"),
     password: Yup.string()
@@ -37,18 +33,8 @@ export default function Login() {
     handleSubmit,
   } = useForm(formOptions);
 
-  useEffect(() => {
-    if (dispatch && dispatch !== null && dispatch !== undefined) {
-      dispatch(resetRegisterSuccess());
-    }
-  }, [dispatch]);
-
   const onSubmit = (data) => {
     console.log("data on logInPage: ", data);
-
-    if (dispatch && dispatch !== null && dispatch !== undefined) {
-      dispatch(login(data));
-    }
   };
 
   return (

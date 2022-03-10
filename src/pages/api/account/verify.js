@@ -10,8 +10,6 @@ export default async (req, res) => {
       return res.status(403).json({ error: `No access token ` });
     }
 
-    console.log(access);
-
     const body = JSON.stringify({
       token: access,
     });
@@ -20,8 +18,7 @@ export default async (req, res) => {
       await backend
         .post("/api/token/verify/", body)
         .then((apiRes) => {
-          console.log("correct");
-          console.log(apiRes);
+          console.log(apiRes.status);
           if (apiRes.status === 200)
             return res
               .status(200)
