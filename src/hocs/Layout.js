@@ -3,8 +3,25 @@ import NavBar from "../components/NavBar";
 import Footer from "../components/index/disconnected/Footer";
 import Priv from "../components/Priv";
 import { useEffect } from "react";
+<<<<<<< HEAD
 
 export default function Layout({ title, description, children, home }) {
+=======
+import { useDispatch } from "react-redux";
+import { checkAuthStatus, requestRefresh } from "../state/auth/authActions";
+import { useSelector } from "react-redux";
+export default function Layout({ title, description, children, home }) {
+  const dispatch = useDispatch();
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+
+  useEffect(() => {
+    if (dispatch && dispatch !== "null" && dispatch !== "undefined") {
+      // dispatch(checkAuthStatus());
+      dispatch(requestRefresh());
+    }
+  }, [dispatch]);
+
+>>>>>>> eb6522005b1f23b3249d00dad9b83f1e63545a5e
   return (
     <>
       <Head>

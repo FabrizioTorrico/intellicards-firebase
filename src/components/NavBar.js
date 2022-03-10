@@ -13,9 +13,17 @@ import {
   Input,
   InputLeftElement,
 } from "@chakra-ui/react";
+<<<<<<< HEAD
 import { HamburgerIcon, CloseIcon, Search2Icon } from "@chakra-ui/icons";
 import NextLink from "next/link";
 import scroll from "./scroll";
+=======
+import { useSelector, useDispatch } from "react-redux";
+import { HamburgerIcon, CloseIcon, Search2Icon } from "@chakra-ui/icons";
+import NextLink from "next/link";
+import scroll from "./scroll";
+import { logout } from "../state/auth/authActions";
+>>>>>>> eb6522005b1f23b3249d00dad9b83f1e63545a5e
 
 const links = ["Blog", "Help", "About"];
 
