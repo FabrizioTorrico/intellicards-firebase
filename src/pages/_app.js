@@ -2,11 +2,6 @@ import { useEffect } from "react";
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 import AOS from "aos";
 import "aos/dist/aos.css";
-<<<<<<< HEAD
-=======
-import { useStore } from "../state/store";
-import { Provider } from "react-redux";
->>>>>>> eb6522005b1f23b3249d00dad9b83f1e63545a5e
 
 const theme = extendTheme({
   colors: {
