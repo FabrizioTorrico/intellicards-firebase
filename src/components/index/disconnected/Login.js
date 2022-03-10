@@ -17,7 +17,8 @@ import {
   Text,
 } from "@chakra-ui/react";
 import NextLink from "next/link";
-import { useEffect } from "react";
+import { loginWithGoogle } from "../../../firebase/auth";
+import Image from "../../Image";
 
 export default function Login() {
   const validationSchema = Yup.object().shape({
@@ -117,11 +118,21 @@ export default function Login() {
                   Log in
                 </Button>
                 <hr className="solid" />
-                <NextLink href={"/signup"}>
-                  <Button colorScheme={"main"} color={"white"} type="button">
-                    <a>Create new account</a>
+                <Stack direction="row">
+                  <NextLink href={"/signup"}>
+                    <Button colorScheme={"main"} color={"white"} type="button">
+                      <a>Create new account</a>
+                    </Button>
+                  </NextLink>
+                  <Button onCLick={loginWithGoogle}>
+                    <Image
+                      src="/img/google-logo.png"
+                      height="25px"
+                      width="25px"
+                    />
+                    Log in With Google
                   </Button>
-                </NextLink>
+                </Stack>
               </Stack>
             </form>
           </Stack>

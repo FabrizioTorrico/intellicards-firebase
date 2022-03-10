@@ -33,5 +33,7 @@ export const AuthProvider = ({ children }) => {
 export const useAuth = () => useContext(AuthContext);
 
 export const loginWithGoogle = () => {
-  signInWithPopup(auth, new GoogleAuthProvider());
+  signInWithPopup(auth, new GoogleAuthProvider()).catch((error) =>
+    console.log(error)
+  );
 };
