@@ -3,6 +3,9 @@ import { auth } from "./index";
 import { GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
 import { getUserData } from "./firestore";
 import { useRouter } from "next/router";
+import Layout from "../hocs/Layout";
+import DisconnectedPage from "../components/index/DisconnectedPage";
+import CompleteLogin from "../components/index/CompleteLogin";
 const AuthContext = createContext({});
 
 export const AuthProvider = ({ children }) => {
@@ -13,21 +16,31 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     return auth.onIdTokenChanged(async (user) => {
       if (!user) {
-        console.log("no user");
         setCurrentUser(null);
         setLoading(false);
         return;
       }
       // const token = await user.getIdToken();
       setCurrentUser(user);
+      console.log(user);
       setCurrentUserData(await getUserData(user.uid));
       setLoading(false);
     });
   }, []);
 
+  function PageToRender() {
+    if (!currentUserData)
+      return (
+        <Layout>
+          {currentUser ? <CompleteLogin /> : <DisconnectedPage />}
+        </Layout>
+      );
+    else return children;
+  }
+
   return (
     <AuthContext.Provider value={{ currentUser, currentUserData }}>
-      {children}
+      <PageToRender />
     </AuthContext.Provider>
   );
 };

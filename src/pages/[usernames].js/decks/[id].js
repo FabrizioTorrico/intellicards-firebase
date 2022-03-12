@@ -1,10 +1,10 @@
-import Layout from "../../hocs/Layout";
+import Layout from "../../../hocs/Layout";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import styles from "../../styles/Home.module.scss";
 import { Box, Heading, Button, SimpleGrid, Text } from "@chakra-ui/react";
-import Container from "../../hocs/Container";
-import Header from "../../components/Header";
+import Container from "../../../hocs/Container";
+import Header from "../../../components/Header";
 import NextLink from "next/link";
 
 export default function Deck() {
