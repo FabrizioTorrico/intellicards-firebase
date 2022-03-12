@@ -34,7 +34,12 @@ export default function CompleteLogin() {
   } = useForm();
 
   const onSubmit = async (data) => {
-    data = { ...data, username };
+    data = {
+      ...data,
+      username,
+      photo_URL: currentUser.photoURL,
+      name: currentUser.displayName,
+    };
     console.log("data on CompleteLogin: ", data);
     if (await usernameExists(data.username)) {
       console.log("username exists");

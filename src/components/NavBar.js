@@ -37,7 +37,7 @@ const NavLink = ({ children, link }) => (
 );
 
 export default function NavBar({ home }) {
-  const { currentUser } = useAuth();
+  const { currentUser, currentUserData } = useAuth();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const isAuthenticated = currentUser ? true : false;
 
@@ -52,7 +52,9 @@ export default function NavBar({ home }) {
       boxShadow={home ? "" : "lg"}
     >
       <Flex alignItems={"center"}>
-        <NextLink href={isAuthenticated ? "/decks" : "/#"}>
+        <NextLink
+          href={currentUserData ? `/${currentUserData.username}` : "/#"}
+        >
           <a>
             <Heading size="md" color="main.500">
               Intellicards

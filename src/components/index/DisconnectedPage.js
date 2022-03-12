@@ -1,11 +1,19 @@
-import { Text, Heading } from "@chakra-ui/react";
+import {
+  Text,
+  Heading,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  Spinner,
+  Center,
+} from "@chakra-ui/react";
 import Image from "next/image";
 import MainHero from "./MainHero";
 import About from "./About";
 import Features from "./Features";
 import Login from "./Login";
 
-export default function DisconnectedPage() {
+export default function DisconnectedPage(loading) {
   const featureCardsText = [
     "Create and Edit Flash Cards",
     "Share and download summaries",
@@ -48,6 +56,21 @@ results faster!"
         featureCardsText={featureCardsText}
       />
       <Login />
+
+      <Modal isOpen={loading} isCentered>
+        <ModalOverlay />
+        <ModalContent>
+          <Center py={"4rem"}>
+            <Spinner
+              thickness="4px"
+              speed="0.65s"
+              emptyColor="gray.200"
+              color="main.500"
+              size="xl"
+            />
+          </Center>
+        </ModalContent>
+      </Modal>
     </>
   );
 }

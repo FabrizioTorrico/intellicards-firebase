@@ -32,7 +32,11 @@ export const AuthProvider = ({ children }) => {
     if (!currentUserData)
       return (
         <Layout>
-          {currentUser ? <CompleteLogin /> : <DisconnectedPage />}
+          {!currentUser || loading ? (
+            <DisconnectedPage loading={loading} />
+          ) : (
+            <CompleteLogin />
+          )}
         </Layout>
       );
     else return children;
