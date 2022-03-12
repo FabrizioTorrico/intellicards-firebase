@@ -17,8 +17,8 @@ import {
   Text,
 } from "@chakra-ui/react";
 import NextLink from "next/link";
-import { loginWithGoogle } from "../../../firebase/auth";
-import Image from "../../Image";
+import { loginWithGoogle } from "../../firebase/auth";
+import Image from "../Image";
 
 export default function Login() {
   const validationSchema = Yup.object().shape({
@@ -124,7 +124,7 @@ export default function Login() {
                       <a>Create new account</a>
                     </Button>
                   </NextLink>
-                  <Button onCLick={loginWithGoogle}>
+                  <Button onClick={loginWithGoogle}>
                     <Image
                       src="/img/google-logo.png"
                       height="25px"

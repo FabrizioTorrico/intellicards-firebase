@@ -7,7 +7,7 @@ import {
   Heading,
 } from "@chakra-ui/react";
 import Link from "next/link";
-import scroll from "../../scroll";
+import scroll from "../scroll";
 
 export default function MainHero({ title, text }) {
   return (

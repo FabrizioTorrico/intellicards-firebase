@@ -1,9 +1,9 @@
 import { Text, Heading } from "@chakra-ui/react";
 import Image from "next/image";
-import MainHero from "./disconnected/MainHero";
-import About from "./disconnected/About";
-import Features from "./disconnected/Features";
-import Login from "./disconnected/Login";
+import MainHero from "./MainHero";
+import About from "./About";
+import Features from "./Features";
+import Login from "./Login";
 
 export default function DisconnectedPage() {
   const featureCardsText = [

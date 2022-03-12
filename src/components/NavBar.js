@@ -16,7 +16,8 @@ import {
 import { HamburgerIcon, CloseIcon, Search2Icon } from "@chakra-ui/icons";
 import NextLink from "next/link";
 import scroll from "./scroll";
-
+import { logout } from "../firebase/auth";
+import { useAuth } from "../firebase/auth";
 const links = ["Blog", "Help", "About"];
 
 const NavLink = ({ children, link }) => (
@@ -36,8 +37,9 @@ const NavLink = ({ children, link }) => (
 );
 
 export default function NavBar({ home }) {
+  const { currentUser } = useAuth();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const isAuthenticated = false;
+  const isAuthenticated = currentUser ? true : false;
 
   return (
     <Box
@@ -92,11 +94,7 @@ export default function NavBar({ home }) {
           ))}
 
           {isAuthenticated ? (
-            <Button
-              rounded={"full"}
-              colorScheme={"main"}
-              onClick={logoutHandler}
-            >
+            <Button rounded={"full"} colorScheme={"main"} onClick={logout}>
               Logout
             </Button>
           ) : (

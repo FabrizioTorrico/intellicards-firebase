@@ -1,10 +1,13 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { auth } from "./index";
-import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
+import { getUserData } from "./firestore";
+import { useRouter } from "next/router";
 const AuthContext = createContext({});
 
 export const AuthProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
+  const [currentUserData, setCurrentUserData] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -15,16 +18,15 @@ export const AuthProvider = ({ children }) => {
         setLoading(false);
         return;
       }
-      const token = await user.getIdToken();
-      console.log("token", token);
-      console.log("user", user);
+      // const token = await user.getIdToken();
       setCurrentUser(user);
+      setCurrentUserData(await getUserData(user.uid));
       setLoading(false);
     });
   }, []);
 
   return (
-    <AuthContext.Provider value={{ currentUser }}>
+    <AuthContext.Provider value={{ currentUser, currentUserData }}>
       {children}
     </AuthContext.Provider>
   );
@@ -37,3 +39,5 @@ export const loginWithGoogle = () => {
     console.log(error)
   );
 };
+
+export const logout = () => signOut(auth);

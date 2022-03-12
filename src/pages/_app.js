@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import { AuthProvider } from "../firebase/auth";
 
 const theme = extendTheme({
   colors: {
@@ -35,7 +36,9 @@ function MyApp({ Component, pageProps }) {
 
   return (
     <ChakraProvider theme={theme}>
-      <Component {...pageProps} />
+      <AuthProvider>
+        <Component {...pageProps} />
+      </AuthProvider>
     </ChakraProvider>
   );
 }

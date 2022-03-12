@@ -1,6 +1,6 @@
 import Head from "next/Head";
 import NavBar from "../components/NavBar";
-import Footer from "../components/index/disconnected/Footer";
+import Footer from "../components/index/Footer";
 import Priv from "../components/Priv";
 import { useEffect } from "react";
 

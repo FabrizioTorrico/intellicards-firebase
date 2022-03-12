@@ -1,4 +1,4 @@
-import styles from "../../../styles/Home.module.scss";
+import styles from "../../styles/Home.module.scss";
 import {
   Grid,
   Box,
@@ -8,9 +8,8 @@ import {
   Button,
   Text,
 } from "@chakra-ui/react";
-import Image from "../../Image";
-import scroll from "../../scroll";
-import studyingImage from "../../../../public/img/learning-image.png";
+import Image from "../Image";
+import scroll from "../scroll";
 
 export default function About({ title, text }) {
   return (
@@ -43,8 +42,13 @@ export default function About({ title, text }) {
         direction={{ base: "column", md: "row" }}
       >
         <Flex flex={1}>
-          <Box boxSize={{ base: "xs", lg: "md" }}>
-            <Image src={studyingImage} alt="studying image" />
+          <Box boxSize={{ base: "xs", lg: "md" }} pos="relative">
+            <Image
+              src={"/img/learning-image.png"}
+              layout="fill"
+              objectFit="contain"
+              alt="studying image"
+            />
           </Box>
         </Flex>
         <Stack flex={1} spacing={{ base: 5, md: 10 }}>

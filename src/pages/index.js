@@ -8,11 +8,9 @@ import {
 import Layout from "../hocs/Layout";
 import DisconnectedPage from "../components/index/DisconnectedPage";
 import { useRouter } from "next/router";
-export default function Home() {
-  const router = useRouter();
-  const isAuthenticated = false;
 
-  if (typeof window !== "undefined" && isAuthenticated) router.push("/decks");
+export default function Home() {
+
   return (
     <>
       <Layout home>
