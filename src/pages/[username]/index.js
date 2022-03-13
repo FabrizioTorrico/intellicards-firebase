@@ -1,11 +1,22 @@
 import {
   getUsernamePaths,
   getUserWithUsername,
+  getUserDecks,
 } from "../../firebase/firestore";
 import Layout from "../../hocs/Layout";
+import Hero from "../../components/Hero";
+import UserCard from "../../components/UserCard";
+import DeckList from "../../components/DeckList";
+
 export default function UserPage({ userProps }) {
-  console.log(JSON.parse(userProps));
-  return <Layout>index </Layout>;
+  const user = JSON.parse(userProps);
+  console.log(user);
+  return (
+    <Layout>
+      <Hero title={<UserCard user={user.userData} />} />
+      <DeckList userDecks={user.userDecks} />
+    </Layout>
+  );
 }
 
 export const getStaticPaths = async () => {
