@@ -40,6 +40,17 @@ export const getUsernamePaths = async () => {
   });
 };
 
+export const getUserDeckPaths = async (username) => {
+  const uid = await getUidWithUsername(username);
+  const userRef = doc(db, "users", uid);
+  const snapshot = await getDocs(collection(userRef, "decks"));
+  return snapshot.docs.map((doc) => {
+    return {
+      params: { username: doc.id.toString() },
+    };
+  });
+};
+
 const getUidWithUsername = async (username) => {
   const usernameRef = doc(db, "usernames", username);
   const usernameSnap = await getDoc(usernameRef);

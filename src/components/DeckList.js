@@ -15,7 +15,7 @@ function Deck({ deckData, id, admin }) {
   const { created_at, title, query, heart_count, username } = deckData;
 
   return (
-    <NextLink href="decks/[deckName]" as={`decks/${query}`}>
+    <NextLink href={`/${username}/decks/${query}`}>
       <a>
         <Box
           border="2px"
@@ -64,7 +64,7 @@ export default function DeckList({ userDecks }) {
 
     if (!userDecks || userDecks === []) return;
     return userDecks.map((deck, i) => (
-      <Deck key={deck.created_at} deckData={deck} id={i + 1} />
+      <Deck key={i} deckData={deck} id={i + 1} />
     ));
   };
 

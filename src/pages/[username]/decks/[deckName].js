@@ -1,32 +1,36 @@
 import Layout from "../../../hocs/Layout";
 import { useRouter } from "next/router";
-import { useSelector } from "react-redux";
-import styles from "../../styles/Home.module.scss";
-import { Box, Heading, Button, SimpleGrid, Text } from "@chakra-ui/react";
+import styles from "../../../styles/Home.module.scss";
+import { Box, Heading, Button, Grid, GridItem, Text } from "@chakra-ui/react";
 import Container from "../../../hocs/Container";
 import Header from "../../../components/Header";
 import NextLink from "next/link";
+import Card from "../../../components/cards/CardPreview";
 
-export default function Deck() {
+export default function DeckCard({ deckProps }) {
   const router = useRouter();
   const { id } = router.query;
-  const deckData = useSelector((state) => state.user.decks?.[id]);
-  const { cards, title } = deckData ?? { cards: "", title: "" };
-
-  function Card({ title, desc, ...rest }) {
-    return (
-      <Box
-        p={8}
-        border="2px"
-        borderColor="gray.400"
-        flex="1"
-        borderRadius="15px"
-        {...rest}
-      >
-        <Text>{desc}</Text>
-      </Box>
-    );
-  }
+  const { cards, title } = {
+    cards: [
+      { title: "algun titulo", desc: "descendiente" },
+      {
+        title:
+          "Exercitation ullamco quis reprehenderit incididunt. Nisi laboris est ullamco ea ea ea anim elit exercitation minim aliquip consectetur sint. Pariatur non enim reprehenderit sunt excepteur eu. Quis magna occaecat culpa voluptate dolore commodo dolore consequat eiusmod exercitation do.o",
+      },
+      {
+        title:
+          "Pariatur eu amet reprehenderit nisi ad aliqua quis Lorem duis. Qui ipsum qui Lorem velit labore quis consectetur occaecat nisi deserunt. Enim excepteur esse officia aliquip minim laboris aute. Est sit irure aliquip eiusmod elit ipsum aute voluptate. Magna anim aliqua velit aute proident tempor occaecat in velit et est. Proident occaecat consectetur ad aute incididunt qui amet aute ipsum commodo mollit.",
+      },
+      { title: "algun titulo" },
+      {
+        title:
+          "Commodo minim ut ullamco ipsum irure nisi ut reprehenderit occaecat id aute officia. Exercitation laborum duis laborum ex qui minim reprehenderit ut excepteur dolor occaecat veniam. Veniam voluptate esse aute deserunt reprehenderit ex exercitation exercitation.",
+      },
+      { title: "algun titulo" },
+      { title: "algun titulo" },
+    ],
+    title: "Fundamentos de Compus",
+  };
 
   return (
     <Layout>
@@ -63,18 +67,16 @@ export default function Deck() {
         </div>
       </Box>
       <Container>
-        <SimpleGrid
-          columns={2}
-          spacingX="40px"
-          spacingY="20px"
-          fontSize={"20px"}
+        <Grid
+          templateColumns="repeat(auto-fit, minmax(250px, 1fr))"
+          autoRows={"10px"}
+          overflow="hidden"
+          justifyItems={["center", "baseline"]}
         >
-          {!cards || (Array.isArray(cards) && cards.length === 0) ? (
-            <Text>There is no cards :(</Text>
-          ) : (
-            cards.map((card) => <Card desc={card.front} />)
-          )}
-        </SimpleGrid>
+          {cards.map((card, i) => (
+            <Card title={card.title} key={i} />
+          ))}
+        </Grid>
       </Container>
     </Layout>
   );
