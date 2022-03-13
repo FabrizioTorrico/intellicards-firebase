@@ -6,15 +6,8 @@ import {
   getDocs,
   setDoc,
   writeBatch,
+  collectionGroup,
 } from "firebase/firestore";
-
-export async function getUserData(uid) {
-  const userRef = doc(db, "users", uid);
-  const userSnap = await getDoc(userRef);
-  const userData = userSnap.data();
-
-  return userData;
-}
 
 export async function createUser(uid, data) {
   const userRef = doc(db, "users", uid);
@@ -40,36 +33,46 @@ export const getUsernamePaths = async () => {
   });
 };
 
-export const getUserDeckPaths = async (username) => {
-  const uid = await getUidWithUsername(username);
+export async function getUserData(uid) {
   const userRef = doc(db, "users", uid);
-  const snapshot = await getDocs(collection(userRef, "decks"));
+  const userSnap = await getDoc(userRef);
+  const userData = userSnap.data();
+
+  return userData;
+}
+
+export const getUserDeckPaths = async () => {
+  const snapshot = await getDocs(collectionGroup(db, "decks"));
   return snapshot.docs.map((doc) => {
+    const { username, query } = doc.data();
     return {
-      params: { username: doc.id.toString() },
+      params: { username, query },
     };
   });
 };
 
-const getUidWithUsername = async (username) => {
+export const getUidWithUsername = async (username) => {
+  let uid;
   const usernameRef = doc(db, "usernames", username);
   const usernameSnap = await getDoc(usernameRef);
-  const { uid } = usernameSnap.data();
+  if (usernameSnap.exists()) uid = usernameSnap.data().uid;
+  else uid = false;
   return uid;
-};
-
-export const getUserWithUsername = async (username) => {
-  const uid = await getUidWithUsername(username);
-  const userData = await getUserData(uid);
-  const userDecks = await getUserDecks(uid);
-  return { userData, userDecks };
 };
 
 export const getUserDecks = async (uid) => {
   const userRef = doc(db, "users", uid);
   const decksRef = collection(userRef, "decks");
-
   const decksSnap = await getDocs(decksRef);
 
   return decksSnap.docs.map((doc) => doc.data());
+};
+
+export const getDeckCards = async (username, deckQuery) => {
+  const uid = await getUidWithUsername(username);
+  if (uid) {
+    const userRef = doc(db, "users", uid);
+    const deckRef = doc(userRef, "decks", deckQuery);
+    const deckSnap = getDoc(deckRef);
+  }
 };

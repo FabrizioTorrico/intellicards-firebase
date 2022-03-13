@@ -1,6 +1,7 @@
 import {
   getUsernamePaths,
-  getUserWithUsername,
+  getUidWithUsername,
+  getUserData,
   getUserDecks,
 } from "../../firebase/firestore";
 import Layout from "../../hocs/Layout";
@@ -25,7 +26,11 @@ export const getStaticPaths = async () => {
 };
 
 export const getStaticProps = async (context) => {
-  const userData = await getUserWithUsername(context.params.username);
+  const uid = await getUidWithUsername(context.params.username);
+  const userData = await getUserData(uid);
+  const userDecks = await getUserDecks(uid);
 
-  return { props: { userProps: JSON.stringify(userData) || null } };
+  return {
+    props: { userProps: JSON.stringify({ userData, userDecks }) || null },
+  };
 };

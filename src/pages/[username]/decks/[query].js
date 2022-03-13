@@ -6,10 +6,9 @@ import Container from "../../../hocs/Container";
 import Header from "../../../components/Header";
 import NextLink from "next/link";
 import Card from "../../../components/cards/CardPreview";
+import { getUserDeckPaths } from "../../../firebase/firestore";
 
 export default function DeckCard({ deckProps }) {
-  const router = useRouter();
-  const { id } = router.query;
   const { cards, title } = {
     cards: [
       { title: "algun titulo", desc: "descendiente" },
@@ -44,7 +43,7 @@ export default function DeckCard({ deckProps }) {
           <Header
             title={title}
             description={
-              <NextLink href={`/play/${id}`}>
+              <NextLink href={`/play/2`}>
                 <Button colorScheme="main.yellow" borderRadius={"50px"}>
                   Play Now
                 </Button>
@@ -81,3 +80,18 @@ export default function DeckCard({ deckProps }) {
     </Layout>
   );
 }
+
+export const getStaticPaths = async () => {
+  const paths = await getUserDeckPaths();
+  return { paths, fallback: "blocking" };
+};
+
+export const getStaticProps = async ({ params }) => {
+  /* const {username, query} = params
+  const uid = await getUidWithUsername(context.params.username);
+  const userData = await getUserData(uid);
+  const userDecks = await getUserDecks(uid);
+  const userPageData = { userData, userDecks };
+
+  return { props: { userProps: JSON.stringify(userPageData) || null } }; */
+};
