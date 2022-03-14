@@ -33,14 +33,6 @@ export const getUsernamePaths = async () => {
   });
 };
 
-export async function getUserData(uid) {
-  const userRef = doc(db, "users", uid);
-  const userSnap = await getDoc(userRef);
-  const userData = userSnap.data();
-
-  return userData;
-}
-
 export const getUserDeckPaths = async () => {
   const snapshot = await getDocs(collectionGroup(db, "decks"));
   return snapshot.docs.map((doc) => {
@@ -60,19 +52,34 @@ export const getUidWithUsername = async (username) => {
   return uid;
 };
 
+export async function getUserData(uid) {
+  const userRef = doc(db, "users", uid);
+  const userSnap = await getDoc(userRef);
+  const userData = userSnap.data();
+
+  return userData;
+}
+
 export const getUserDecks = async (uid) => {
   const userRef = doc(db, "users", uid);
   const decksRef = collection(userRef, "decks");
   const decksSnap = await getDocs(decksRef);
 
-  return decksSnap.docs.map((doc) => doc.data());
+  return decksSnap?.docs.map((doc) => doc.data()) || [];
 };
 
-export const getDeckCards = async (username, deckQuery) => {
-  const uid = await getUidWithUsername(username);
-  if (uid) {
-    const userRef = doc(db, "users", uid);
-    const deckRef = doc(userRef, "decks", deckQuery);
-    const deckSnap = getDoc(deckRef);
-  }
+export const getDeckData = async (uid, deckQuery) => {
+  const userRef = doc(db, "users", uid);
+  const deckRef = doc(userRef, "decks", deckQuery);
+  const deckSnap = await getDoc(deckRef);
+  const deckData = deckSnap.data();
+  return deckData;
+};
+export const getDeckCards = async (uid, deckQuery) => {
+  const userRef = doc(db, "users", uid);
+  const deckRef = doc(userRef, "decks", deckQuery);
+  const cardsRef = collection(deckRef, "cards");
+  const cardsSnap = await getDocs(cardsRef);
+
+  return cardsSnap?.docs.map((doc) => doc.data()) || [];
 };

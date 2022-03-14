@@ -29,9 +29,9 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   function PageToRender() {
-    if (!currentUserData)
+    if (!currentUserData) {
       return (
-        <Layout>
+        <Layout home>
           {!currentUser || loading ? (
             <DisconnectedPage loading={loading} />
           ) : (
@@ -39,7 +39,7 @@ export const AuthProvider = ({ children }) => {
           )}
         </Layout>
       );
-    else return children;
+    } else return children;
   }
 
   return (

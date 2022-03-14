@@ -8,7 +8,9 @@ export default function ({ children, bg, pt, pb, maxW }) {
       pb={pb ? pb : { base: 8, md: 16 }}
       bg={bg}
     >
-      <Container maxW={maxW ? maxW : "5xl"}>{children}</Container>
+      <Container maxW={maxW ? maxW : { base: "md", md: "4xl" }}>
+        {children}
+      </Container>
     </Stack>
   );
 }

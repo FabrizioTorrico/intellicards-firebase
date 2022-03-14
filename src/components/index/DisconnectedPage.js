@@ -13,7 +13,7 @@ import About from "./About";
 import Features from "./Features";
 import Login from "./Login";
 
-export default function DisconnectedPage(loading) {
+export default function DisconnectedPage({ loading }) {
   const featureCardsText = [
     "Create and Edit Flash Cards",
     "Share and download summaries",

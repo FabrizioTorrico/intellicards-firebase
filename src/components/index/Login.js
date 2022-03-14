@@ -75,7 +75,7 @@ export default function Login() {
           <Stack spacing={4}>
             <form onSubmit={handleSubmit(onSubmit)}>
               <FormControl id="username" isInvalid={errors.username}>
-                <FormLabel>Username</FormLabel>
+                <FormLabel>Username - email</FormLabel>
                 <Input
                   type="text"
                   {...register("username")}

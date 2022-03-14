@@ -11,13 +11,10 @@ export default class CardPreview extends React.Component {
   }
 
   setPans = () => {
-    console.log(this.cardRef);
     const height = this.cardRef.current.clientHeight;
-
     const spans = Math.ceil(height / 10) + 1;
 
     this.setState({ spans });
-    console.log(spans);
   };
 
   render() {
