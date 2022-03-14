@@ -11,7 +11,6 @@ import DeckList from "../../components/DeckList";
 
 export default function UserPage({ userProps }) {
   const user = JSON.parse(userProps);
-
   return (
     <Layout>
       <Hero title={<UserCard user={user.userData} />} />

@@ -12,7 +12,7 @@ export default class CardPreview extends React.Component {
 
   setPans = () => {
     const height = this.cardRef.current.clientHeight;
-    const spans = Math.ceil(height / 10) + 1;
+    const spans = Math.ceil(height / 10) + 3;
 
     this.setState({ spans });
   };
@@ -23,11 +23,18 @@ export default class CardPreview extends React.Component {
         <Box
           p={6}
           border="2px"
-          borderColor="gray.400"
+          borderColor="gray.300"
           borderRadius="15px"
           ref={this.cardRef}
         >
-          <Text>{this.props.title}</Text>
+          <Text
+            fontWeight={600}
+            fontSize={{ base: "md", md: "xl" }}
+            textAlign="center"
+          >
+            {this.props.title.charAt(0).toUpperCase() +
+              this.props.title.slice(1)}
+          </Text>
         </Box>
       </GridItem>
     );

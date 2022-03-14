@@ -22,7 +22,7 @@ import Image from "../Image";
 
 export default function Login() {
   const validationSchema = Yup.object().shape({
-    username: Yup.string().required("Username is required"),
+    email: Yup.string().required("email is required"),
     password: Yup.string()
       .required("Password is required")
       .min(8, "Password must be at least 8 characters"),
@@ -74,16 +74,16 @@ export default function Login() {
         <Box rounded={"lg"} bg={"white"} boxShadow={"2xl"} p={8}>
           <Stack spacing={4}>
             <form onSubmit={handleSubmit(onSubmit)}>
-              <FormControl id="username" isInvalid={errors.username}>
-                <FormLabel>Username - email</FormLabel>
+              <FormControl id="email" isInvalid={errors.email}>
+                <FormLabel>Email</FormLabel>
                 <Input
-                  type="text"
-                  {...register("username")}
-                  mb={errors.username ? "" : "28px"}
-                  name="username"
+                  type="email"
+                  {...register("email")}
+                  mb={errors.email ? "" : "28px"}
+                  name="email"
                   autoComplete="true"
                 />
-                <FormErrorMessage>{errors.username?.message}</FormErrorMessage>
+                <FormErrorMessage>{errors.email?.message}</FormErrorMessage>
               </FormControl>
               <FormControl id="password" isInvalid={errors.password}>
                 <FormLabel>Password</FormLabel>

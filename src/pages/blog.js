@@ -111,7 +111,7 @@ export default function Blog() {
               </Text>
             </>
           }
-          description="Welcome to the Intellicards blog. Get updated on the latest news in
+          secondary="Welcome to the Intellicards blog. Get updated on the latest news in
               education, trends and best practices in your industry and practical
               tips from our experts."
         />

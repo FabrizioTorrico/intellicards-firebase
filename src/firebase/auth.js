@@ -22,7 +22,6 @@ export const AuthProvider = ({ children }) => {
       }
       // const token = await user.getIdToken();
       setCurrentUser(user);
-      console.log(user);
       setCurrentUserData(await getUserData(user.uid));
       setLoading(false);
     });

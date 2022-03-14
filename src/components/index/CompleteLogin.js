@@ -17,10 +17,14 @@ import { useAuth } from "../../firebase/auth";
 import { useForm } from "react-hook-form";
 import Container from "../../hocs/Container";
 import { createUser, usernameExists } from "../../firebase/firestore";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 
 export default function CompleteLogin() {
+  window.scroll({
+    top: 0,
+    left: 0,
+  });
   const router = useRouter();
   const { currentUser, currentUserData } = useAuth();
   const [username, setUsername] = useState("");

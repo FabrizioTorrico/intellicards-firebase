@@ -25,7 +25,7 @@ export default function () {
               </Text>
             </>
           }
-          description={SearchBar()}
+          secondary={SearchBar()}
         />
       </Container>
     </Layout>

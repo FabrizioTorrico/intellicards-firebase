@@ -11,7 +11,7 @@ import {
 import NextLink from "next/link";
 import { IoHeartOutline } from "react-icons/io5";
 
-function Deck({ deckData, id, admin }) {
+function DeckPreview({ deckData, id, admin }) {
   const { created_at, title, query, heart_count, username } = deckData;
 
   return (
@@ -57,20 +57,17 @@ function Deck({ deckData, id, admin }) {
 }
 
 export default function DeckList({ userDecks }) {
-  console.log(userDecks);
-
   const renderDecks = () => {
-    console.log(userDecks);
-
     if (!userDecks || userDecks === []) return;
+
     return userDecks.map((deck, i) => (
-      <Deck key={i} deckData={deck} id={i + 1} />
+      <DeckPreview key={i} deckData={deck} id={i + 1} />
     ));
   };
 
   return (
     <Container maxW={{ base: "md", md: "4xl" }}>
-      <Stack spacing={{ base: 4, md: 5 }} py={{ base: 8, md: 14 }}>
+      <Stack spacing={{ base: 4, md: 5 }} py={{ base: 8, md: 12 }}>
         <Heading fontWeight={600} fontSize={"3xl"} lineHeight={"110%"}>
           Decks
         </Heading>

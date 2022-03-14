@@ -8,13 +8,7 @@ export default function UserCard({ user }) {
       alignItems={"center"}
     >
       <Avatar size={"2xl"} name={user.name} src={user.photo_URL} />
-      <Grid
-        position="relative"
-        columns={2}
-        color="gray.700"
-        fontSize={"xl"}
-        gap={[2, 6]}
-      >
+      <Grid columns={2} color="gray.700" fontSize={"xl"} gap={[2, 6]}>
         <Text>{user.deck_count} decks</Text>
         <Text>{user.connection_count} connections</Text>
         <GridItem colSpan={2}>
