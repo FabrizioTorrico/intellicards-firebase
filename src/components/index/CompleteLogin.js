@@ -16,7 +16,7 @@ import {
 import { useAuth } from "../../firebase/auth";
 import { useForm } from "react-hook-form";
 import Container from "../../hocs/Container";
-import { createUser, usernameExists } from "../../firebase/firestore";
+import { createFirestoreUser, usernameExists } from "../../firebase/firestore";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 
@@ -26,7 +26,7 @@ export default function CompleteLogin() {
     left: 0,
   });
   const router = useRouter();
-  const { currentUser, currentUserData } = useAuth();
+  const { currentUser, refreshUserData } = useAuth();
   const [username, setUsername] = useState("");
   const {
     register,
@@ -38,6 +38,7 @@ export default function CompleteLogin() {
   } = useForm();
 
   const onSubmit = async (data) => {
+    //in the ...data just is the bio
     data = {
       ...data,
       username,
@@ -51,8 +52,10 @@ export default function CompleteLogin() {
       return;
     }
     console.log("passed");
-    await createUser(currentUser.uid, data);
-    router.push(username);
+    await createFirestoreUser(currentUser.uid, data).then(async () => {
+      router.push(`/${data.username}`);
+      await refreshUserData(currentUser.uid);
+    });
   };
 
   const onUsernameChange = (e) => {
@@ -74,11 +77,6 @@ export default function CompleteLogin() {
     }
     clearErrors("username");
     setUsername(value);
-    /* {...register("username", {
-        minLength: { value: 3, message: "min lenght is 3" },
-        maxLength: { value: 20, message: "max lenght is 20" },
-        required: "this is required",
-      })} */
   };
 
   return (
@@ -88,7 +86,6 @@ export default function CompleteLogin() {
           fontWeight={600}
           fontSize={{ base: "4xl", md: "6xl" }}
           lineHeight={"110%"}
-          data-aos="fade-down"
         >
           Complete your unique{" "}
           <Text as="span" color="main.500">

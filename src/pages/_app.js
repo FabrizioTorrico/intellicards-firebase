@@ -3,7 +3,7 @@ import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { AuthProvider } from "../firebase/auth";
-
+import { Toaster } from 'react-hot-toast';
 const theme = extendTheme({
   colors: {
     main: {
@@ -38,6 +38,7 @@ function MyApp({ Component, pageProps }) {
     <ChakraProvider theme={theme}>
       <AuthProvider>
         <Component {...pageProps} />
+        <Toaster />
       </AuthProvider>
     </ChakraProvider>
   );

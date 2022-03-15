@@ -14,9 +14,9 @@ export default function ({ title, secondary, pb, py, textAlign }) {
         <Heading fontSize="5xl" flex={1}>
           {title}
         </Heading>
-        <Text flex={1} fontSize={"xl"}>
+        <Box flex={1} fontSize={"xl"}>
           {secondary}
-        </Text>
+        </Box>
       </Stack>
     </Box>
   );

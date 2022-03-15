@@ -9,18 +9,15 @@ import {
   Link,
   Grid,
   GridItem,
+  Heading,
 } from "@chakra-ui/react";
 import styles from "../styles/Home.module.scss";
 import { IoHeartOutline } from "react-icons/io5";
 
 function DeckStats({ username, heart_count }) {
   return (
-    <Stack
-      spacing={{ base: 8, md: 24 }}
-      direction={{ base: "column", md: "row" }}
-      alignItems={"center"}
-    >
-      <Grid templateColumns="1fr 1fr" fontSize={"xl"} gap={[2, 6]}>
+    <Grid templateColumns="2fr 2fr" fontSize={"xl"} gap={[2, 6]}>
+      <GridItem colSpan={2}>
         <Button
           backgroundColor="white"
           color="pink.300"
@@ -28,14 +25,16 @@ function DeckStats({ username, heart_count }) {
         >
           Give Heart
         </Button>
-        <Text alignSelf="center">{heart_count} hearts</Text>
-        <GridItem colSpan={2}>
-          <Button colorScheme="main.yellow" width="100%" height="3rem">
-            Play now
-          </Button>
-        </GridItem>
-      </Grid>
-    </Stack>
+      </GridItem>
+      <GridItem alignSelf="center" colSpan={2}>
+        <Text>{heart_count} hearts</Text>
+      </GridItem>
+      <GridItem colSpan={4}>
+        <Button colorScheme="main.yellow" width="100%" height="3rem">
+          Play now
+        </Button>
+      </GridItem>
+    </Grid>
   );
 }
 export default function DeckData({ title, username, heart_count, created_at }) {

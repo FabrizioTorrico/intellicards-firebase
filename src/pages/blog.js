@@ -37,9 +37,9 @@ export default function Blog() {
   const BlogTags = (props) => {
     return (
       <HStack spacing={2} marginTop={props.marginTop}>
-        {props.tags.map((tag) => {
+        {props.tags.map((tag, i) => {
           return (
-            <Tag size={"md"} variant="solid" colorScheme="main" key={tag}>
+            <Tag size={"md"} variant="solid" colorScheme="main" key={i}>
               {tag}
             </Tag>
           );

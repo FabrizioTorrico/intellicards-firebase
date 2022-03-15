@@ -9,7 +9,7 @@ export default function ({ children, bg, pt, pb, maxW, py }) {
       bg={bg}
       py={py}
     >
-      <Container maxW={maxW ? maxW : { base: "md", md: "4xl" }}>
+      <Container maxW={maxW ? maxW : { base: "xl", md: "4xl" }}>
         {children}
       </Container>
     </Stack>

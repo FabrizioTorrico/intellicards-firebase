@@ -9,7 +9,10 @@ import {
   collectionGroup,
 } from "firebase/firestore";
 
-export async function createUser(uid, data) {
+export async function createFirestoreUser(uid, data) {
+  data.deck_count = 0;
+  data.confirmed = false;
+  data.connection_count = 0;
   const userRef = doc(db, "users", uid);
   const usernameRef = doc(db, "usernames", data.username);
   const batch = writeBatch(db);
