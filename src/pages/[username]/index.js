@@ -6,14 +6,14 @@ import {
 } from "../../firebase/firestore";
 import Layout from "../../hocs/Layout";
 import Hero from "../../components/Hero";
-import UserCard from "../../components/UserCard";
-import DeckList from "../../components/DeckList";
+import UserHeader from "../../components/UserHeader";
+import DeckList from "../../components/decks/DeckList";
 
 export default function UserPage({ userProps }) {
   const user = JSON.parse(userProps);
   return (
     <Layout>
-      <Hero title={<UserCard user={user.userData} />} />
+      <Hero title={<UserHeader user={user.userData} />} />
       <DeckList userDecks={user.userDecks} />
     </Layout>
   );

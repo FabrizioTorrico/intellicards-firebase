@@ -1,17 +1,24 @@
-import Container from "../hocs/Container";
+import { IoHeartOutline, IoTrash } from "react-icons/io5";
 import {
+  Button,
+  IconButton,
   Text,
   Box,
-  Stack,
-  Heading,
   Flex,
-  transition,
   Spacer,
+  Popover,
+  PopoverTrigger,
+  PopoverArrow,
+  PopoverContent,
+  PopoverCloseButton,
+  PopoverFooter,
+  PopoverBody,
+  PopoverHeader,
 } from "@chakra-ui/react";
 import NextLink from "next/link";
-import { IoHeartOutline } from "react-icons/io5";
+import { deleteDeck } from "../../firebase/firestore";
 
-function DeckPreview({ deckData, id, admin }) {
+export default function DeckPreview({ deckData, id }) {
   const { created_at, title, query, heart_count, username } = deckData;
 
   return (
@@ -41,9 +48,11 @@ function DeckPreview({ deckData, id, admin }) {
             >
               {id}
             </Text>
+
             <Text fontWeight={600} fontSize={{ base: "lg", md: "2xl" }}>
               {title}
             </Text>
+
             <Spacer />
             <Box position="relative" top="2px">
               <IoHeartOutline size={"32px"} />
@@ -53,26 +62,5 @@ function DeckPreview({ deckData, id, admin }) {
         </Box>
       </a>
     </NextLink>
-  );
-}
-
-export default function DeckList({ userDecks }) {
-  const renderDecks = () => {
-    if (!userDecks || userDecks === []) return;
-
-    return userDecks.map((deck, i) => (
-      <DeckPreview key={i} deckData={deck} id={i + 1} />
-    ));
-  };
-
-  return (
-    <Container maxW={{ base: "md", md: "4xl" }}>
-      <Stack spacing={{ base: 4, md: 5 }} py={{ base: 8, md: 12 }}>
-        <Heading fontWeight={600} fontSize={"3xl"} lineHeight={"110%"}>
-          Decks
-        </Heading>
-        {renderDecks()}
-      </Stack>
-    </Container>
   );
 }

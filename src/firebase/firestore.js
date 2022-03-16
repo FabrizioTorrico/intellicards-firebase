@@ -7,7 +7,9 @@ import {
   setDoc,
   writeBatch,
   collectionGroup,
+  deleteDoc,
 } from "firebase/firestore";
+import { auth } from "./index";
 
 export async function createFirestoreUser(uid, data) {
   data.deck_count = 0;
@@ -78,6 +80,7 @@ export const getDeckData = async (uid, deckQuery) => {
   const deckData = deckSnap.data();
   return deckData;
 };
+
 export const getDeckCards = async (uid, deckQuery) => {
   const userRef = doc(db, "users", uid);
   const deckRef = doc(userRef, "decks", deckQuery);
@@ -86,3 +89,35 @@ export const getDeckCards = async (uid, deckQuery) => {
 
   return cardsSnap?.docs.map((doc) => doc.data()) || [];
 };
+
+export const deleteDeck = async (deckQuery) => {
+  const { uid } = auth.currentUser;
+  const userRef = doc(db, "users", uid);
+  const deckRef = doc(userRef, "decks", deckQuery);
+  await deleteDoc(deckRef);
+};
+
+export const deleteCard = async (deckQuery, cardQuery) => {
+  const { uid } = auth.currentUser;
+  const userRef = doc(db, "users", uid);
+  const deckRef = doc(userRef, "decks", deckQuery);
+  const cardRef = doc(userRef, "cards", cardQuery);
+
+  await deleteDoc(cardRef);
+};
+
+export const updateCard = async (deckQuery, cardQuery, cardData) => {
+  const { uid } = auth.currentUser;
+  const userRef = doc(db, "users", uid);
+  const deckRef = doc(userRef, "decks", deckQuery);
+  const cardRef = doc(userRef, "cards", cardQuery);
+
+  await updateDoc(cardRef, cardData);
+};
+/* export const deleteCard = async (username, deckQuery) => {
+  const uid = await getUidWithUsername(username);
+  const userRef = doc(db, "users", uid);
+  const deckRef = doc(userRef, "decks", deckQuery);
+
+  await deleteDoc(deckRef);
+}; */

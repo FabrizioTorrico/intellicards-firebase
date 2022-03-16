@@ -1,5 +1,16 @@
-import { GridItem, Box, Text } from "@chakra-ui/react";
+import {
+  GridItem,
+  Flex,
+  Spacer,
+  Text,
+  IconButton,
+  Button,
+  Box,
+} from "@chakra-ui/react";
 import React from "react";
+// import { deleteCard, updateCard } from "../../firebase/firestore";
+import { IoTrashOutline, IoCreateOutline } from "react-icons/io5";
+import CardUpdate from "./CardUpdate";
 export default class CardPreview extends React.Component {
   constructor(props) {
     super(props);
@@ -18,8 +29,9 @@ export default class CardPreview extends React.Component {
   };
 
   render() {
+    console.log(this.props);
     return (
-      <GridItem w="250px" gridRowEnd={`span ${this.state.spans}`}>
+      <GridItem w={"250px"} gridRowEnd={`span ${this.state.spans}`}>
         <Box
           p={6}
           border="2px"
@@ -27,14 +39,18 @@ export default class CardPreview extends React.Component {
           borderRadius="15px"
           ref={this.cardRef}
         >
-          <Text
-            fontWeight={600}
-            fontSize={{ base: "md", md: "xl" }}
-            textAlign="center"
-          >
+          <Text fontWeight={600} fontSize={"xl"} textAlign="center" mb={3}>
             {this.props.title.charAt(0).toUpperCase() +
               this.props.title.slice(1)}
           </Text>
+          <br />
+          <Flex justifyContent={"center"} alignContent={"center"}>
+            <CardUpdate {...this.props}>
+              <IconButton icon={<IoCreateOutline />} mr={2} />
+            </CardUpdate>
+
+            <IconButton colorScheme={"red"} icon={<IoTrashOutline />} />
+          </Flex>
         </Box>
       </GridItem>
     );

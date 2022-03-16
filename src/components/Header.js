@@ -9,7 +9,7 @@ export default function ({ title, secondary, pb, py, textAlign }) {
       <Stack
         direction={{ base: "column", md: "row" }}
         alignItems="center"
-        spacing={"6rem"}
+        spacing={"3rem"}
       >
         <Heading fontSize="5xl" flex={1}>
           {title}

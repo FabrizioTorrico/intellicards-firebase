@@ -124,6 +124,25 @@ export default function NavBar({ home }) {
                 {link}
               </NavLink>
             ))}
+            {isAuthenticated ? (
+              <Button rounded={"full"} colorScheme={"main"} onClick={logout}>
+                Logout
+              </Button>
+            ) : (
+              <NextLink href="/#login">
+                <a>
+                  <Button
+                    rounded={"full"}
+                    colorScheme={"main"}
+                    onClick={(e) => {
+                      home && scroll("login", e);
+                    }}
+                  >
+                    Start now
+                  </Button>
+                </a>
+              </NextLink>
+            )}
           </Stack>
         </Box>
       ) : null}

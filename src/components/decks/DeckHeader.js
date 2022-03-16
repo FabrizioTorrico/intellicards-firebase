@@ -1,5 +1,5 @@
-import Container from "../hocs/Container";
-import Header from "./Header";
+import Container from "../../hocs/Container";
+import Header from "../Header";
 import NextLink from "next/link";
 import {
   Button,
@@ -11,13 +11,14 @@ import {
   GridItem,
   Heading,
 } from "@chakra-ui/react";
-import styles from "../styles/Home.module.scss";
+import styles from "../../styles/Home.module.scss";
 import { IoHeartOutline } from "react-icons/io5";
+import { deleteDeck } from "../../firebase/firestore";
 
 function DeckStats({ username, heart_count }) {
   return (
-    <Grid templateColumns="2fr 2fr" fontSize={"xl"} gap={[2, 6]}>
-      <GridItem colSpan={2}>
+    <Grid templateColumns="1fr 1fr" fontSize={"xl"} gap={6}>
+      <GridItem>
         <Button
           backgroundColor="white"
           color="pink.300"
@@ -26,18 +27,29 @@ function DeckStats({ username, heart_count }) {
           Give Heart
         </Button>
       </GridItem>
-      <GridItem alignSelf="center" colSpan={2}>
+      <GridItem alignSelf="center" justifySelf="center">
         <Text>{heart_count} hearts</Text>
       </GridItem>
-      <GridItem colSpan={4}>
-        <Button colorScheme="main.yellow" width="100%" height="3rem">
+      <GridItem colSpan={2}>
+        <Button
+          colorScheme="main.yellow"
+          width="100%"
+          height="3rem"
+          rounded="full"
+          onClick={deleteDeck}
+        >
           Play now
         </Button>
       </GridItem>
     </Grid>
   );
 }
-export default function DeckData({ title, username, heart_count, created_at }) {
+export default function DeckHeader({
+  title,
+  username,
+  heart_count,
+  created_at,
+}) {
   return (
     <Box
       bgGradient="linear(main.600, main.500)"

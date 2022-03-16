@@ -1,8 +1,7 @@
 import { Box, Heading, Button, Grid, GridItem, Text } from "@chakra-ui/react";
 import Container from "../../hocs/Container";
-import Card from "./CardPreview";
-
-export default function CardList({ deckCards }) {
+import CardPreview from "./CardPreview";
+export default function CardList({ deckCards, deckName, admin }) {
   return (
     <Container py={{ base: 14, md: 24 }}>
       <Heading fontWeight={600} fontSize={"3xl"} lineHeight={"110%"} my={5}>
@@ -12,14 +11,18 @@ export default function CardList({ deckCards }) {
         templateColumns="repeat(auto-fill, minmax(250px, 1fr))"
         autoRows={"10px"}
         overflow="hidden"
-        justifyItems={["center", "baseline"]}
+        justifyItems={{ base: "center", md: "baseline" }}
       >
         {!deckCards || (Array.isArray(deckCards) && deckCards.length === 0) ? (
           <GridItem gridRowEnd={"span 4"}>
-            <Text fontSize="2xl">There is no cards!</Text>
+            <Text fontSize="2xl" color="gray.600">
+              There is no cards!
+            </Text>
           </GridItem>
         ) : (
-          deckCards.map((card, i) => <Card title={card.title} key={i} />)
+          deckCards.map((card, i) => (
+            <CardPreview {...card} key={i} deckName={deckName} />
+          ))
         )}
       </Grid>
     </Container>

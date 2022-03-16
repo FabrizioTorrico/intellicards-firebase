@@ -1,5 +1,5 @@
 import Layout from "../../../hocs/Layout";
-import DeckData from "../../../components/DeckData";
+import DeckHeader from "../../../components/decks/DeckHeader";
 import CardList from "../../../components/cards/CardList";
 import {
   getDeckCards,
@@ -7,16 +7,25 @@ import {
   getUserDeckPaths,
   getUidWithUsername,
 } from "../../../firebase/firestore";
+import { useAuth } from "../../../firebase/auth";
+import { useEffect, useState } from "react";
 
 export default function DeckCard({ deckProps }) {
   const { deckData, deckCards } = JSON.parse(deckProps);
-  console.log("deckData: ", deckData);
-  console.log("deckCards: ", deckCards);
+  const { currentUser } = useAuth();
+  const [admin, setAdmin] = useState(false);
+  //checks if uid is equal deckUid
+  useEffect(() => {
+    (async () => {
+      const deckUid = await getUidWithUsername(deckData.username);
+      setAdmin(deckUid === currentUser.uid);
+    })();
+  }, []);
 
   return (
     <Layout>
-      <DeckData {...deckData} />
-      <CardList deckCards={deckCards} />
+      <DeckHeader {...deckData} />
+      <CardList deckCards={deckCards} deckName={deckData.query} admin={admin} />
     </Layout>
   );
 }
