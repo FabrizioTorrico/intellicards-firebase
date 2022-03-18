@@ -19,15 +19,17 @@ export default function DeckCard({ deckProps }) {
   useEffect(() => {
     //checks if uid is equal deckUid
     (async () => {
-      const deckUid = await getUidWithUsername(deckData.username);
-      setAdmin(deckUid === currentUser.uid);
+      if (currentUser) {
+        const deckUid = await getUidWithUsername(deckData.username);
+        setAdmin(deckUid === currentUser.uid);
+      }
     })();
   }, []);
 
   return (
     <Layout>
       <DeckHeader {...deckData} />
-      <CardList deckCards={deckCards} admin={admin} />
+      <CardList deckCards={deckCards} deckId={deckData.deckId} admin={admin} />
     </Layout>
   );
 }

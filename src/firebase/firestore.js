@@ -8,6 +8,7 @@ import {
   writeBatch,
   collectionGroup,
   deleteDoc,
+  addDoc,
 } from "firebase/firestore";
 import { auth } from "./index";
 
@@ -100,6 +101,14 @@ export const deleteDeck = async (deckQuery) => {
   await deleteDoc(deckRef);
 };
 
+export const createCard = async (deckQuery, cardData) => {
+  const { uid } = auth.currentUser;
+  const userRef = doc(db, "users", uid);
+  const deckRef = doc(userRef, "decks", deckQuery);
+  const cardsCollection = collection(deckRef, "cards");
+
+  await addDoc(cardsCollection, cardData);
+};
 export const deleteCard = async (deckQuery, cardQuery) => {
   const { uid } = auth.currentUser;
   const userRef = doc(db, "users", uid);

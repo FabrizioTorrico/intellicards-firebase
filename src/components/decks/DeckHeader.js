@@ -36,7 +36,6 @@ function DeckStats({ username, heart_count }) {
           width="100%"
           height="3rem"
           rounded="full"
-          onClick={deleteDeck}
         >
           Play now
         </Button>
