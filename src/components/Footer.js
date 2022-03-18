@@ -27,7 +27,7 @@ export default function Footer() {
           align={{ base: "center", md: "center" }}
         >
           <Text>
-            © 2021 Intellicards. All rights reserved. Web Design & Development
+            © 2022 Intellicards. All rights reserved. Web Design & Development
             by Fabrizio Torrico.
           </Text>
           <Stack direction={"row"} spacing={3} fontSize="3xl">

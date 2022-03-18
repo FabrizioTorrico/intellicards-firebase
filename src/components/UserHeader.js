@@ -1,6 +1,5 @@
 import { Text, Avatar, Stack, Box, Grid, GridItem } from "@chakra-ui/react";
 export default function UserHeader({ user }) {
-  console.log(user);
   return (
     <Stack
       spacing={{ base: 8, md: 24 }}

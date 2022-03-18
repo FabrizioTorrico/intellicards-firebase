@@ -3,7 +3,10 @@ import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { AuthProvider } from "../firebase/auth";
-import { Toaster } from 'react-hot-toast';
+import { Toaster } from "react-hot-toast";
+import CardContext from "../components/cards/CardContext";
+import { useState } from "react";
+
 const theme = extendTheme({
   colors: {
     main: {
@@ -25,6 +28,12 @@ const theme = extendTheme({
 });
 
 function MyApp({ Component, pageProps }) {
+  const [cardEdit, setCardEdit] = useState({
+    front: "",
+    back: "",
+    type: "basic",
+  });
+
   useEffect(() => {
     AOS.init({
       once: false,
@@ -37,8 +46,10 @@ function MyApp({ Component, pageProps }) {
   return (
     <ChakraProvider theme={theme}>
       <AuthProvider>
-        <Component {...pageProps} />
-        <Toaster />
+        <CardContext.Provider value={{ cardEdit, setCardEdit }}>
+          <Component {...pageProps} />
+          <Toaster />
+        </CardContext.Provider>
       </AuthProvider>
     </ChakraProvider>
   );

@@ -41,9 +41,11 @@ export const getUsernamePaths = async () => {
 export const getUserDeckPaths = async () => {
   const snapshot = await getDocs(collectionGroup(db, "decks"));
   return snapshot.docs.map((doc) => {
-    const { username, query } = doc.data();
+    const { username } = doc.data();
+    const deckId = doc.id.toString();
+
     return {
-      params: { username, query },
+      params: { username, deckId },
     };
   });
 };
@@ -70,24 +72,25 @@ export const getUserDecks = async (uid) => {
   const decksRef = collection(userRef, "decks");
   const decksSnap = await getDocs(decksRef);
 
-  return decksSnap?.docs.map((doc) => doc.data()) || [];
+  return decksSnap?.docs.map((doc) => ({ ...doc.data(), deckId: doc.id }));
 };
 
-export const getDeckData = async (uid, deckQuery) => {
+export const getDeckData = async (uid, deckId) => {
   const userRef = doc(db, "users", uid);
-  const deckRef = doc(userRef, "decks", deckQuery);
+  const deckRef = doc(userRef, "decks", deckId);
   const deckSnap = await getDoc(deckRef);
-  const deckData = deckSnap.data();
+  const deckData = { ...deckSnap.data(), deckId: deckSnap.id };
+
   return deckData;
 };
 
-export const getDeckCards = async (uid, deckQuery) => {
+export const getDeckCards = async (uid, deckId) => {
   const userRef = doc(db, "users", uid);
-  const deckRef = doc(userRef, "decks", deckQuery);
+  const deckRef = doc(userRef, "decks", deckId);
   const cardsRef = collection(deckRef, "cards");
   const cardsSnap = await getDocs(cardsRef);
 
-  return cardsSnap?.docs.map((doc) => doc.data()) || [];
+  return cardsSnap?.docs.map((doc) => ({ ...doc.data(), cardId: doc.id }));
 };
 
 export const deleteDeck = async (deckQuery) => {
@@ -114,10 +117,3 @@ export const updateCard = async (deckQuery, cardQuery, cardData) => {
 
   await updateDoc(cardRef, cardData);
 };
-/* export const deleteCard = async (username, deckQuery) => {
-  const uid = await getUidWithUsername(username);
-  const userRef = doc(db, "users", uid);
-  const deckRef = doc(userRef, "decks", deckQuery);
-
-  await deleteDoc(deckRef);
-}; */

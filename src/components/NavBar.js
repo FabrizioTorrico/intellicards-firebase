@@ -68,7 +68,7 @@ export default function NavBar({ home }) {
               pointerEvents="none"
               children={<Search2Icon color="main.600" />}
             />
-            <Input type="search" placeholder="Search for Decks" />
+            <Input type="search" placeholder="Search" />
           </InputGroup>
         ) : (
           <Spacer />

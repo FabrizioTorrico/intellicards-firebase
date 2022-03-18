@@ -6,23 +6,15 @@ import {
   Box,
   Flex,
   Spacer,
-  Popover,
-  PopoverTrigger,
-  PopoverArrow,
-  PopoverContent,
-  PopoverCloseButton,
-  PopoverFooter,
-  PopoverBody,
-  PopoverHeader,
 } from "@chakra-ui/react";
 import NextLink from "next/link";
-import { deleteDeck } from "../../firebase/firestore";
 
 export default function DeckPreview({ deckData, id }) {
-  const { created_at, title, query, heart_count, username } = deckData;
+  const { created_at, title, deckId, heart_count, username } = deckData;
+  console.log(deckData);
 
   return (
-    <NextLink href={`/${username}/decks/${query}`}>
+    <NextLink href={`/${username}/decks/${deckId}`}>
       <a>
         <Box
           border="2px"

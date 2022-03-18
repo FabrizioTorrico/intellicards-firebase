@@ -1,30 +1,37 @@
-import { Box, Heading, Button, Grid, GridItem, Text } from "@chakra-ui/react";
 import Container from "../../hocs/Container";
+import { Text, Stack, Heading } from "@chakra-ui/react";
 import CardPreview from "./CardPreview";
-export default function CardList({ deckCards, deckName, admin }) {
+import CardForm from "./CardForm";
+import { useState, useEffect } from "react";
+export default function CardList({ deckCards, admin }) {
+  const [cards, setCards] = useState([]);
+
+  useEffect(() => {
+    setCards(deckCards);
+  }, []);
+
+  const renderCards = () => {
+    if (!cards || (Array.isArray(cards) && cards.length === 0))
+      return (
+        <Text color="gray.600" fontSize={{ base: "lg", md: "2xl" }}>
+          There is no Cards!
+        </Text>
+      );
+
+    return cards.map((card, i) => (
+      <CardPreview key={i} cardData={card} id={i + 1} />
+    ));
+  };
+
   return (
-    <Container py={{ base: 14, md: 24 }}>
-      <Heading fontWeight={600} fontSize={"3xl"} lineHeight={"110%"} my={5}>
-        Cards
-      </Heading>
-      <Grid
-        templateColumns="repeat(auto-fill, minmax(250px, 1fr))"
-        autoRows={"10px"}
-        overflow="hidden"
-        justifyItems={{ base: "center", md: "baseline" }}
-      >
-        {!deckCards || (Array.isArray(deckCards) && deckCards.length === 0) ? (
-          <GridItem gridRowEnd={"span 4"}>
-            <Text fontSize="2xl" color="gray.600">
-              There is no cards!
-            </Text>
-          </GridItem>
-        ) : (
-          deckCards.map((card, i) => (
-            <CardPreview {...card} key={i} deckName={deckName} />
-          ))
-        )}
-      </Grid>
+    <Container maxW={{ base: "md", md: "4xl" }}>
+      <Stack spacing={{ base: 4, md: 5 }} py={{ base: 8, md: 12 }}>
+        <Heading fontWeight={600} fontSize={"3xl"} lineHeight={"110%"}>
+          Cards
+        </Heading>
+        {admin && <CardForm />}
+        {renderCards()}
+      </Stack>
     </Container>
   );
 }
