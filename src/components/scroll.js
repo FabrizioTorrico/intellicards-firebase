@@ -1,5 +1,5 @@
 export default function scroll(id, e) {
-  const el = document.getElementById(`${id}`);
   e.preventDefault(); // Stop Page Reloading
+  const el = document.getElementById(`${id}`);
   el && el.scrollIntoView({ behavior: "smooth" });
 }

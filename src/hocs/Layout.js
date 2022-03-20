@@ -5,15 +5,6 @@ import Priv from "../components/Priv";
 import { useEffect } from "react";
 
 export default function Layout({ title, description, children, home }) {
-  const isAuthenticated = false;
-
-  /*  useEffect(() => {
-    if (dispatch && dispatch !== "null" && dispatch !== "undefined") {
-      // dispatch(checkAuthStatus());
-      dispatch(requestRefresh());
-    }
-  }, [dispatch]); */
-
   return (
     <>
       <Head>

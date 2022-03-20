@@ -8,27 +8,20 @@ import {
   getUidWithUsername,
 } from "../../../firebase/firestore";
 import { useAuth } from "../../../firebase/auth";
-import { useEffect, useState } from "react";
-
+import { useEffect, useState, useRef } from "react";
+import { Stack, Heading, Container } from "@chakra-ui/react";
+import CardForm from "../../../components/cards/CardForm";
 export default function DeckCard({ deckProps }) {
-  const { deckData, deckCards } = JSON.parse(deckProps);
-  console.log(deckData);
+  const { deckData, deckCards, deckUid } = JSON.parse(deckProps);
   const { currentUser } = useAuth();
   const [admin, setAdmin] = useState(false);
-
   useEffect(() => {
-    //checks if uid is equal deckUid
-    (async () => {
-      if (currentUser) {
-        const deckUid = await getUidWithUsername(deckData.username);
-        setAdmin(deckUid === currentUser.uid);
-      }
-    })();
+    setAdmin(deckUid === currentUser.uid);
   }, []);
 
   return (
     <Layout>
-      <DeckHeader {...deckData} />
+      <DeckHeader deckData={deckData} deckUid={deckUid} admin={admin} />
       <CardList deckCards={deckCards} deckId={deckData.deckId} admin={admin} />
     </Layout>
   );
@@ -46,9 +39,11 @@ export const getStaticProps = async ({ params }) => {
   const uid = await getUidWithUsername(username);
   const deckData = await getDeckData(uid, deckId);
   const deckCards = await getDeckCards(uid, deckId);
-  console.log(deckData);
+  const deckUid = await getUidWithUsername(deckData.username);
 
   return {
-    props: { deckProps: JSON.stringify({ deckData, deckCards }) || null },
+    props: {
+      deckProps: JSON.stringify({ deckData, deckCards, deckUid }) || null,
+    },
   };
 };

@@ -16,7 +16,7 @@ import {
   useOutsideClick,
   Collapse,
 } from "@chakra-ui/react";
-import React, { useContext } from "react";
+import React, { useState } from "react";
 import FocusLock from "react-focus-lock";
 import CardContext from "./CardContext";
 import Divider from "../Divider";
@@ -41,7 +41,7 @@ const TextInput = React.forwardRef((props, ref) => {
 });
 
 export default function CardForm() {
-  const { cardEdit, setCardEdit } = useContext(CardContext);
+  const [cardEdit, setCardEdit] = useState({ front: "", back: "" });
   const frontRef = React.useRef();
   const { isOpen, onOpen, onClose } = useDisclosure();
   useOutsideClick({
@@ -68,6 +68,7 @@ export default function CardForm() {
       })
       .then(() => {
         setCardEdit({ front: "", back: "", type: "basic" });
+        onClose();
       });
   };
 
@@ -119,7 +120,7 @@ export default function CardForm() {
             </Stack>
 
             <Button colorScheme="main" size={"md"} type="submit">
-              Create
+              Create new card
             </Button>
           </Stack>
         </Collapse>

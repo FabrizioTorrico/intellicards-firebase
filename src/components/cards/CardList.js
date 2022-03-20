@@ -7,27 +7,27 @@ import { collection, doc, onSnapshot } from "firebase/firestore";
 import { useAuth } from "../../firebase/auth";
 import { db } from "../../firebase";
 export default function CardList({ deckCards, deckId, admin }) {
-  const [cards, setCards] = useState([]);
+  const [cards, setCards] = useState(deckCards);
   const { uid } = useAuth().currentUser;
-  useEffect(() => {
-    setCards(deckCards);
 
+  useEffect(() => {
     const userRef = doc(db, "users", uid);
     const deckRef = doc(userRef, "decks", deckId);
     const cardsCollection = collection(deckRef, "cards");
 
-    const unsubcribe = onSnapshot(cardsCollection, (querySnapshot) => {
+    const unsubscribe = onSnapshot(cardsCollection, (querySnapshot) => {
       console.log(querySnapshot);
       setCards(
         querySnapshot.docs.map((doc) => ({
           ...doc.data(),
-          CardId: doc.id,
+          cardId: doc.id,
         }))
       );
     });
+    return unsubscribe;
   }, []);
 
-  const renderCards = () => {
+  function renderDecks() {
     if (!cards || (Array.isArray(cards) && cards.length === 0))
       return (
         <Text color="gray.600" fontSize={{ base: "lg", md: "2xl" }}>
@@ -36,9 +36,9 @@ export default function CardList({ deckCards, deckId, admin }) {
       );
 
     return cards.map((card, i) => (
-      <CardPreview key={i} cardData={card} id={i + 1} />
+      <CardPreview key={i} deckId={deckId} cardData={card} admin={admin} />
     ));
-  };
+  }
 
   return (
     <Container maxW={{ base: "md", md: "4xl" }}>
@@ -47,7 +47,7 @@ export default function CardList({ deckCards, deckId, admin }) {
           Cards
         </Heading>
         {admin && <CardForm />}
-        {renderCards()}
+        {renderDecks()}
       </Stack>
     </Container>
   );

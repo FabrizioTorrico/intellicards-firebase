@@ -12,20 +12,24 @@ import {
   Heading,
 } from "@chakra-ui/react";
 import styles from "../../styles/Home.module.scss";
-import { IoHeartOutline } from "react-icons/io5";
-import { deleteDeck } from "../../firebase/firestore";
+import {
+  deleteDeck,
+  getRealTimeDeck,
+  getRealTimeHeart,
+} from "../../firebase/firestore";
+import HeartButton from "../HeartButton";
+import { useState, useEffect } from "react";
 
-function DeckStats({ username, heart_count }) {
+function DeckStats({ deckUid, deckId, heart_count }) {
+  const [myHeart, setMyHeart] = useState(null);
+  useEffect(() => {
+    return getRealTimeHeart(deckUid, deckId, setMyHeart);
+  }, []);
+
   return (
     <Grid templateColumns="1fr 1fr" fontSize={"xl"} gap={6}>
       <GridItem>
-        <Button
-          backgroundColor="white"
-          color="pink.300"
-          leftIcon={<IoHeartOutline size="24px" />}
-        >
-          Give Heart
-        </Button>
+        <HeartButton deckUid={deckUid} deckId={deckId} myHeart={myHeart} />{" "}
       </GridItem>
       <GridItem alignSelf="center" justifySelf="center">
         <Text>{heart_count} hearts</Text>
@@ -43,12 +47,14 @@ function DeckStats({ username, heart_count }) {
     </Grid>
   );
 }
-export default function DeckHeader({
-  title,
-  username,
-  heart_count,
-  created_at,
-}) {
+export default function DeckHeader({ deckData, deckUid }) {
+  const [realTimeDeck, setRealTimeDeck] = useState(deckData);
+  const { title, username, heart_count, created_at, deckId } = realTimeDeck;
+
+  useEffect(() => {
+    return getRealTimeDeck(deckUid, deckId, setRealTimeDeck);
+  }, []);
+
   return (
     <Box
       bgGradient="linear(main.600, main.500)"
@@ -66,11 +72,15 @@ export default function DeckHeader({
         <Header
           title={title}
           secondary={
-            <DeckStats username={username} heart_count={heart_count} />
+            <DeckStats
+              deckUid={deckUid}
+              deckId={deckId}
+              heart_count={heart_count}
+            />
           }
         ></Header>
       </Container>
-      <div className={styles.wave2}>
+      <div className={styles.wave2} id="card-form">
         <svg
           data-name="Layer 1"
           xmlns="http://www.w3.org/2000/svg"
