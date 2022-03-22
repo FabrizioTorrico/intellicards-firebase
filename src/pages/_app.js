@@ -4,8 +4,7 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import { AuthProvider } from "../firebase/auth";
 import { Toaster } from "react-hot-toast";
-import CardContext from "../components/cards/CardContext";
-import { useState } from "react";
+import { PlayProvider } from "../components/decks/PlayContext";
 
 const theme = extendTheme({
   colors: {
@@ -28,12 +27,6 @@ const theme = extendTheme({
 });
 
 function MyApp({ Component, pageProps }) {
-  const [cardEdit, setCardEdit] = useState({
-    front: "",
-    back: "",
-    type: "basic",
-  });
-
   useEffect(() => {
     AOS.init({
       once: false,
@@ -46,10 +39,10 @@ function MyApp({ Component, pageProps }) {
   return (
     <ChakraProvider theme={theme}>
       <AuthProvider>
-        <CardContext.Provider value={{ cardEdit, setCardEdit }}>
+        <PlayProvider>
           <Component {...pageProps} />
           <Toaster />
-        </CardContext.Provider>
+        </PlayProvider>
       </AuthProvider>
     </ChakraProvider>
   );

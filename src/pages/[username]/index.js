@@ -8,13 +8,22 @@ import Layout from "../../hocs/Layout";
 import Hero from "../../components/Hero";
 import UserHeader from "../../components/UserHeader";
 import DeckList from "../../components/decks/DeckList";
+import { useAuth } from "../../firebase/auth";
+import { useEffect, useState } from "react";
 
 export default function UserPage({ userProps }) {
-  const user = JSON.parse(userProps);
+  const { userData, userDecks, userId } = JSON.parse(userProps);
+  const [admin, setAdmin] = useState(false);
+  const { currentUser } = useAuth();
+
+  useEffect(() => {
+    setAdmin(userId === currentUser.uid);
+  }, []);
+
   return (
     <Layout>
-      <Hero title={<UserHeader user={user.userData} />} />
-      <DeckList userDecks={user.userDecks} />
+      <Hero title={<UserHeader user={userData} admin={admin} />} />
+      <DeckList userDecks={userDecks} admin={admin} />
     </Layout>
   );
 }
@@ -30,6 +39,8 @@ export const getStaticProps = async (context) => {
   const userDecks = await getUserDecks(uid);
 
   return {
-    props: { userProps: JSON.stringify({ userData, userDecks }) || null },
+    props: {
+      userProps: JSON.stringify({ userData, userDecks, userId: uid }) || null,
+    },
   };
 };

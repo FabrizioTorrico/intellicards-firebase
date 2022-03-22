@@ -1,8 +1,8 @@
 import { Center } from "@chakra-ui/react";
 
-export default function Divider() {
+export default function Divider({ my }) {
   return (
-    <Center>
+    <Center my={my}>
       <hr
         style={{
           width: "90%",

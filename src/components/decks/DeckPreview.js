@@ -1,17 +1,9 @@
 import { IoHeartOutline, IoTrash } from "react-icons/io5";
-import {
-  Button,
-  IconButton,
-  Text,
-  Box,
-  Flex,
-  Spacer,
-} from "@chakra-ui/react";
+import { Button, IconButton, Text, Box, Flex, Spacer } from "@chakra-ui/react";
 import NextLink from "next/link";
 
 export default function DeckPreview({ deckData, id }) {
   const { created_at, title, deckId, heart_count, username } = deckData;
-  console.log(deckData);
 
   return (
     <NextLink href={`/${username}/decks/${deckId}`}>

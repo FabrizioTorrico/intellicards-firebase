@@ -1,17 +1,26 @@
 import Container from "../../hocs/Container";
 import { Text, Stack, Heading } from "@chakra-ui/react";
 import DeckPreview from "./DeckPreview";
+import DeckForm from "./DeckForm";
+import { useState, useEffect } from "react";
+import { getRealTimeDeckList } from "../../firebase/firestore";
+export default function DeckList({ userDecks, admin }) {
+  console.log("decklist rendered");
+  const [deckList, setDeckList] = useState(userDecks);
 
-export default function DeckList({ userDecks }) {
+  useEffect(() => {
+    if (admin) return getRealTimeDeckList(setDeckList);
+  }, [admin]);
+
   const renderDecks = () => {
-    if (!userDecks || (Array.isArray(userDecks) && userDecks.length === 0))
+    if (!deckList || (Array.isArray(deckList) && deckList.length === 0))
       return (
         <Text color="gray.600" fontSize={{ base: "lg", md: "2xl" }}>
           There is no Decks!
         </Text>
       );
 
-    return userDecks.map((deck, i) => (
+    return deckList.map((deck, i) => (
       <DeckPreview key={i} deckData={deck} id={i + 1} />
     ));
   };
@@ -22,6 +31,7 @@ export default function DeckList({ userDecks }) {
         <Heading fontWeight={600} fontSize={"3xl"} lineHeight={"110%"}>
           Decks
         </Heading>
+        {admin && <DeckForm />}
         {renderDecks()}
       </Stack>
     </Container>

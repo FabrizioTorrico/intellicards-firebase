@@ -82,7 +82,10 @@ export default function CardForm() {
     >
       <form onSubmit={handleSubmit(onSubmit)}>
         <TextInput
-          {...register("front", { required: "front is required" })}
+          {...register("front", {
+            required: "front is required",
+            maxLength: { value: 2000, message: "Max length is 2000 char" },
+          })}
           errors={errors}
           label={isOpen ? "Front" : "Create New Card"}
           id="front"
@@ -93,7 +96,10 @@ export default function CardForm() {
           <Stack spacing={4}>
             <Divider />
             <TextInput
-              {...register("back", { required: "back is required" })}
+              {...register("back", {
+                required: "back is required",
+                maxLength: { value: 2000, message: "Max length is 2000 char" },
+              })}
               errors={errors}
               label="Back"
               id="back"

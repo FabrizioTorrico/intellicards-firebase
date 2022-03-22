@@ -7,25 +7,27 @@ import { collection, doc, onSnapshot } from "firebase/firestore";
 import { useAuth } from "../../firebase/auth";
 import { db } from "../../firebase";
 export default function CardList({ deckCards, deckId, admin }) {
+  console.log("cardlist rendered");
   const [cards, setCards] = useState(deckCards);
   const { uid } = useAuth().currentUser;
 
   useEffect(() => {
-    const userRef = doc(db, "users", uid);
-    const deckRef = doc(userRef, "decks", deckId);
-    const cardsCollection = collection(deckRef, "cards");
+    if (admin) {
+      const userRef = doc(db, "users", uid);
+      const deckRef = doc(userRef, "decks", deckId);
+      const cardsCollection = collection(deckRef, "cards");
 
-    const unsubscribe = onSnapshot(cardsCollection, (querySnapshot) => {
-      console.log(querySnapshot);
-      setCards(
-        querySnapshot.docs.map((doc) => ({
-          ...doc.data(),
-          cardId: doc.id,
-        }))
-      );
-    });
-    return unsubscribe;
-  }, []);
+      const unsubscribe = onSnapshot(cardsCollection, (querySnapshot) => {
+        setCards(
+          querySnapshot.docs.map((doc) => ({
+            ...doc.data(),
+            cardId: doc.id,
+          }))
+        );
+      });
+      return unsubscribe;
+    }
+  }, [admin]);
 
   function renderDecks() {
     if (!cards || (Array.isArray(cards) && cards.length === 0))

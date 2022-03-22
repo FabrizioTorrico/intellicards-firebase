@@ -11,9 +11,10 @@ import {
   addDoc,
   onSnapshot,
   increment,
+  serverTimestamp,
 } from "firebase/firestore";
 import { auth } from "./index";
-
+import kebabcase from "lodash.kebabcase";
 export async function createFirestoreUser(uid, data) {
   data.deck_count = 0;
   data.confirmed = false;
@@ -96,6 +97,27 @@ export const getDeckCards = async (uid, deckId) => {
   return cardsSnap?.docs.map((doc) => ({ ...doc.data(), cardId: doc.id }));
 };
 
+export const createDeck = async (username, title) => {
+  const { uid } = auth.currentUser;
+  const userRef = doc(db, "users", uid);
+  const decksCollection = collection(userRef, "decks");
+
+  const deckData = {
+    username,
+    title,
+    query: encodeURI(kebabcase(title)),
+    heart_count: 0,
+    published: false,
+    created_at: serverTimestamp(),
+    updated_at: serverTimestamp(),
+  };
+
+  const batch = writeBatch(db);
+
+  batch.update(userRef, { deck_count: increment(1) });
+  batch.set(decksCollection, deckData);
+  await batch.commit();
+};
 export const deleteDeck = async (deckQuery) => {
   const { uid } = auth.currentUser;
   const userRef = doc(db, "users", uid);
@@ -161,6 +183,18 @@ export const getRealTimeDeck = (deckUid, deckId, setDeck) => {
   return onSnapshot(deckRef, (doc) => {
     console.log("realtime deck: ", doc.data());
     setDeck({ ...doc.data(), deckId: doc.id });
+  });
+};
+
+export const getRealTimeDeckList = (setDeckList) => {
+  const { uid } = auth.currentUser;
+  const userRef = doc(db, "users", uid);
+  const deckCollection = collection(userRef, "decks");
+
+  return onSnapshot(deckCollection, (collection) => {
+    setDeckList(
+      collection.docs.map((doc) => ({ ...doc.data(), deckId: doc.id }))
+    );
   });
 };
 

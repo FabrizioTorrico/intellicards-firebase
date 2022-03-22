@@ -11,15 +11,21 @@ import { useAuth } from "../../../firebase/auth";
 import { useEffect, useState, useRef } from "react";
 import { Stack, Heading, Container } from "@chakra-ui/react";
 import CardForm from "../../../components/cards/CardForm";
+import usePlay from "../../../components/decks/PlayContext";
+import CardPlay from "../../../components/cards/CardPlay";
 export default function DeckCard({ deckProps }) {
   const { deckData, deckCards, deckUid } = JSON.parse(deckProps);
   const { currentUser } = useAuth();
   const [admin, setAdmin] = useState(false);
+  const { play } = usePlay();
+  const shuffledCards = deckCards.sort((a, b) => 0.5 - Math.random());
   useEffect(() => {
     setAdmin(deckUid === currentUser.uid);
   }, []);
 
-  return (
+  return play ? (
+    <CardPlay deckCards={shuffledCards} deckData={deckData} />
+  ) : (
     <Layout>
       <DeckHeader deckData={deckData} deckUid={deckUid} admin={admin} />
       <CardList deckCards={deckCards} deckId={deckData.deckId} admin={admin} />

@@ -19,8 +19,10 @@ import {
 } from "../../firebase/firestore";
 import HeartButton from "../HeartButton";
 import { useState, useEffect } from "react";
+import usePlay from "./PlayContext";
 
 function DeckStats({ deckUid, deckId, heart_count }) {
+  const { setPlay } = usePlay();
   const [myHeart, setMyHeart] = useState(null);
   useEffect(() => {
     return getRealTimeHeart(deckUid, deckId, setMyHeart);
@@ -40,6 +42,7 @@ function DeckStats({ deckUid, deckId, heart_count }) {
           width="100%"
           height="3rem"
           rounded="full"
+          onClick={() => setPlay(true)}
         >
           Play now
         </Button>
