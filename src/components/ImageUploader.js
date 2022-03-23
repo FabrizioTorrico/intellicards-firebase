@@ -18,12 +18,19 @@ import { uploadImageToStorage } from "../firebase/storage";
 import { useContext } from "react";
 import CardContext from "./cards/CardContext";
 
+/**
+ * reacts conditionally if there is a downloadURL, it allows uploading images and checking erros
+ * @param {props} props
+ * @property {function} setError sets the error to parent component
+ * @property {function} clearErrors clears the error to parent component
+ */
 export default function ImageUploader({ setError, clearErrors }) {
   const inputRef = useRef();
   const [uploading, setUploading] = useState(false);
   const [downloadURL, setDownloadURL] = useState(null);
   const [copied, setCopied] = useState(false);
 
+  //for replacing default styling and replacing it with chakra ui
   const handleClick = () => inputRef.current?.click();
 
   const uploadFile = async (e) => {
@@ -37,14 +44,12 @@ export default function ImageUploader({ setError, clearErrors }) {
     const fileMB = file.size / (1024 * 1024);
     const MAX_FILE_SIZE = 5;
     if (fileMB > MAX_FILE_SIZE) {
-      console.log("too mlarge");
       setError("image", { message: "Max file size is 5mb" });
     }
 
     uploadImageToStorage(file, setDownloadURL, setUploading);
   };
 
-  if (downloadURL) console.log(downloadURL);
   return downloadURL ? (
     <InputGroup>
       <Image

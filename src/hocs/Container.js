@@ -1,5 +1,9 @@
 import { Stack, Container } from "@chakra-ui/react";
 
+/**
+ * @param {{ children: JSX.Element}} [Props]
+ * @returns the children component aligned and with global padding
+ */
 export default function ({ children, bg, pt, pb, maxW, py }) {
   return (
     <Stack

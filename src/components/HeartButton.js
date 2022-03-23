@@ -1,6 +1,13 @@
 import { Button } from "@chakra-ui/react";
 import { IoHeartOutline, IoHeartDislike } from "react-icons/io5";
 import { addHeart, removeHeart } from "../firebase/firestore";
+
+/**
+ * @param {props} props
+ * @property {myHeart} firebaseRef a reference to the realtime user Heart to check if it exists
+ * @property {String} deckUid uses the deckUid for changes on firebase
+ * @property {String} deckId uses the deckUid for changes on firebase
+ */
 export default function HeartButton({ myHeart, deckUid, deckId }) {
   return myHeart?.exists() ? (
     <Button

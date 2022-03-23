@@ -1,9 +1,16 @@
 import Head from "next/Head";
 import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
-import Priv from "../components/Priv";
 import { useEffect } from "react";
 
+/**
+ * the children component with nav bar and footer
+ * @param {string} title The Head title
+ * @param {string} description The Head description
+ * @param {JSX.Element} children The Head description
+ * @param {boolean} home Checks if it's the home for special interactinos
+ * @author Fabrizio Torrico
+ */
 export default function Layout({ title, description, children, home }) {
   return (
     <>

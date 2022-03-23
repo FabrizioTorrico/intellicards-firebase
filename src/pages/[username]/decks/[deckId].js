@@ -12,7 +12,7 @@ import { useEffect, useState, useRef } from "react";
 import { Stack, Heading, Container } from "@chakra-ui/react";
 import CardForm from "../../../components/cards/CardForm";
 import usePlay from "../../../components/decks/PlayContext";
-import CardPlay from "../../../components/cards/CardPlay";
+import PlayCard from "../../../components/play/PlayCard";
 export default function DeckCard({ deckProps }) {
   const { deckData, deckCards, deckUid } = JSON.parse(deckProps);
   const { currentUser } = useAuth();
@@ -24,7 +24,7 @@ export default function DeckCard({ deckProps }) {
   }, []);
 
   return play ? (
-    <CardPlay deckCards={shuffledCards} deckData={deckData} />
+    <PlayCard deckCards={shuffledCards} deckData={deckData} />
   ) : (
     <Layout>
       <DeckHeader deckData={deckData} deckUid={deckUid} admin={admin} />

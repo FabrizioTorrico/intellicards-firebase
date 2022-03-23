@@ -62,9 +62,9 @@ export default function CardForm() {
     console.log(data);
     toast
       .promise(createCard(deckId, data), {
-        loading: "Saving...",
-        success: <b>Settings saved!</b>,
-        error: <b>Could not save.</b>,
+        loading: <b>Creating card...</b>,
+        success: <b>Card created!</b>,
+        error: <b>Could not create.</b>,
       })
       .then(() => {
         setCardEdit({ front: "", back: "", type: "basic" });

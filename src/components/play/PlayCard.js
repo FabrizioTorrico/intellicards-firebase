@@ -8,14 +8,15 @@ import {
   HStack,
   Center,
   IconButton,
+  Spacer,
 } from "@chakra-ui/react";
 import usePlay from "../decks/PlayContext";
 import { useState } from "react";
 import MarkDown from "../MarkDown";
 import Divider from "../Divider";
-import styles from "../../styles/CardPlay.module.scss";
-import ReactCardFlip from "react-card-flip";
-import cn from "classnames";
+import styles from "../../styles/Play.module.scss";
+import PlayForm from "./PlayForm";
+
 export default function CardPlay({ deckCards, deckData }) {
   console.log(deckCards);
   const { setPlay } = usePlay();
@@ -59,29 +60,38 @@ export default function CardPlay({ deckCards, deckData }) {
             <Box className={`${styles["card"]} ${styles["front"]}`}>
               <MarkDown>{deckCards[cardIndex].front}</MarkDown>
               <Divider my={4} />
-              <Button rightIcon={<ArrowForwardIcon />} onClick={handleFlip}>
+              <Button
+                textAlign={"center"}
+                rightIcon={<ArrowForwardIcon />}
+                onClick={handleFlip}
+              >
                 <Text>Show answer</Text>
               </Button>
             </Box>
             <Box className={`${styles["card"]} ${styles["back"]}`}>
               <MarkDown>{deckCards[cardIndex].back}</MarkDown>
               <Divider my={4} />
-              <Button rightIcon={<ArrowBackIcon />} onClick={handleFlip}>
-                <Text>Go Back</Text>
-              </Button>
-              <Button
-                rightIcon={<ArrowForwardIcon />}
-                onClick={() => {
-                  handleFlip();
-                  handleIndex();
-                }}
-              >
-                <Text>Continue</Text>
-              </Button>
+              <Flex gap={"20px"}>
+                <Button rightIcon={<ArrowBackIcon />} onClick={handleFlip}>
+                  <Text>Go Back</Text>
+                </Button>
+                <Spacer />
+                <Button
+                  rightIcon={<ArrowForwardIcon />}
+                  onClick={() => {
+                    handleFlip();
+                    handleIndex();
+                  }}
+                  colorScheme={"main"}
+                >
+                  <Text>Continue</Text>
+                </Button>
+              </Flex>
             </Box>
           </Box>
         </Box>
       </Center>
+      <PlayForm />
     </Box>
   );
 }

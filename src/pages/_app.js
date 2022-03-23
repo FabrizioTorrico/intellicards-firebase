@@ -6,6 +6,7 @@ import { AuthProvider } from "../firebase/auth";
 import { Toaster } from "react-hot-toast";
 import { PlayProvider } from "../components/decks/PlayContext";
 
+// Setup for chakra ui
 const theme = extendTheme({
   colors: {
     main: {
@@ -27,6 +28,7 @@ const theme = extendTheme({
 });
 
 function MyApp({ Component, pageProps }) {
+  // setup for aos
   useEffect(() => {
     AOS.init({
       once: false,

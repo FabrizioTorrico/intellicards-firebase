@@ -30,6 +30,11 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useRef } from "react";
 import { createUserForAuth } from "../firebase/auth";
 
+/**
+ * opens a modal to create a user with first name, last name, email and password. After this, Complete login should be called
+ * @param {props} props
+ * @property {function} onClose closes the modal
+ */
 export default function Signup({ onClose }) {
   const [showPassword, setShowPassword] = useState(false);
   const [showRePassword, setShowRePassword] = useState(false);
@@ -50,6 +55,7 @@ export default function Signup({ onClose }) {
       .required("Confirm Password is required")
       .oneOf([Yup.ref("password")], "Passwords must match"),
   });
+
   const formOptions = { resolver: yupResolver(validationSchema) };
   const {
     register,
@@ -58,7 +64,6 @@ export default function Signup({ onClose }) {
   } = useForm(formOptions);
 
   const onSubmit = (data) => {
-    console.log("data on signUpPage: ", data);
     createUserForAuth(data);
     onClose();
   };

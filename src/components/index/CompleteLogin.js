@@ -20,6 +20,9 @@ import { createFirestoreUser, usernameExists } from "../../firebase/firestore";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 
+/**
+ * Completes the user information with username and biography
+ */
 export default function CompleteLogin() {
   window.scroll({
     top: 0,

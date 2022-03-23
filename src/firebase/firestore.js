@@ -12,6 +12,8 @@ import {
   onSnapshot,
   increment,
   serverTimestamp,
+  query,
+  orderBy,
 } from "firebase/firestore";
 import { auth } from "./index";
 import kebabcase from "lodash.kebabcase";
@@ -93,8 +95,8 @@ export const getDeckCards = async (uid, deckId) => {
   const deckRef = doc(userRef, "decks", deckId);
   const cardsRef = collection(deckRef, "cards");
   const cardsSnap = await getDocs(cardsRef);
-
-  return cardsSnap?.docs.map((doc) => ({ ...doc.data(), cardId: doc.id }));
+  const q = query(cardsSnap, orderBy("created_at", "desc"));
+  return q?.docs.map((doc) => ({ ...doc.data(), cardId: doc.id }));
 };
 
 export const createDeck = async (username, title) => {

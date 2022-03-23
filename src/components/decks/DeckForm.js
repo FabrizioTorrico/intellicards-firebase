@@ -28,9 +28,9 @@ export default function DeckForm() {
       return;
     }
     toast.promise(createDeck(currentUserData.username, deckName), {
-      success: <b>Deck created Succesfully</b>,
-      loading: <b>creating deck...</b>,
-      error: <b>error creating deck</b>,
+      success: <b>Deck created!</b>,
+      loading: <b>Creating deck...</b>,
+      error: <b>Could not create.</b>,
     });
   };
 
@@ -40,6 +40,7 @@ export default function DeckForm() {
         <Flex alignItems={"center"}>
           <FormControl isInvalid={error} flex={3}>
             <Input
+              autoComplete="off"
               id={"deck"}
               placeholder={"My new deck name"}
               fontSize="xl"

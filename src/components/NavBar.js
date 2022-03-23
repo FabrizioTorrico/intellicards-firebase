@@ -36,6 +36,10 @@ const NavLink = ({ children, link }) => (
   </NextLink>
 );
 
+/**
+ * It's the main navBar, changes on auth and user Data, and it's responsive. POSITION FIXED
+ * @param {boolean} home  checks the home for scrolling on click instead of routing and specific design
+ */
 export default function NavBar({ home }) {
   const { currentUser, currentUserData } = useAuth();
   const { isOpen, onOpen, onClose } = useDisclosure();

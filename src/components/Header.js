@@ -1,4 +1,13 @@
 import { Heading, Text, Stack, Box } from "@chakra-ui/react";
+/**
+ * Takes the title and secondary to do a responsive header resusable
+ * @param {props} props
+ * @property {String} title 
+ * @property {String} secondary
+ * @property {Number} pb padding bottom
+ * @property {Number} py padding on y axis
+ * @returns
+ */
 export default function ({ title, secondary, pb, py, textAlign }) {
   return (
     <Box

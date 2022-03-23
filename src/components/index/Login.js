@@ -145,12 +145,16 @@ export default function Login() {
                       Create new account
                     </Button>
 
-                    <Button onClick={loginWithGoogle}>
-                      <Image
-                        src="/img/google-logo.png"
-                        height="25px"
-                        width="25px"
-                      />
+                    <Button
+                      onClick={loginWithGoogle}
+                      leftIcon={
+                        <Image
+                          src="/img/google-logo.png"
+                          height="25px"
+                          width="25px"
+                        />
+                      }
+                    >
                       Log in With Google
                     </Button>
                   </Stack>

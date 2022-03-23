@@ -50,6 +50,11 @@ function DeckStats({ deckUid, deckId, heart_count }) {
     </Grid>
   );
 }
+
+/**
+ * uses the deckData and deckUid to get real time deck data
+ * @param {props} props 
+ */
 export default function DeckHeader({ deckData, deckUid }) {
   const [realTimeDeck, setRealTimeDeck] = useState(deckData);
   const { title, username, heart_count, created_at, deckId } = realTimeDeck;

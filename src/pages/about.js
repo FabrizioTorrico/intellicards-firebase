@@ -4,6 +4,7 @@ import Container from "../hocs/Container";
 import Image from "../components/Image";
 import { Box, Text, Stack, Heading } from "@chakra-ui/react";
 import aboutImage from "../../public/img/friends.jpg";
+
 export default function AboutPage() {
   return (
     <Layout title="About">

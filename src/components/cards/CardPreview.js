@@ -25,7 +25,7 @@ export default function CardPreview({ cardData, deckId, admin }) {
       {
         loading: "Deleting...",
         success: <b>card Deleted!</b>,
-        error: <b>Could not save.</b>,
+        error: <b>Could not delete.</b>,
       },
       {
         success: {
