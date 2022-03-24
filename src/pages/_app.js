@@ -4,7 +4,7 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import { AuthProvider } from "../firebase/auth";
 import { Toaster } from "react-hot-toast";
-import { PlayProvider } from "../components/decks/PlayContext";
+import { PlayProvider } from "../components/play/PlayContext";
 
 // Setup for chakra ui
 const theme = extendTheme({

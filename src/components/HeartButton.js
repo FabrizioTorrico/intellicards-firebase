@@ -9,7 +9,8 @@ import { addHeart, removeHeart } from "../firebase/firestore";
  * @property {String} deckId uses the deckUid for changes on firebase
  */
 export default function HeartButton({ myHeart, deckUid, deckId }) {
-  return myHeart?.exists() ? (
+  if (!myHeart) return <div>you are not signed in!</div>;
+  return myHeart.exists() ? (
     <Button
       backgroundColor="white"
       color="pink.400"

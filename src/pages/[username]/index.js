@@ -17,7 +17,7 @@ export default function UserPage({ userProps }) {
   const { currentUser } = useAuth();
 
   useEffect(() => {
-    setAdmin(userId === currentUser.uid);
+    setAdmin(userId === currentUser?.uid);
   }, []);
 
   return (

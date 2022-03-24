@@ -3,29 +3,15 @@ import { Text, Stack, Heading } from "@chakra-ui/react";
 import CardPreview from "./CardPreview";
 import CardForm from "./CardForm";
 import { useState, useEffect } from "react";
-import { collection, doc, onSnapshot } from "firebase/firestore";
-import { useAuth } from "../../firebase/auth";
-import { db } from "../../firebase";
+import { getRealTimeCardList } from "../../firebase/firestore";
+
 export default function CardList({ deckCards, deckId, admin }) {
   console.log("cardlist rendered");
   const [cards, setCards] = useState(deckCards);
-  const { uid } = useAuth().currentUser;
 
   useEffect(() => {
     if (admin) {
-      const userRef = doc(db, "users", uid);
-      const deckRef = doc(userRef, "decks", deckId);
-      const cardsCollection = collection(deckRef, "cards");
-
-      const unsubscribe = onSnapshot(cardsCollection, (querySnapshot) => {
-        setCards(
-          querySnapshot.docs.map((doc) => ({
-            ...doc.data(),
-            cardId: doc.id,
-          }))
-        );
-      });
-      return unsubscribe;
+      return getRealTimeCardList(deckId, setCards);
     }
   }, [admin]);
 

@@ -23,8 +23,8 @@ export default function DeckForm() {
   const handleSubmit = async (e) => {
     console.log("watefuk");
     e.preventDefault();
-    if (deckName.length > 100) {
-      setError("Max length is 100 char");
+    if (deckName.length > 80) {
+      setError("Max length is 80 char");
       return;
     }
     toast.promise(createDeck(currentUserData.username, deckName), {

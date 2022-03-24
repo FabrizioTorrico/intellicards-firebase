@@ -23,6 +23,9 @@ export const AuthProvider = ({ children }) => {
   const [currentUserData, setCurrentUserData] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  async function refreshUserData(uid) {
+    setCurrentUserData(await getUserData(uid));
+  }
   useEffect(() => {
     return auth.onIdTokenChanged(async (user) => {
       setLoading(true);
@@ -53,8 +56,20 @@ export const AuthProvider = ({ children }) => {
     } else return children;
   }
 
+  /* function PageToRender() {
+    if (!currentUserData && currentUser)
+      return (
+        <Layout>
+          <CompleteLogin />
+        </Layout>
+      );
+    return children;
+  } */
+
   return (
-    <AuthContext.Provider value={{ currentUser, currentUserData }}>
+    <AuthContext.Provider
+      value={{ currentUser, currentUserData, refreshUserData }}
+    >
       <PageToRender />
     </AuthContext.Provider>
   );

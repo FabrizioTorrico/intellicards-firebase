@@ -46,7 +46,10 @@ export default function CardForm() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   useOutsideClick({
     ref: frontRef,
-    handler: () => onClose(),
+    handler: () => {
+      clearErrors();
+      onClose();
+    },
   });
   const router = useRouter();
   const { deckId } = router.query;

@@ -10,7 +10,7 @@ import {
   IconButton,
   Spacer,
 } from "@chakra-ui/react";
-import usePlay from "../decks/PlayContext";
+import usePlay from "./PlayContext";
 import { useState } from "react";
 import MarkDown from "../MarkDown";
 import Divider from "../Divider";
@@ -18,7 +18,7 @@ import styles from "../../styles/Play.module.scss";
 import PlayForm from "./PlayForm";
 
 export default function CardPlay({ deckCards, deckData }) {
-  console.log(deckCards);
+  if (!deckCards) return;
   const { setPlay } = usePlay();
   const [finished, setFinished] = useState(false);
   const [cardIndex, setCardIndex] = useState(0);

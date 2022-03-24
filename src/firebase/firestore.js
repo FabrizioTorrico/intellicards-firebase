@@ -94,15 +94,15 @@ export const getDeckCards = async (uid, deckId) => {
   const userRef = doc(db, "users", uid);
   const deckRef = doc(userRef, "decks", deckId);
   const cardsRef = collection(deckRef, "cards");
-  const cardsSnap = await getDocs(cardsRef);
-  const q = query(cardsSnap, orderBy("created_at", "desc"));
-  return q?.docs.map((doc) => ({ ...doc.data(), cardId: doc.id }));
+  const q = query(cardsRef, orderBy("created_at", "desc"));
+
+  return q.docs?.map((doc) => ({ ...doc.data(), cardId: doc.id }));
 };
 
 export const createDeck = async (username, title) => {
   const { uid } = auth.currentUser;
   const userRef = doc(db, "users", uid);
-  const decksCollection = collection(userRef, "decks");
+  const decksCollection = doc(collection(userRef, "decks"));
 
   const deckData = {
     username,
@@ -115,7 +115,6 @@ export const createDeck = async (username, title) => {
   };
 
   const batch = writeBatch(db);
-
   batch.update(userRef, { deck_count: increment(1) });
   batch.set(decksCollection, deckData);
   await batch.commit();
@@ -142,6 +141,7 @@ export const deleteCard = async (deckId, cardId) => {
   const deckRef = doc(userRef, "decks", deckId);
   const cardRef = doc(deckRef, "cards", cardId);
 
+  console.log("here");
   await deleteDoc(cardRef);
 };
 
@@ -196,6 +196,19 @@ export const getRealTimeDeckList = (setDeckList) => {
   return onSnapshot(deckCollection, (collection) => {
     setDeckList(
       collection.docs.map((doc) => ({ ...doc.data(), deckId: doc.id }))
+    );
+  });
+};
+
+export const getRealTimeCardList = (deckId, setCardList) => {
+  const { uid } = auth.currentUser;
+  const userRef = doc(db, "users", uid);
+  const deckRef = doc(userRef, "decks", deckId);
+  const cardsCollection = collection(deckRef, "cards");
+
+  return onSnapshot(cardsCollection, (collection) => {
+    setCardList(
+      collection.docs.map((doc) => ({ ...doc.data(), cardId: doc.id }))
     );
   });
 };

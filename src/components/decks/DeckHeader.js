@@ -19,7 +19,7 @@ import {
 } from "../../firebase/firestore";
 import HeartButton from "../HeartButton";
 import { useState, useEffect } from "react";
-import usePlay from "./PlayContext";
+import usePlay from "../play/PlayContext";
 
 function DeckStats({ deckUid, deckId, heart_count }) {
   const { setPlay } = usePlay();
@@ -31,7 +31,7 @@ function DeckStats({ deckUid, deckId, heart_count }) {
   return (
     <Grid templateColumns="1fr 1fr" fontSize={"xl"} gap={6}>
       <GridItem>
-        <HeartButton deckUid={deckUid} deckId={deckId} myHeart={myHeart} />{" "}
+        <HeartButton deckUid={deckUid} deckId={deckId} myHeart={myHeart} />
       </GridItem>
       <GridItem alignSelf="center" justifySelf="center">
         <Text>{heart_count} hearts</Text>
@@ -53,9 +53,9 @@ function DeckStats({ deckUid, deckId, heart_count }) {
 
 /**
  * uses the deckData and deckUid to get real time deck data
- * @param {props} props 
+ * @param {props} props
  */
-export default function DeckHeader({ deckData, deckUid }) {
+export default function DeckHeader({ deckData, deckUid, canPlay, admin }) {
   const [realTimeDeck, setRealTimeDeck] = useState(deckData);
   const { title, username, heart_count, created_at, deckId } = realTimeDeck;
 
@@ -84,6 +84,7 @@ export default function DeckHeader({ deckData, deckUid }) {
               deckUid={deckUid}
               deckId={deckId}
               heart_count={heart_count}
+              canPlay={canPlay}
             />
           }
         ></Header>
