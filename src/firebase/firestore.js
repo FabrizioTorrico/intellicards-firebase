@@ -17,6 +17,7 @@ import {
 } from "firebase/firestore";
 import { auth } from "./index";
 import kebabcase from "lodash.kebabcase";
+
 export async function createFirestoreUser(uid, data) {
   data.deck_count = 0;
   data.confirmed = false;
@@ -57,11 +58,9 @@ export const getUserDeckPaths = async () => {
 };
 
 export const getUidWithUsername = async (username) => {
-  let uid;
   const usernameRef = doc(db, "usernames", username);
   const usernameSnap = await getDoc(usernameRef);
-  if (usernameSnap.exists()) uid = usernameSnap.data().uid;
-  else uid = false;
+  const { uid } = usernameSnap.data();
   return uid;
 };
 
@@ -78,7 +77,7 @@ export const getUserDecks = async (uid) => {
   const decksRef = collection(userRef, "decks");
   const decksSnap = await getDocs(decksRef);
 
-  return decksSnap?.docs.map((doc) => ({ ...doc.data(), deckId: doc.id }));
+  return decksSnap.docs?.map((doc) => ({ ...doc.data(), deckId: doc.id }));
 };
 
 export const getDeckData = async (uid, deckId) => {
@@ -94,9 +93,13 @@ export const getDeckCards = async (uid, deckId) => {
   const userRef = doc(db, "users", uid);
   const deckRef = doc(userRef, "decks", deckId);
   const cardsRef = collection(deckRef, "cards");
-  const q = query(cardsRef, orderBy("created_at", "desc"));
+  // const q = query(cardsCollection, orderBy("created_at", "desc"));
+  const cardsSnap = await getDocs(cardsRef);
 
-  return q.docs?.map((doc) => ({ ...doc.data(), cardId: doc.id }));
+  return cardsSnap.docs?.map((doc) => ({
+    ...doc.data(),
+    cardId: doc.id,
+  }));
 };
 
 export const createDeck = async (username, title) => {
@@ -214,7 +217,8 @@ export const getRealTimeCardList = (deckId, setCardList) => {
 };
 
 export const getRealTimeHeart = (deckUid, deckId, setMyHeart) => {
-  const { uid } = auth.currentUser;
+  const uid = auth.currentUser?.uid;
+  if (!uid) return;
   const userRef = doc(db, "users", deckUid);
   const deckRef = doc(userRef, "decks", deckId);
   const heartRef = doc(deckRef, "hearts", uid);

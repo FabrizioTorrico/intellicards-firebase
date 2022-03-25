@@ -42,7 +42,7 @@ export const AuthProvider = ({ children }) => {
     });
   }, []);
 
-  function PageToRender() {
+  /* function PageToRender() {
     if (!currentUserData) {
       return (
         <Layout home>
@@ -54,17 +54,17 @@ export const AuthProvider = ({ children }) => {
         </Layout>
       );
     } else return children;
-  }
+  } */
 
-  /* function PageToRender() {
-    if (!currentUserData && currentUser)
+  function PageToRender() {
+    if (!currentUserData && currentUser && !loading)
       return (
         <Layout>
           <CompleteLogin />
         </Layout>
       );
     return children;
-  } */
+  }
 
   return (
     <AuthContext.Provider

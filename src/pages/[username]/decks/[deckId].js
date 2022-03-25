@@ -16,6 +16,7 @@ import PlayCard from "../../../components/play/PlayCard";
 
 export default function DeckId({ deckProps }) {
   const { deckData, deckCards, deckUid } = JSON.parse(deckProps);
+  console.log({ deckData, deckCards, deckUid });
   const { currentUser } = useAuth();
   const [admin, setAdmin] = useState(false);
   const { play, canPlay } = usePlay();
@@ -28,7 +29,7 @@ export default function DeckId({ deckProps }) {
   return play && canPlay ? (
     <PlayCard deckCards={shuffledCards} deckData={deckData} />
   ) : (
-    <Layout>
+    <Layout priv>
       <DeckHeader deckData={deckData} deckUid={deckUid} admin={admin} />
       <CardList deckCards={deckCards} deckId={deckData.deckId} admin={admin} />
     </Layout>
@@ -43,15 +44,14 @@ export const getStaticPaths = async () => {
 
 export const getStaticProps = async ({ params }) => {
   const { username, deckId } = params;
-  console.log("params: ", username, deckId);
+
   const uid = await getUidWithUsername(username);
   const deckData = await getDeckData(uid, deckId);
   const deckCards = await getDeckCards(uid, deckId);
-  const deckUid = await getUidWithUsername(deckData.username);
 
   return {
     props: {
-      deckProps: JSON.stringify({ deckData, deckCards, deckUid }) || null,
+      deckProps: JSON.stringify({ deckData, deckCards, deckUid: uid }) || null,
     },
   };
 };

@@ -20,6 +20,7 @@ import {
 import HeartButton from "../HeartButton";
 import { useState, useEffect } from "react";
 import usePlay from "../play/PlayContext";
+import { useAuth } from "../../firebase/auth";
 
 function DeckStats({ deckUid, deckId, heart_count }) {
   const { setPlay } = usePlay();
