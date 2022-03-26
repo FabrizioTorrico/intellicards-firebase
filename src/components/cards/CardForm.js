@@ -87,7 +87,7 @@ export default function CardForm() {
         <TextInput
           {...register("front", {
             required: "front is required",
-            maxLength: { value: 2000, message: "Max length is 2000 char" },
+            maxLength: { value: 1500, message: "Max length is 1500 char" },
           })}
           errors={errors}
           label={isOpen ? "Front" : "Create New Card"}
@@ -101,7 +101,7 @@ export default function CardForm() {
             <TextInput
               {...register("back", {
                 required: "back is required",
-                maxLength: { value: 2000, message: "Max length is 2000 char" },
+                maxLength: { value: 1500, message: "Max length is 1500 char" },
               })}
               errors={errors}
               label="Back"

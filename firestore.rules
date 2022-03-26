@@ -2,8 +2,75 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
     match /{document=**} {
-      allow read, write//: if
-          //request.time < timestamp.date(2022, 3, 20);
+      // allow read, write: if true
+      function canCreateUser(userId) {
+        let isOwner = request.auth.uid == userId;
+        let username = request.resource.data.username;
+        let hasUsername = existsAfter(/databases/$(database)/documents/usernames/$(username));
+        
+        return isOwner && hasUsername;
+      }
+      function canCreateUsername(username) {
+        // chequea el uid del usuario y el uid de la data a modificar
+        let isOwner = request.auth.uid == request.resource.data.uid;
+        let isValidLength = username.size() >= 3 && username.size() <= 20;
+        let isValidUserDoc = getAfter(/databases/$(database)/documents/users/$(request.auth.uid)).data.username == username;
+        
+        return isOwner && isValidLength && isValidUserDoc;     
+      }
+      function canCreateDeck(userId) {
+        let isOwner = request.auth.uid == userId;
+        let isNow = request.time == request.resource.data.created_at;
+        let isValidContent = request.resource.data.title.size() <= 80 && request.resource.data.heart_count == 0;
+        let username = get(/databases/$(database)/documents/users/$(request.auth.uid)).data.username;
+        let usernameMatches = username == request.resource.data.username;
+
+      	return isOwner && isNow && isValidContent && usernameMatches;
+      }
+      function canCreateCard(userId){
+        let isOwner = request.auth.uid == userId;
+        let isValidContent = request.resource.data.front.size() <= 1500 && request.resource.data.back.size() <= 1500;
+        
+        return isOwner && isValidContent
+      }
+      function canIncrementHearts(userId, deckId) {
+		    let hasValidFields = request.resource.data.diff(resource.data).affectedKeys().hasOnly(['heart_count']);
+        let currentUser = request.auth.uid;
+		    let heartDocExistsAfter = existsAfter(/databases/$(database)/documents/users/$(userId)/decks/$(deckId)/hearts/$(currentUser));
+        let heartDocExists = exists(/databases/$(database)/documents/users/$(userId)/decks/$(deckId)/hearts/$(currentUser));
+				
+        let heartDocAdded= !heartDocExists && heartDocExistsAfter;
+        let heartDocRemoved = heartDocExists && !heartDocExistsAfter;
+
+        
+        let countChange = request.resource.data.heart_count - resource.data.heart_count;
+        let validChange = countChange == 1 || countChange == -1;
+
+        return hasValidFields && validChange && ( countChange == 1 ? heartDocAdded : heartDocRemoved );
+      }
+      
+      match /users/{userId} {
+        allow read;
+        allow create: if canCreateUser(userId);
+      }
+      match /usernames/{usernameId} {
+        allow read;
+        allow create: if canCreateUsername(usernameId);
+      }
+
+      match /users/{userId}/decks/{deckId} {
+        allow read;
+        allow create: if canCreateDeck(userId); 
+        // allow update: if canUpdatePost(userId) || canIncrementHearts(userId, postId);
+        allow update: if canIncrementHearts(userId, deckId);
+        allow delete: if request.auth.uid == userId;
+
+        match /cards/{cardId}{
+          allow read;
+          allow create: if canCreateCard(userId); 
+          allow delete: if request.auth.uid == userId;
+        }
+      }
     }
   }
 }

@@ -74,8 +74,8 @@ export default function CompleteLogin() {
       setError("username", { message: "min length is 3" });
       return;
     }
-    if (value.length > 15) {
-      setError("username", { message: "max length is 15" });
+    if (value.length > 20) {
+      setError("username", { message: "max length is 20" });
       return;
     }
     clearErrors("username");
