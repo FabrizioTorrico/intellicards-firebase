@@ -17,20 +17,19 @@ import Divider from "../Divider";
 import styles from "../../styles/Play.module.scss";
 import PlayForm from "./PlayForm";
 
-export default function CardPlay({ deckCards, deckData }) {
-  const { setPlay } = usePlay();
+export default function CardPlay({ cards, deckData }) {
+  const { setPlayActive } = usePlay();
   const [finished, setFinished] = useState(false);
   const [cardIndex, setCardIndex] = useState(0);
   const [showBack, setShowBack] = useState(false);
-  if (!deckCards) return;
 
   function handleFlip() {
     setShowBack(!showBack);
   }
 
   function handleIndex() {
-    if (cardIndex < deckCards.length - 1) setCardIndex(cardIndex + 1);
-    else setPlay(false); /* setFinished(true); */
+    if (cardIndex < cards.length - 1) setCardIndex(cardIndex + 1);
+    else setPlayActive(false); /* setFinished(true); */
   }
   console.log(cardIndex);
   return (
@@ -40,7 +39,7 @@ export default function CardPlay({ deckCards, deckData }) {
           size="40px"
           bg="white"
           color="gray.900"
-          onClick={() => setPlay(false)}
+          onClick={() => setPlayActive(false)}
           _hover={{ cursor: "pointer" }}
         >
           <CloseIcon />
@@ -58,7 +57,7 @@ export default function CardPlay({ deckCards, deckData }) {
             }`}
           >
             <Box className={`${styles["card"]} ${styles["front"]}`}>
-              <MarkDown>{deckCards[cardIndex].front}</MarkDown>
+              <MarkDown>{cards[cardIndex].front}</MarkDown>
               <Divider my={4} />
               <Button
                 textAlign={"center"}
@@ -69,7 +68,7 @@ export default function CardPlay({ deckCards, deckData }) {
               </Button>
             </Box>
             <Box className={`${styles["card"]} ${styles["back"]}`}>
-              <MarkDown>{deckCards[cardIndex].back}</MarkDown>
+              <MarkDown>{cards[cardIndex].back}</MarkDown>
               <Divider my={4} />
               <Flex gap={"20px"}>
                 <Button rightIcon={<ArrowBackIcon />} onClick={handleFlip}>

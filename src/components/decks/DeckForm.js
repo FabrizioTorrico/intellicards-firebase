@@ -22,11 +22,6 @@ export default function DeckForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const re = /[^a-zñ0-9_.+-=?/(/)]/;
-    if (re.test(deckName)) {
-      setError("Sorry, your username contains invalid characters");
-      return;
-    }
     if (deckName.length > 80) {
       setError("Max length is 80 char");
       return;

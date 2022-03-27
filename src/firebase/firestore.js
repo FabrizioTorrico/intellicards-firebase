@@ -83,6 +83,7 @@ export const getDeckData = async (uid, deckId) => {
   const userRef = doc(db, "users", uid);
   const deckRef = doc(userRef, "decks", deckId);
   const deckSnap = await getDoc(deckRef);
+  if (!deckSnap.exists()) return;
   const deckData = { ...deckSnap.data(), deckId: deckSnap.id };
 
   return deckData;

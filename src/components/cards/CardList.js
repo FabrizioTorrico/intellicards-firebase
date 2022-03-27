@@ -2,19 +2,7 @@ import Container from "../../hocs/Container";
 import { Text, Stack, Heading } from "@chakra-ui/react";
 import CardPreview from "./CardPreview";
 import CardForm from "./CardForm";
-import { useState, useEffect } from "react";
-import { getRealTimeCardList } from "../../firebase/firestore";
-
-export default function CardList({ deckCards, deckId, admin }) {
-  console.log("cardlist rendered");
-  const [cards, setCards] = useState(deckCards);
-
-  useEffect(() => {
-    if (admin) {
-      return getRealTimeCardList(deckId, setCards);
-    }
-  }, [admin]);
-
+export default function CardList({ cards, deckId, admin }) {
   function renderDecks() {
     if (!cards || (Array.isArray(cards) && cards.length === 0))
       return (

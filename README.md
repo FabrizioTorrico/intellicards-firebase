@@ -14,6 +14,7 @@
 - [ ] Customization on cards and design
 - [ ] Get statistics from cards played
 - [ ] Search for deck / users
+- [ ] Images directory
 - [ ] Social Links
 - [ ] Tutorial
 

@@ -13,30 +13,54 @@ import { Stack, Heading, Container } from "@chakra-ui/react";
 import CardForm from "../../../components/cards/CardForm";
 import usePlay from "../../../components/play/PlayContext";
 import PlayCard from "../../../components/play/PlayCard";
+import { getRealTimeCardList } from "../../../firebase/firestore";
 
 export default function DeckId({ deckProps }) {
   const { deckData, deckCards, deckUid } = JSON.parse(deckProps);
-  console.log({ deckData, deckCards, deckUid });
   const { currentUser } = useAuth();
   const [admin, setAdmin] = useState(false);
-  const { play, canPlay } = usePlay();
-  const shuffledCards = deckCards?.sort((a, b) => 0.5 - Math.random());
-
+  const { playActive } = usePlay();
+  const [cards, setCards] = useState(deckCards);
+  const shuffledCards = cards?.sort((a, b) => 0.5 - Math.random());
   useEffect(() => {
     setAdmin(deckUid === currentUser?.uid);
+    if (admin) {
+      return getRealTimeCardList(deckData.deckId, setCards);
+    }
   }, []);
 
-  return play ? (
-    <PlayCard deckCards={shuffledCards} deckData={deckData} />
+  return playActive && cards.length > 0 ? (
+    <PlayCard cards={shuffledCards} deckData={deckData} />
   ) : (
     <Layout priv>
       <DeckHeader deckData={deckData} deckUid={deckUid} admin={admin} />
-      <CardList deckCards={deckCards} deckId={deckData.deckId} admin={admin} />
+      <CardList cards={cards} admin={admin} />
     </Layout>
   );
 }
 
-export const getStaticPaths = async () => {
+export const getServerSideProps = async ({ query }) => {
+  const { username, deckId } = query;
+  const deckUid = await getUidWithUsername(username);
+  if (!deckUid)
+    return {
+      notFound: true,
+    };
+  const deckData = await getDeckData(deckUid, deckId);
+  if (!deckData)
+    return {
+      notFound: true,
+    };
+  const deckCards = await getDeckCards(deckUid, deckId);
+
+  return {
+    props: {
+      deckProps: JSON.stringify({ deckData, deckCards, deckUid }) || null,
+    },
+  };
+};
+
+/* export const getStaticPaths = async () => {
   const paths = await getUserDeckPaths();
   console.log("paths: ", paths);
   return { paths, fallback: false };
@@ -54,4 +78,4 @@ export const getStaticProps = async ({ params }) => {
       deckProps: JSON.stringify({ deckData, deckCards, deckUid }) || null,
     },
   };
-};
+}; */

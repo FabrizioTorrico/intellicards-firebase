@@ -2,10 +2,10 @@ import { createContext, useContext, useState } from "react";
 const PlayContext = createContext(null);
 
 export const PlayProvider = ({ children }) => {
-  const [play, setPlay] = useState(false);
+  const [playActive, setPlayActive] = useState(false);
   const [canPlay, setCanPlay] = useState(false);
   return (
-    <PlayContext.Provider value={{ play, setPlay, canPlay, setCanPlay }}>
+    <PlayContext.Provider value={{ playActive, setPlayActive, canPlay, setCanPlay }}>
       {children}
     </PlayContext.Provider>
   );

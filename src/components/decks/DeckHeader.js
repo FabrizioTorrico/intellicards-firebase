@@ -23,7 +23,7 @@ import usePlay from "../play/PlayContext";
 import { useAuth } from "../../firebase/auth";
 
 function DeckStats({ deckUid, deckId, heart_count }) {
-  const { setPlay } = usePlay();
+  const { setPlayActive } = usePlay();
   const [myHeart, setMyHeart] = useState(null);
   useEffect(() => {
     return getRealTimeHeart(deckUid, deckId, setMyHeart);
@@ -32,13 +32,18 @@ function DeckStats({ deckUid, deckId, heart_count }) {
   return (
     <Grid templateColumns="1fr 1fr" fontSize={"xl"} gap={6}>
       <GridItem>
-        <HeartButton deckUid={deckUid} deckId={deckId} myHeart={myHeart} heartCount={heart_count}/>
+        <HeartButton
+          deckUid={deckUid}
+          deckId={deckId}
+          myHeart={myHeart}
+          heartCount={heart_count}
+        />
       </GridItem>
       <GridItem>
         <Button
           colorScheme="main.yellow"
           width="100%"
-          onClick={() => setPlay(true)}
+          onClick={() => setPlayActive(true)}
         >
           Play now
         </Button>

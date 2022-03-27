@@ -26,4 +26,5 @@ if (process.env.NODE_ENV === "development") {
   connectAuthEmulator(auth, "http://localhost:9099");
   connectStorageEmulator(storage, "localhost", 9199);
 }
+
 export { db, auth, storage };

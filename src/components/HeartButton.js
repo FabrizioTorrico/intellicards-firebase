@@ -17,7 +17,7 @@ export default function HeartButton({ myHeart, deckUid, deckId, heartCount }) {
       leftIcon={<IoHeartDislike size="24px" />}
       onClick={() => removeHeart(deckUid, deckId)}
     >
-      Remove Heart {heartCount}
+      {heartCount} Remove Heart
     </Button>
   ) : (
     <Button
@@ -26,7 +26,7 @@ export default function HeartButton({ myHeart, deckUid, deckId, heartCount }) {
       leftIcon={<IoHeartOutline size="24px" />}
       onClick={() => addHeart(deckUid, deckId)}
     >
-      Give Heart
+      {heartCount} Give Heart
     </Button>
   );
 }
