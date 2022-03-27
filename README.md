@@ -1,3 +1,27 @@
+### TODO
+
+- [x] Login
+- [x] Sign Up
+- [x] Render conditionally on Auth
+- [x] Create Decks
+- [x] Create Cards
+- [x] Play Decks
+- [x] Responsive
+- [ ] Shared decks
+- [ ] Blog
+- [ ] About
+- [ ] Help
+- [ ] Customization on cards and design
+- [ ] Get statistics from cards played
+- [ ] Search for deck / users
+- [ ] Social Links
+- [ ] Tutorial
+
+### TOFIX
+
+- [ ] Images on Play cards
+- [ ] Overall design theme
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
