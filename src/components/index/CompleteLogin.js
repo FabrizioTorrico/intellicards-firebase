@@ -19,7 +19,7 @@ import Container from "../../hocs/Container";
 import { createFirestoreUser, usernameExists } from "../../firebase/firestore";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-
+import toast from "react-hot-toast";
 /**
  * Completes the user information with username and biography
  */
@@ -48,16 +48,21 @@ export default function CompleteLogin() {
       photo_URL: currentUser.photoURL,
       name: currentUser.displayName,
     };
-    console.log("data on CompleteLogin: ", data);
     if (await usernameExists(data.username)) {
-      console.log("username exists");
       setError("username", { message: "username already exists" });
       return;
     }
-    console.log("passed");
     await createFirestoreUser(currentUser.uid, data).then(async () => {
       router.push(`/${data.username}`);
-      await refreshUserData(currentUser.uid);
+      toast.promise(
+        refreshUserData(currentUser.uid),
+        {
+          success: <b>User loaded!</b>,
+          loading: <b>Loading user...</b>,
+          error: <b>Could not load user.</b>,
+        },
+        { id: "loadingUser" }
+      );
     });
   };
 

@@ -8,7 +8,7 @@ import { addHeart, removeHeart } from "../firebase/firestore";
  * @property {String} deckUid uses the deckUid for changes on firebase
  * @property {String} deckId uses the deckUid for changes on firebase
  */
-export default function HeartButton({ myHeart, deckUid, deckId }) {
+export default function HeartButton({ myHeart, deckUid, deckId, heartCount }) {
   if (!myHeart) return <div>you are not signed in!</div>;
   return myHeart.exists() ? (
     <Button
@@ -17,7 +17,7 @@ export default function HeartButton({ myHeart, deckUid, deckId }) {
       leftIcon={<IoHeartDislike size="24px" />}
       onClick={() => removeHeart(deckUid, deckId)}
     >
-      Remove Heart
+      Remove Heart {heartCount}
     </Button>
   ) : (
     <Button

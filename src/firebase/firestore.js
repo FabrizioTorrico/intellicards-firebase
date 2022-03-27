@@ -20,7 +20,6 @@ import kebabcase from "lodash.kebabcase";
 
 export async function createFirestoreUser(uid, data) {
   data.deck_count = 0;
-  data.confirmed = false;
   data.connection_count = 0;
   const userRef = doc(db, "users", uid);
   const usernameRef = doc(db, "usernames", data.username);
@@ -114,7 +113,7 @@ export const createDeck = async (username, title) => {
     heart_count: 0,
     published: false,
     created_at: serverTimestamp(),
-    updated_at: serverTimestamp(),
+    // updated_at: serverTimestamp(),
   };
 
   const batch = writeBatch(db);

@@ -29,12 +29,12 @@ export default function CardPlay({ deckCards, deckData }) {
   }
 
   function handleIndex() {
-    if (cardIndex < deckCards.length) setCardIndex(cardIndex + 1);
-    else setFinished(true);
+    if (cardIndex < deckCards.length - 1) setCardIndex(cardIndex + 1);
+    else setPlay(false); /* setFinished(true); */
   }
   console.log(cardIndex);
   return (
-    <Box minH={"100vh"} bg={"gray.300"} p={6}>
+    <Box minH={"100vh"} bg={"main.500"} p={6}>
       <Flex gap={3} alignItems={"center"} mb={"3rem"}>
         <Circle
           size="40px"

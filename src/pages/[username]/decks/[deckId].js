@@ -26,7 +26,7 @@ export default function DeckId({ deckProps }) {
     setAdmin(deckUid === currentUser?.uid);
   }, []);
 
-  return play && canPlay ? (
+  return play ? (
     <PlayCard deckCards={shuffledCards} deckData={deckData} />
   ) : (
     <Layout priv>
@@ -45,13 +45,13 @@ export const getStaticPaths = async () => {
 export const getStaticProps = async ({ params }) => {
   const { username, deckId } = params;
 
-  const uid = await getUidWithUsername(username);
-  const deckData = await getDeckData(uid, deckId);
-  const deckCards = await getDeckCards(uid, deckId);
+  const deckUid = await getUidWithUsername(username);
+  const deckData = await getDeckData(deckUid, deckId);
+  const deckCards = await getDeckCards(deckUid, deckId);
 
   return {
     props: {
-      deckProps: JSON.stringify({ deckData, deckCards, deckUid: uid }) || null,
+      deckProps: JSON.stringify({ deckData, deckCards, deckUid }) || null,
     },
   };
 };

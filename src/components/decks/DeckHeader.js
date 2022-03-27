@@ -32,17 +32,12 @@ function DeckStats({ deckUid, deckId, heart_count }) {
   return (
     <Grid templateColumns="1fr 1fr" fontSize={"xl"} gap={6}>
       <GridItem>
-        <HeartButton deckUid={deckUid} deckId={deckId} myHeart={myHeart} />
+        <HeartButton deckUid={deckUid} deckId={deckId} myHeart={myHeart} heartCount={heart_count}/>
       </GridItem>
-      <GridItem alignSelf="center" justifySelf="center">
-        <Text>{heart_count} hearts</Text>
-      </GridItem>
-      <GridItem colSpan={2}>
+      <GridItem>
         <Button
           colorScheme="main.yellow"
           width="100%"
-          height="3rem"
-          rounded="full"
           onClick={() => setPlay(true)}
         >
           Play now

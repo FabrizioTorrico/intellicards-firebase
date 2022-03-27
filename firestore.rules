@@ -2,7 +2,11 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
     match /{document=**} {
-      // allow read, write: if true
+      //required for collection group
+      match /decks/{deckId} {
+        allow read;
+      }
+
       function canCreateUser(userId) {
         let isOwner = request.auth.uid == userId;
         let username = request.resource.data.username;
@@ -33,6 +37,15 @@ service cloud.firestore {
         
         return isOwner && isValidContent
       }
+      function canUpdateDeckCount(userId){
+        let isOwner = request.auth.uid == userId;
+        let hasValidFields = request.resource.data.diff(resource.data).affectedKeys().hasOnly(['deck_count']);
+
+        let countChange = request.resource.data.deck_count - resource.data.deck_count;
+        let validChange = countChange == 1 || countChange == -1;
+
+        return isOwner && validChange && hasValidFields
+      }
       function canIncrementHearts(userId, deckId) {
 		    let hasValidFields = request.resource.data.diff(resource.data).affectedKeys().hasOnly(['heart_count']);
         let currentUser = request.auth.uid;
@@ -49,27 +62,32 @@ service cloud.firestore {
         return hasValidFields && validChange && ( countChange == 1 ? heartDocAdded : heartDocRemoved );
       }
       
-      match /users/{userId} {
-        allow read;
-        allow create: if canCreateUser(userId);
-      }
       match /usernames/{usernameId} {
         allow read;
         allow create: if canCreateUsername(usernameId);
       }
 
+      match /users/{userId} {
+        allow read;
+        allow create: if canCreateUser(userId);
+        allow update: if canUpdateDeckCount(userId);
+      }
+
       match /users/{userId}/decks/{deckId} {
         allow read;
-        allow create: if canCreateDeck(userId); 
-        // allow update: if canUpdatePost(userId) || canIncrementHearts(userId, postId);
-        allow update: if canIncrementHearts(userId, deckId);
-        allow delete: if request.auth.uid == userId;
+        allow create: if canCreateDeck(userId);
+        allow update: if canIncrementHearts(userId, deckId)
+      }
 
-        match /cards/{cardId}{
-          allow read;
-          allow create: if canCreateCard(userId); 
-          allow delete: if request.auth.uid == userId;
-        }
+      match /users/{userId}/decks/{deckId}/cards/{cardId} {
+        allow read;
+        allow create: if canCreateCard(userId)
+        allow delete: if request.auth.uid == userId;
+      }
+
+      match /users/{userId}/decks/{deckId}/hearts/{heartId} {
+        allow read;
+        allow write: if request.auth.uid == heartId;
       }
     }
   }

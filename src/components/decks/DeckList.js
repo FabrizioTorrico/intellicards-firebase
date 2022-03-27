@@ -6,12 +6,10 @@ import { useState, useEffect } from "react";
 import { getRealTimeDeckList } from "../../firebase/firestore";
 
 export default function DeckList({ userDecks, admin }) {
-  console.log("decklist rendered");
   const [deckList, setDeckList] = useState(userDecks);
 
   useEffect(() => {
     if (admin) {
-      console.log("realtime");
       return getRealTimeDeckList(setDeckList);
     }
   }, [admin]);
