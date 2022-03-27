@@ -14,6 +14,7 @@ import DisconnectedPage from "../components/index/DisconnectedPage";
  */
 export default function Layout({ title, description, children, home, priv }) {
   const { currentUser } = useAuth();
+  console.log(currentUser && priv);
   return (
     <>
       <Head>
@@ -34,7 +35,7 @@ export default function Layout({ title, description, children, home, priv }) {
           minHeight: "60vh",
         }}
       >
-        {currentUser ? children : <DisconnectedPage />}
+        {priv ? currentUser ? children : <DisconnectedPage /> : children}
       </main>
       <Footer />
     </>
