@@ -28,7 +28,25 @@ export default function UserPage({ userProps }) {
   );
 }
 
-export const getStaticPaths = async () => {
+export const getServerSideProps = async ({ query }) => {
+  const { username } = query;
+  const uid = await getUidWithUsername(username);
+
+  if (!uid) {
+    return {
+      notFound: true,
+    };
+  }
+  const userData = await getUserData(uid);
+  const userDecks = await getUserDecks(uid);
+
+  return {
+    props: {
+      userProps: JSON.stringify({ userData, userDecks, userId: uid }) || null,
+    },
+  };
+};
+/* export const getStaticPaths = async () => {
   const paths = await getUsernamePaths();
   return { paths, fallback: false };
 };
@@ -43,4 +61,4 @@ export const getStaticProps = async (context) => {
       userProps: JSON.stringify({ userData, userDecks, userId: uid }) || null,
     },
   };
-};
+}; */

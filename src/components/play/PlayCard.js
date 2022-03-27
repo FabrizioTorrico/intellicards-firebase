@@ -18,11 +18,11 @@ import styles from "../../styles/Play.module.scss";
 import PlayForm from "./PlayForm";
 
 export default function CardPlay({ deckCards, deckData }) {
-  if (!deckCards) return;
   const { setPlay } = usePlay();
   const [finished, setFinished] = useState(false);
   const [cardIndex, setCardIndex] = useState(0);
   const [showBack, setShowBack] = useState(false);
+  if (!deckCards) return;
 
   function handleFlip() {
     setShowBack(!showBack);
