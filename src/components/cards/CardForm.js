@@ -18,7 +18,6 @@ import {
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import FocusLock from "react-focus-lock";
-import CardContext from "./CardContext";
 import Divider from "../Divider";
 import ImageUploader from "../ImageUploader.js";
 import toast from "react-hot-toast";

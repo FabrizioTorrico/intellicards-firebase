@@ -1,16 +1,15 @@
-import Container from "../../hocs/Container";
-import { Text, Stack, Heading, Box } from "@chakra-ui/react";
-import CardPreview from "./CardPreview";
-import CardForm from "./CardForm";
-import { useEffect, useRef, useState } from "react";
+import { Box, Flex } from '@chakra-ui/react'
+import CardPreview from './CardPreview'
+import { useCard } from './CardContext'
 
-export default function CardList({ cards, deckId, admin }) {
-  const [top, setTop] = useState(0);
-  useEffect(() => {
-    setTop(document.querySelector("#navbar").clientHeight);
-  }, []);
+export default function CardList({ deckId, admin }) {
+  const { cards } = useCard()
+  // const [top, setTop] = useState(0);
+  // useEffect(() => {
+  //   setTop(document.querySelector("#navbar").clientHeight);
+  // }, []);
 
-  function renderCards() {
+  /* function renderCards() {
     // if (!cards || (Array.isArray(cards) && cards.length === 0))
     //   return (
     //     <Text color="gray.600" fontSize={{ base: "lg", md: "2xl" }}>
@@ -18,27 +17,37 @@ export default function CardList({ cards, deckId, admin }) {
     //     </Text>
     //   );
 
-    return cards.map((card, i) => (
-      <CardPreview key={i} deckId={deckId} cardData={card} admin={admin} />
+    return 
     ));
   }
-
+ */
   return (
     <Box
-      maxW={{ base: "md", md: "2xl" }}
       position="fixed"
-      top={top + "px"}
-      left={0}
+      // h={"100vh - 64px"}
+      // top={top + "px"}
+      // left={0}
       bg="white"
       zIndex={50}
-      py={8}
-      px={12}
+      w={80}
+      h={'85vh'}
+      overflow={'auto'}
     >
       {/* <Heading fontWeight={600} fontSize={"3xl"} lineHeight={"110%"}>
         Cards
       </Heading> */}
       {/* {admin && <CardForm />} */}
-      {renderCards()}
+      <Flex py={8} px={6} gap={6} direction={'column'}>
+        {cards.map((card, i) => (
+          <CardPreview
+            key={i}
+            index={i}
+            deckId={deckId}
+            cardData={card}
+            admin={admin}
+          />
+        ))}
+      </Flex>
     </Box>
-  );
+  )
 }

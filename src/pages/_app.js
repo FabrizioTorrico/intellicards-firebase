@@ -5,6 +5,7 @@ import "aos/dist/aos.css";
 import { AuthProvider } from "../firebase/auth";
 import { Toaster } from "react-hot-toast";
 import { PlayProvider } from "../components/play/PlayContext";
+import { CardProvider } from "../components/cards/CardContext";
 
 // Setup for chakra ui
 const theme = extendTheme({
@@ -42,8 +43,10 @@ function MyApp({ Component, pageProps }) {
     <ChakraProvider theme={theme}>
       <AuthProvider>
         <PlayProvider>
-          <Component {...pageProps} />
-          <Toaster />
+          <CardProvider>
+            <Component {...pageProps} />
+            <Toaster />
+          </CardProvider>
         </PlayProvider>
       </AuthProvider>
     </ChakraProvider>

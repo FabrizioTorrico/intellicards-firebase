@@ -16,7 +16,6 @@ import { useState } from "react";
 import { IoCamera } from "react-icons/io5";
 import { uploadImageToStorage } from "../firebase/storage";
 import { useContext } from "react";
-import CardContext from "./cards/CardContext";
 
 /**
  * reacts conditionally if there is a downloadURL, it allows uploading images and checking erros
