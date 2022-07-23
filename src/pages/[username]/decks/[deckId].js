@@ -34,8 +34,8 @@ export default function DeckId({ deckProps }) {
     <PlayCard cards={shuffledCards} deckData={deckData} />
   ) : (
     <Layout priv>
-      <DeckHeader deckData={deckData} deckUid={deckUid} admin={admin} />
       <CardList cards={cards} admin={admin} deckId={deckData.deckId} />
+      <DeckHeader deckData={deckData} deckUid={deckUid} admin={admin} />
     </Layout>
   );
 }

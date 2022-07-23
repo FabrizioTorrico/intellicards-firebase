@@ -45,6 +45,7 @@ export default function CardForm() {
   const [cardEdit, setCardEdit] = useState({ front: "", back: "" });
   const frontRef = React.useRef();
   const { isOpen, onOpen, onClose } = useDisclosure();
+
   useOutsideClick({
     ref: frontRef,
     handler: () => {

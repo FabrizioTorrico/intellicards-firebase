@@ -55,16 +55,8 @@ export default function CardPreview({ cardData, deckId, admin }) {
               onClick={deleteHandler}
             />
           )}
-
-          <IconButton icon={<TriangleDownIcon />} onClick={onToggle} />
         </ButtonGroup>
       </Flex>
-      <Collapse in={isOpen} animateOpacity>
-        <Divider />
-        <Box p={{ base: 4, md: 8 }} gap={{ base: 4, md: 8 }}>
-          <MarkDown>{back}</MarkDown>
-        </Box>
-      </Collapse>
     </Box>
   );
 }

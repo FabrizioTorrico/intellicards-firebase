@@ -47,8 +47,9 @@ export default function NavBar({ home }) {
 
   return (
     <Box
+      id="navbar"
       py={3}
-      px={{ base: 6, md: 32 }}
+      px={{ base: 6, md: 16 }}
       w="100%"
       pos="fixed"
       bg="white"

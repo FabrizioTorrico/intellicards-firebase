@@ -8,9 +8,9 @@ import { useAuth } from "../firebase/auth";
 export default function Home() {
   const router = useRouter();
   const { currentUserData } = useAuth();
+
   useEffect(() => {
     if (currentUserData) {
-      console.log("rendered inex");
       toast.promise(
         router.push(`/${currentUserData.username}`),
         {
@@ -21,7 +21,8 @@ export default function Home() {
         { id: "loadingUser" }
       );
     }
-  }, []);
+  }, [currentUserData, router]);
+
   return (
     <Layout home>
       <DisconnectedPage />
