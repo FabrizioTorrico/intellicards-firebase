@@ -2,6 +2,7 @@ import Container from "../../hocs/Container";
 import { Text, Stack, Heading } from "@chakra-ui/react";
 import CardPreview from "./CardPreview";
 import CardForm from "./CardForm";
+
 export default function CardList({ cards, deckId, admin }) {
   function renderDecks() {
     if (!cards || (Array.isArray(cards) && cards.length === 0))

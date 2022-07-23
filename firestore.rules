@@ -2,7 +2,7 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
     match /{document=**} {
-      //required for collection group
+      // requerido para coleccion en grupo
       match /decks/{deckId} {
         allow read;
       }
@@ -14,6 +14,7 @@ service cloud.firestore {
         
         return isOwner && hasUsername;
       }
+
       function canCreateUsername(username) {
         // chequea el uid del usuario y el uid de la data a modificar
         let isOwner = request.auth.uid == request.resource.data.uid;
@@ -22,6 +23,7 @@ service cloud.firestore {
         
         return isOwner && isValidLength && isValidUserDoc;     
       }
+
       function canCreateDeck(userId) {
         let isOwner = request.auth.uid == userId;
         let isNow = request.time == request.resource.data.created_at;
@@ -31,12 +33,14 @@ service cloud.firestore {
 
       	return isOwner && isNow && isValidContent && usernameMatches;
       }
+
       function canCreateCard(userId){
         let isOwner = request.auth.uid == userId;
         let isValidContent = request.resource.data.front.size() <= 1500 && request.resource.data.back.size() <= 1500;
         
         return isOwner && isValidContent
       }
+      
       function canUpdateDeckCount(userId){
         let isOwner = request.auth.uid == userId;
         let hasValidFields = request.resource.data.diff(resource.data).affectedKeys().hasOnly(['deck_count']);
@@ -46,6 +50,7 @@ service cloud.firestore {
 
         return isOwner && validChange && hasValidFields
       }
+      
       function canIncrementHearts(userId, deckId) {
 		    let hasValidFields = request.resource.data.diff(resource.data).affectedKeys().hasOnly(['heart_count']);
         let currentUser = request.auth.uid;

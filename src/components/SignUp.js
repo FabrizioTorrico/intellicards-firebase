@@ -102,7 +102,11 @@ export default function Signup({ onClose }) {
           </HStack>
           <FormControl id="email" isInvalid={errors.email}>
             <FormLabel>Email address</FormLabel>
-            <Input {...register("email")} type="email" placeholder="e-mail" />
+            <Input
+              {...register("email")}
+              type="email"
+              placeholder="example@email.com"
+            />
             <FormErrorMessage>{errors.email?.message}</FormErrorMessage>
           </FormControl>
           <HStack>

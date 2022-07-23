@@ -21,10 +21,15 @@ const db = getFirestore();
 const storage = getStorage();
 const auth = getAuth();
 
+const EMULATORS_STARTED = "EMULATORS_STARTED";
 if (process.env.NODE_ENV === "development") {
-  connectFirestoreEmulator(db, "localhost", 8080);
-  connectAuthEmulator(auth, "http://localhost:9099");
-  connectStorageEmulator(storage, "localhost", 9199);
+  console.log("emulator");
+  if (!global[EMULATORS_STARTED]) {
+    global[EMULATORS_STARTED] = true;
+    connectFirestoreEmulator(db, "localhost", 8080);
+    connectAuthEmulator(auth, "http://localhost:9099");
+    connectStorageEmulator(storage, "localhost", 9199);
+  }
 }
 
 export { db, auth, storage };

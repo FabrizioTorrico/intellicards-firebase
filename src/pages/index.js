@@ -1,5 +1,5 @@
 import Layout from "../hocs/Layout";
-import DisconnectedPage from "../components/index/DisconnectedPage";
+import DisconnectedPage from "../components/Unauthenticated/DisconnectedPage";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/router";

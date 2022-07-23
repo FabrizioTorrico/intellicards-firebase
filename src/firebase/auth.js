@@ -12,8 +12,8 @@ import { auth } from "./index";
 import { getUserData } from "./firestore";
 import { useRouter } from "next/router";
 import Layout from "../hocs/Layout";
-import DisconnectedPage from "../components/index/DisconnectedPage";
-import CompleteLogin from "../components/index/CompleteLogin";
+import DisconnectedPage from "../components/Unauthenticated/DisconnectedPage";
+import CompleteLogin from "../components/Unauthenticated/CompleteLogin";
 import toast from "react-hot-toast";
 
 const AuthContext = createContext({});

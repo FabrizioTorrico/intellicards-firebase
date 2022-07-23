@@ -24,10 +24,6 @@ import toast from "react-hot-toast";
  * Completes the user information with username and biography
  */
 export default function CompleteLogin() {
-  window.scroll({
-    top: 0,
-    left: 0,
-  });
   const router = useRouter();
   const { currentUser, refreshUserData } = useAuth();
   const [username, setUsername] = useState("");
@@ -39,6 +35,13 @@ export default function CompleteLogin() {
     formState: { errors },
     handleSubmit,
   } = useForm();
+
+  useEffect(() => {
+    window.scroll({
+      top: 0,
+      left: 0,
+    });
+  }, []);
 
   const onSubmit = async (data) => {
     //in the ...data just is the bio

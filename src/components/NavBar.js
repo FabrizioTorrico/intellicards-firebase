@@ -52,7 +52,7 @@ export default function NavBar({ home }) {
       w="100%"
       pos="fixed"
       bg="white"
-      zIndex="9999"
+      zIndex="50"
       boxShadow={home ? "" : "lg"}
     >
       <Flex alignItems={"center"}>
@@ -68,10 +68,9 @@ export default function NavBar({ home }) {
 
         {isAuthenticated ? (
           <InputGroup mx="4rem">
-            <InputLeftElement
-              pointerEvents="none"
-              children={<Search2Icon color="main.600" />}
-            />
+            <InputLeftElement pointerEvents="none">
+              <Search2Icon color="main.600" />
+            </InputLeftElement>
             <Input type="search" placeholder="Search" />
           </InputGroup>
         ) : (

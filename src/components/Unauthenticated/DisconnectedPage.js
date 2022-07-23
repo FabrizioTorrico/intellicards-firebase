@@ -20,7 +20,7 @@ export default function DisconnectedPage({ loading }) {
     "Share and download summaries",
     "Pomodoro technique",
     "Communities for your subjects",
-    "Blog and comments for decks",
+    "Markdown on every card type",
   ];
 
   return (

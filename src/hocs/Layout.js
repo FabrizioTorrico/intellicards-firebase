@@ -2,7 +2,7 @@ import Head from "next/head";
 import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
 import { useAuth } from "../firebase/auth";
-import DisconnectedPage from "../components/index/DisconnectedPage";
+import DisconnectedPage from "../components/Unauthenticated/DisconnectedPage";
 
 /**
  * the children component with nav bar and footer
@@ -14,7 +14,7 @@ import DisconnectedPage from "../components/index/DisconnectedPage";
  */
 export default function Layout({ title, description, children, home, priv }) {
   const { currentUser } = useAuth();
-  console.log(currentUser && priv);
+
   return (
     <>
       <Head>

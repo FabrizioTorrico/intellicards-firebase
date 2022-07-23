@@ -17,9 +17,7 @@ import { deleteCard } from "../../firebase/firestore";
 import toast from "react-hot-toast";
 export default function CardPreview({ cardData, deckId, admin }) {
   const { front, back, type, cardId } = cardData;
-  console.log(cardData);
   const { isOpen, onToggle } = useDisclosure();
-
   const deleteHandler = () => {
     toast.promise(
       deleteCard(deckId, cardId),

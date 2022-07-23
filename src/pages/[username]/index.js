@@ -18,7 +18,7 @@ export default function UserPage({ userProps }) {
 
   useEffect(() => {
     setAdmin(userId === currentUser?.uid);
-  }, []);
+  }, [userId, currentUser?.uid]);
 
   return (
     <Layout priv>

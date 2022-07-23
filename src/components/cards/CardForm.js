@@ -25,7 +25,8 @@ import toast from "react-hot-toast";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import { createCard } from "../../firebase/firestore";
-const TextInput = React.forwardRef((props, ref) => {
+
+const TextInput = React.forwardRef(function TextInput(props, ref) {
   return (
     <FormControl id={props.id} isInvalid={props.errors[props.id]}>
       <Textarea

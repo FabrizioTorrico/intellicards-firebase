@@ -59,7 +59,7 @@ export const getUserDeckPaths = async () => {
 export const getUidWithUsername = async (username) => {
   const usernameRef = doc(db, "usernames", username);
   const usernameSnap = await getDoc(usernameRef);
-  const { uid } = usernameSnap.data();
+  const uid = usernameSnap.data()?.uid;
   return uid;
 };
 
@@ -140,11 +140,14 @@ export const createCard = async (deckQuery, cardData) => {
 
 export const deleteCard = async (deckId, cardId) => {
   const { uid } = auth.currentUser;
+  console.log(1);
   const userRef = doc(db, "users", uid);
+  console.log(2);
   const deckRef = doc(userRef, "decks", deckId);
+  console.log(3);
   const cardRef = doc(deckRef, "cards", cardId);
+  console.log(4);
 
-  console.log("here");
   await deleteDoc(cardRef);
 };
 
@@ -186,7 +189,6 @@ export const getRealTimeDeck = (deckUid, deckId, setDeck) => {
   const deckRef = doc(userRef, "decks", deckId);
 
   return onSnapshot(deckRef, (doc) => {
-    console.log("realtime deck: ", doc.data());
     setDeck({ ...doc.data(), deckId: doc.id });
   });
 };

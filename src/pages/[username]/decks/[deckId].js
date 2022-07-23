@@ -22,19 +22,20 @@ export default function DeckId({ deckProps }) {
   const { playActive } = usePlay();
   const [cards, setCards] = useState(deckCards);
   const shuffledCards = cards?.sort((a, b) => 0.5 - Math.random());
+
   useEffect(() => {
     setAdmin(deckUid === currentUser?.uid);
     if (admin) {
       return getRealTimeCardList(deckData.deckId, setCards);
     }
-  }, []);
+  }, [admin, currentUser?.uid, deckData.deckId, deckUid]);
 
   return playActive && cards.length > 0 ? (
     <PlayCard cards={shuffledCards} deckData={deckData} />
   ) : (
     <Layout priv>
       <DeckHeader deckData={deckData} deckUid={deckUid} admin={admin} />
-      <CardList cards={cards} admin={admin} />
+      <CardList cards={cards} admin={admin} deckId={deckData.deckId} />
     </Layout>
   );
 }

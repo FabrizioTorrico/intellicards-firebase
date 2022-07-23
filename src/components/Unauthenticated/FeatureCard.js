@@ -1,5 +1,6 @@
 import { Box, Flex, Center, Text } from "@chakra-ui/react";
 import { CheckIcon } from "@chakra-ui/icons";
+
 export default function FeatureCard({ text }) {
   return (
     <Flex

@@ -10,6 +10,7 @@ import { useState } from "react";
 import { useAuth } from "../../firebase/auth";
 import { createDeck } from "../../firebase/firestore";
 import toast from "react-hot-toast";
+
 export default function DeckForm() {
   const [deckName, setDeckName] = useState("");
   const [error, setError] = useState("");
@@ -22,8 +23,12 @@ export default function DeckForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (deckName.length < 2) {
+      setError("Min length is 2 characters");
+      return;
+    }
     if (deckName.length > 80) {
-      setError("Max length is 80 char");
+      setError("Max length is 80 characters");
       return;
     }
     toast.promise(createDeck(currentUserData.username, deckName), {
@@ -37,9 +42,11 @@ export default function DeckForm() {
   return (
     <Box border="2px" borderColor={"gray.300"} borderRadius="10px" p={4}>
       <form onSubmit={handleSubmit}>
-        <Flex alignItems={"center"}>
+        <Flex alignItems={"flex-start"} gap={8}>
           <FormControl isInvalid={error} flex={3}>
             <Input
+              focusBorderColor="white"
+              errorBorderColor="white"
               autoComplete="off"
               id={"deck"}
               placeholder={"My new deck name"}
@@ -49,7 +56,7 @@ export default function DeckForm() {
               value={deckName}
               onChange={onDeckNameChange}
             />
-            <FormErrorMessage>{error}</FormErrorMessage>
+            <FormErrorMessage pl={4}>{error}</FormErrorMessage>
           </FormControl>
           <Button type="submit" flex={1} colorScheme={"main"} heigh={"100%"}>
             Create New Deck
