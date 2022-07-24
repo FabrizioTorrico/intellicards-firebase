@@ -1,20 +1,28 @@
-import { ArrowBackIcon, ArrowForwardIcon } from '@chakra-ui/icons'
-import { Box, Button, Flex } from '@chakra-ui/react'
-import React from 'react'
+import { Box, Button, Flex, Spacer, Text } from '@chakra-ui/react'
+import React, { useState } from 'react'
 import Divider from '../Divider'
 import MarkDown from '../MarkDown'
 import { useCard } from './CardContext'
+import styles from '../../styles/Cards.module.scss'
+import { ArrowBackIcon, ArrowForwardIcon } from '@chakra-ui/icons'
 
 function CardContent() {
-  const { selectedCard, cards } = useCard()
+  const { cards, selectedCard, setSelectedCard } = useCard()
   const card = cards[selectedCard]
+  const [showBack, setShowBack] = useState(false)
+  const [triggerAnimation, setTriggerAnimation] = useState(false)
 
   function Arrow({ direction }) {
     return (
       <Flex
         h={12}
         w={8}
-        bg="gray.800"
+        bg={
+          (direction === 'left' && selectedCard === 0) ||
+          (direction === 'right' && selectedCard === cards.length - 1)
+            ? 'gray.500'
+            : 'gray.800'
+        }
         alignItems="center"
         justifyContent="center"
         position="absolute"
@@ -26,6 +34,17 @@ function CardContent() {
         opacity={0.7}
         zIndex={40}
         cursor="pointer"
+        onClick={() => {
+          if (direction === 'left') {
+            const newPos = selectedCard - 1
+            if (newPos < 0) return
+            setSelectedCard(newPos)
+          } else {
+            const newPos = selectedCard + 1
+            if (newPos > cards.length - 1) return
+            setSelectedCard(newPos)
+          }
+        }}
       >
         {direction === 'left' ? (
           <ArrowBackIcon w={4} h={4} color="white" />
@@ -35,18 +54,49 @@ function CardContent() {
       </Flex>
     )
   }
+
   return (
-    <Box ml={80} h="85vh" position="relative">
+    <>
       <Arrow direction="left" />
       <Arrow direction="right" />
-      <MarkDown p={24} h="86%">
-        {card?.front}
-      </MarkDown>
+      <Box
+        py={16}
+        px={24}
+        h="86%"
+        className={triggerAnimation ? styles.fade_in : ''}
+        onAnimationEnd={() => setTriggerAnimation(false)}
+        overflow={'auto'}
+      >
+        <MarkDown>{showBack ? card?.back : card?.front}</MarkDown>
+      </Box>
       <Divider width="100%" borderWidth="2px" />
-      <Flex h="14%" ml={8} alignItems="center">
-        <Button colorScheme="main">Show answer</Button>
+      <Flex h="14%" mx={8} alignItems="center">
+        <Button
+          colorScheme="main"
+          onClick={() => {
+            if (!triggerAnimation) {
+              setShowBack((state) => !state)
+              setTriggerAnimation(true)
+            }
+          }}
+        >
+          {showBack ? 'Show Front' : 'Show answer'}
+        </Button>
+        <Spacer />
+        {showBack && (
+          <Flex
+            alignItems={'center'}
+            gap={2}
+            className={triggerAnimation ? styles.fade_in : ''}
+          >
+            <Text>Do you know the answer ? </Text>
+            <Button colorScreme={'green'}>Yes</Button>
+            <Button colorScreme={'gray'}>Almost</Button>
+            <Button colorScreme={'red'}>No</Button>
+          </Flex>
+        )}
       </Flex>
-    </Box>
+    </>
   )
 }
 

@@ -8,17 +8,19 @@ import {
 } from '../../../firebase/firestore'
 import { useAuth } from '../../../firebase/auth'
 import { useEffect, useState } from 'react'
-import usePlay from '../../../components/play/PlayContext'
-import PlayCard from '../../../components/play/PlayCard'
+/* import usePlay from '../../../components/play/PlayContext'
+import PlayCard from '../../../components/play/PlayCard' */
 import CardContent from '../../../components/cards/CardContent'
+import CardForm from '../../../components/cards/CardForm'
 import { useCard } from '../../../components/cards/CardContext'
+
+import { Box } from '@chakra-ui/layout'
 
 export default function DeckId({ deckProps }) {
   const { deckData, deckCards, deckUid } = JSON.parse(deckProps)
-  const { cards, setCards } = useCard()
+  const { setCards, createCard } = useCard()
   const { currentUser } = useAuth()
   const [admin, setAdmin] = useState(false)
-  const { playActive } = usePlay()
   // const shuffledCards = cards?.sort((a, b) => 0.5 - Math.random());
 
   useEffect(() => {
@@ -32,12 +34,12 @@ export default function DeckId({ deckProps }) {
     }
   }, [admin, currentUser?.uid, deckData.deckId, deckUid])
 
-  return playActive && cards.length > 0 ? (
-    <PlayCard cards={shuffledCards} deckData={deckData} />
-  ) : (
+  return (
     <Layout priv>
       <CardList admin={admin} deckId={deckData.deckId} />
-      <CardContent deckData={deckData} />
+      <Box ml={80} h="85vh" position="relative">
+        {createCard ? <CardForm /> : <CardContent deckData={deckData} />}
+      </Box>
       {/* <DeckHeader deckData={deckData} deckUid={deckUid} admin={admin} /> */}
     </Layout>
   )

@@ -1,25 +1,25 @@
 import {
-  Button,
-  IconButton,
-  Text,
-  Box,
   Flex,
+  Text,
+  /* Button,
+  IconButton,
+  Box,
   Spacer,
   useDisclosure,
   Collapse,
-  ButtonGroup,
+  ButtonGroup, */
 } from '@chakra-ui/react'
-import { TriangleDownIcon, DeleteIcon } from '@chakra-ui/icons'
+/* import { TriangleDownIcon, DeleteIcon } from '@chakra-ui/icons'
 import NextLink from 'next/link'
 import Divider from '../Divider'
 import MarkDown from '../MarkDown'
 import { deleteCard } from '../../firebase/firestore'
-import toast from 'react-hot-toast'
+import toast from 'react-hot-toast' */
 import { useCard } from './CardContext'
 
-export default function CardPreview({ cardData, deckId, index, admin }) {
-  const { front /* , back, type , cardId*/ } = cardData
-  const { selectedCard, setSelectedCard } = useCard()
+export default function CardPreview({ deckId, index, cardData }) {
+  const { front /* back, type , cardId */ } = cardData
+  const { selectedCard, setSelectedCard, setCreateCard } = useCard()
 
   /* const deleteHandler = () => {
     toast.promise(
@@ -50,17 +50,25 @@ export default function CardPreview({ cardData, deckId, index, admin }) {
       cursor="pointer"
       transition={'0.3s'}
       _hover={{ bg: 'gray.300' }}
-      onClick={() => setSelectedCard(index)}
+      onClick={() => {
+        setSelectedCard(index)
+        setCreateCard(false)
+      }}
     >
-      <Text
+      <Flex
         fontWeight={600}
         fontSize={'lg'}
         lineHeight={'110%'}
-        color="gray.500"
+        color={'gray.500'}
       >
         {index}
-      </Text>
-      <Text fontWeight={500} lineHeight={'110%'} noOfLines={2}>
+      </Flex>
+      <Text
+        fontWeight={500}
+        lineHeight={'110%'}
+        noOfLines={2}
+        color={'gray.900'}
+      >
         {front}
       </Text>
       {/* <ButtonGroup>
