@@ -30,6 +30,7 @@ const markdownTheme = {
 
 const MarkDown = ({ children, props }) => (
   <ChakraMarkDown
+    {...props}
     components={ChakraUIRenderer(markdownTheme)}
     remarkPlugins={[remarkGfm]}
     skipHtml

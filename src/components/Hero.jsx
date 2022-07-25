@@ -1,13 +1,7 @@
 import {
   Box,
-  InputGroup,
-  InputLeftElement,
-  Input,
-  Heading,
   Stack,
-  Text,
 } from "@chakra-ui/react";
-import { Search2Icon } from "@chakra-ui/icons";
 import Container from "../hocs/Container";
 
 export default function Hero({ title, secondary }) {

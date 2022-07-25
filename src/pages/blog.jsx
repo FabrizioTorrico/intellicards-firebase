@@ -1,5 +1,4 @@
-import Layout from "../hocs/Layout";
-import { ReactNode } from "react";
+import Layout from '../hocs/Layout'
 import {
   Stack,
   Box,
@@ -9,29 +8,29 @@ import {
   Tag,
   Wrap,
   WrapItem,
-} from "@chakra-ui/react";
-import NextLink from "next/link";
-import studyingImage from "../../public/img/celebration.jpg";
-import Image from "../components/Image";
-import Header from "../components/Header";
-import Container from "../hocs/Container";
+} from '@chakra-ui/react'
+import NextLink from 'next/link'
+import studyingImage from '../../public/img/celebration.jpg'
+import Image from '../components/Image'
+import Header from '../components/Header'
+import Container from '../hocs/Container'
 
 const blogFeaturesData = [
   {
-    title: "Welcome to our first blog post",
-    text: "For us it is an immense joy to show you our first post as Intellicards. From now on, every news related to our community and company will be communicated through this medium. ",
-    author: "Fabrizio Torrico",
-    date: "2022-1-20",
+    title: 'Welcome to our first blog post',
+    text: 'For us it is an immense joy to show you our first post as Intellicards. From now on, every news related to our community and company will be communicated through this medium. ',
+    author: 'Fabrizio Torrico',
+    date: '2022-1-20',
   },
-];
+]
 const blogLatestData = [
   {
-    title: "Welcome to our first blog post",
-    text: "For us it is an immense joy to show you our first post as Intellicards. From now on, every news related to our community and company will be communicated through this medium. ",
-    author: "Fabrizio Torrico",
-    date: "2022-1-20",
+    title: 'Welcome to our first blog post',
+    text: 'For us it is an immense joy to show you our first post as Intellicards. From now on, every news related to our community and company will be communicated through this medium. ',
+    author: 'Fabrizio Torrico',
+    date: '2022-1-20',
   },
-];
+]
 
 export default function Blog() {
   const BlogTags = (props) => {
@@ -39,36 +38,36 @@ export default function Blog() {
       <HStack spacing={2} marginTop={props.marginTop}>
         {props.tags.map((tag, i) => {
           return (
-            <Tag size={"md"} variant="solid" colorScheme="main" key={i}>
+            <Tag size={'md'} variant="solid" colorScheme="main" key={i}>
               {tag}
             </Tag>
-          );
+          )
         })}
       </HStack>
-    );
-  };
+    )
+  }
 
   const BlogAuthor = (props) => {
     return (
       <Text fontWeight="medium">
         {props.name} — {props.date.toLocaleDateString()}
       </Text>
-    );
-  };
+    )
+  }
 
   const BlogItem = ({ data, flex }) => {
-    const { title, text, author, date } = data;
+    const { title, text, author, date } = data
     return (
       <NextLink href="/">
         <a>
           <Stack
-            direction={flex ? "row" : "column"}
+            direction={flex ? 'row' : 'column'}
             spacing="7"
             _hover={{
-              color: "main.500",
+              color: 'main.500',
             }}
           >
-            <Box borderRadius="md" w={flex ? "35%" : ""}>
+            <Box borderRadius="md" w={flex ? '35%' : ''}>
               <Image
                 borderRadius="lg"
                 transform="scale(1.0)"
@@ -78,8 +77,8 @@ export default function Blog() {
               />
             </Box>
             <Box w="100%">
-              <BlogTags tags={["Engineering", "Product"]} />
-              <Stack direction={flex ? "row" : "column"} marginTop="2">
+              <BlogTags tags={['Engineering', 'Product']} />
+              <Stack direction={flex ? 'row' : 'column'} marginTop="2">
                 <Heading fontSize="xl">{title}</Heading>
                 <BlogAuthor name={author} date={new Date(date)} />
               </Stack>
@@ -88,7 +87,7 @@ export default function Blog() {
                 fontSize="md"
                 marginTop="2"
                 noOfLines={3}
-                color={"gray.500"}
+                color={'gray.500'}
               >
                 {text}
               </Text>
@@ -96,8 +95,8 @@ export default function Blog() {
           </Stack>
         </a>
       </NextLink>
-    );
-  };
+    )
+  }
 
   return (
     <Layout title="blog">
@@ -105,8 +104,8 @@ export default function Blog() {
         <Header
           title={
             <>
-              Our{" "}
-              <Text as={"span"} color={"main.500"}>
+              Our{' '}
+              <Text as={'span'} color={'main.500'}>
                 Blog
               </Text>
             </>
@@ -116,19 +115,22 @@ export default function Blog() {
               tips from our experts."
         />
 
-        <Heading fontSize={"3xl"} as="h3" mb="5">
+        <Heading fontSize={'3xl'} as="h3" mb="5">
           Featured stories
         </Heading>
         <Wrap spacing="30px">
           {blogFeaturesData.map((data, i) => (
-            <WrapItem width={{ base: "100%", sm: "45%", md: "45%", lg: "30%" }}>
-              <BlogItem key={i} data={data} />
+            <WrapItem
+              key={i}
+              width={{ base: '100%', sm: '45%', md: '45%', lg: '30%' }}
+            >
+              <BlogItem data={data} />
             </WrapItem>
           ))}
         </Wrap>
       </Container>
       <Container bg="gray.100">
-        <Heading fontSize={"3xl"} as="h3" mb="5">
+        <Heading fontSize={'3xl'} as="h3" mb="5">
           Latest stories
         </Heading>
 
@@ -137,5 +139,5 @@ export default function Blog() {
         ))}
       </Container>
     </Layout>
-  );
+  )
 }

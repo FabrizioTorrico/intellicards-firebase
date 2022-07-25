@@ -26,6 +26,7 @@ export const AuthProvider = ({ children }) => {
   async function refreshUserData(uid) {
     setCurrentUserData(await getUserData(uid));
   }
+  
   useEffect(() => {
     return auth.onIdTokenChanged(async (user) => {
       setLoading(true);

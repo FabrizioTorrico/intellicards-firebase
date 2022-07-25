@@ -1,21 +1,13 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import {
   Button,
-  FormControl,
-  FormErrorMessage,
-  FormLabel,
-  Icon,
   InputGroup,
   Input,
   Spinner,
-  Code,
   Image,
-  Text,
 } from "@chakra-ui/react";
-import { useState } from "react";
 import { IoCamera } from "react-icons/io5";
 import { uploadImageToStorage } from "../firebase/storage";
-import { useContext } from "react";
 
 /**
  * reacts conditionally if there is a downloadURL, it allows uploading images and checking erros
@@ -29,7 +21,7 @@ export default function ImageUploader({ setError, clearErrors }) {
   const [downloadURL, setDownloadURL] = useState(null);
   const [copied, setCopied] = useState(false);
 
-  //for replacing default styling and replacing it with chakra ui
+  // for replacing default styling and replacing it with chakra ui
   const handleClick = () => inputRef.current?.click();
 
   const uploadFile = async (e) => {
@@ -37,9 +29,8 @@ export default function ImageUploader({ setError, clearErrors }) {
     clearErrors("image");
     const file = e.target.files[0];
     if (!file) return;
-    console.log(file);
 
-    //check fileMB
+    // check fileMB
     const fileMB = file.size / (1024 * 1024);
     const MAX_FILE_SIZE = 5;
     if (fileMB > MAX_FILE_SIZE) {

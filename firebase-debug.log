@@ -1,57 +1,63 @@
-[debug] [2022-07-23T22:56:41.460Z] ----------------------------------------------------------------------
-[debug] [2022-07-23T22:56:41.462Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\hogar\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js emulators:start
-[debug] [2022-07-23T22:56:41.463Z] CLI Version:   11.2.2
-[debug] [2022-07-23T22:56:41.463Z] Platform:      win32
-[debug] [2022-07-23T22:56:41.463Z] Node Version:  v16.13.1
-[debug] [2022-07-23T22:56:41.464Z] Time:          Sat Jul 23 2022 19:56:41 GMT-0300 (hora estándar de Argentina)
-[debug] [2022-07-23T22:56:41.464Z] ----------------------------------------------------------------------
+[debug] [2022-07-25T01:50:58.019Z] ----------------------------------------------------------------------
+[debug] [2022-07-25T01:50:58.023Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\hogar\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js emulators:start
+[debug] [2022-07-25T01:50:58.025Z] CLI Version:   11.2.2
+[debug] [2022-07-25T01:50:58.025Z] Platform:      win32
+[debug] [2022-07-25T01:50:58.025Z] Node Version:  v16.13.1
+[debug] [2022-07-25T01:50:58.037Z] Time:          Sun Jul 24 2022 22:50:58 GMT-0300 (hora estándar de Argentina)
+[debug] [2022-07-25T01:50:58.038Z] ----------------------------------------------------------------------
 [debug] 
-[debug] [2022-07-23T22:56:41.546Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
-[debug] [2022-07-23T22:56:41.546Z] > authorizing via signed-in user (fabriziotorrico27@gmail.com)
-[debug] [2022-07-23T22:56:41.716Z] java version "18.0.1.1" 2022-04-22
+[debug] [2022-07-25T01:50:58.047Z] >>> [apiv2][query] GET https://firebase-public.firebaseio.com/cli.json [none]
+[debug] [2022-07-25T01:50:58.386Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2022-07-25T01:50:58.388Z] > authorizing via signed-in user (fabriziotorrico27@gmail.com)
+[debug] [2022-07-25T01:50:58.808Z] <<< [apiv2][status] GET https://firebase-public.firebaseio.com/cli.json 200
+[debug] [2022-07-25T01:50:58.809Z] <<< [apiv2][body] GET https://firebase-public.firebaseio.com/cli.json {"cloudBuildErrorAfter":1594252800000,"cloudBuildWarnAfter":1590019200000,"defaultNode10After":1594252800000,"minVersion":"3.0.5","node8DeploysDisabledAfter":1613390400000,"node8RuntimeDisabledAfter":1615809600000,"node8WarnAfter":1600128000000}
+[debug] [2022-07-25T01:50:58.915Z] java version "18.0.1.1" 2022-04-22
 
-[debug] [2022-07-23T22:56:41.717Z] Java(TM) SE Runtime Environment (build 18.0.1.1+2-6)
+[debug] [2022-07-25T01:50:58.916Z] Java(TM) SE Runtime Environment (build 18.0.1.1+2-6)
 Java HotSpot(TM) 64-Bit Server VM (build 18.0.1.1+2-6, mixed mode, sharing)
 
-[debug] [2022-07-23T22:56:41.746Z] Parsed Java major version: 18
+[debug] [2022-07-25T01:50:58.982Z] Parsed Java major version: 18
 [info] i  emulators: Starting emulators: auth, firestore, hosting, storage {"metadata":{"emulator":{"name":"hub"},"message":"Starting emulators: auth, firestore, hosting, storage"}}
-[debug] [2022-07-23T22:56:41.780Z] [hub] writing locator at C:\Users\hogar\AppData\Local\Temp\hub-intellicards.json
-[debug] [2022-07-23T22:56:41.795Z] Ignoring unsupported arg: projectId {"metadata":{"emulator":{"name":"firestore"},"message":"Ignoring unsupported arg: projectId"}}
-[debug] [2022-07-23T22:56:41.795Z] Ignoring unsupported arg: auto_download {"metadata":{"emulator":{"name":"firestore"},"message":"Ignoring unsupported arg: auto_download"}}
-[debug] [2022-07-23T22:56:41.795Z] Starting Firestore Emulator with command {"binary":"java","args":["-Dgoogle.cloud_firestore.debug_log_level=FINE","-Duser.language=en","-jar","C:\\Users\\hogar\\.cache\\firebase\\emulators\\cloud-firestore-emulator-v1.14.4.jar","--host","localhost","--port",9000,"--rules","C:\\Users\\hogar\\OneDrive\\Documentos\\00programacion\\01projects\\Web\\next\\intellicards-firebase\\firestore.rules"],"optionalArgs":["port","webchannel_port","host","rules","functions_emulator","seed_from_export"],"joinArgs":false} {"metadata":{"emulator":{"name":"firestore"},"message":"Starting Firestore Emulator with command {\"binary\":\"java\",\"args\":[\"-Dgoogle.cloud_firestore.debug_log_level=FINE\",\"-Duser.language=en\",\"-jar\",\"C:\\\\Users\\\\hogar\\\\.cache\\\\firebase\\\\emulators\\\\cloud-firestore-emulator-v1.14.4.jar\",\"--host\",\"localhost\",\"--port\",9000,\"--rules\",\"C:\\\\Users\\\\hogar\\\\OneDrive\\\\Documentos\\\\00programacion\\\\01projects\\\\Web\\\\next\\\\intellicards-firebase\\\\firestore.rules\"],\"optionalArgs\":[\"port\",\"webchannel_port\",\"host\",\"rules\",\"functions_emulator\",\"seed_from_export\"],\"joinArgs\":false}"}}
+[debug] [2022-07-25T01:50:59.009Z] [hub] writing locator at C:\Users\hogar\AppData\Local\Temp\hub-intellicards.json
+[debug] [2022-07-25T01:50:59.045Z] Ignoring unsupported arg: projectId {"metadata":{"emulator":{"name":"firestore"},"message":"Ignoring unsupported arg: projectId"}}
+[debug] [2022-07-25T01:50:59.046Z] Ignoring unsupported arg: auto_download {"metadata":{"emulator":{"name":"firestore"},"message":"Ignoring unsupported arg: auto_download"}}
+[debug] [2022-07-25T01:50:59.047Z] Starting Firestore Emulator with command {"binary":"java","args":["-Dgoogle.cloud_firestore.debug_log_level=FINE","-Duser.language=en","-jar","C:\\Users\\hogar\\.cache\\firebase\\emulators\\cloud-firestore-emulator-v1.14.4.jar","--host","localhost","--port",9000,"--rules","C:\\Users\\hogar\\OneDrive\\Documentos\\00programacion\\01projects\\Web\\next\\intellicards-firebase\\firestore.rules"],"optionalArgs":["port","webchannel_port","host","rules","functions_emulator","seed_from_export"],"joinArgs":false} {"metadata":{"emulator":{"name":"firestore"},"message":"Starting Firestore Emulator with command {\"binary\":\"java\",\"args\":[\"-Dgoogle.cloud_firestore.debug_log_level=FINE\",\"-Duser.language=en\",\"-jar\",\"C:\\\\Users\\\\hogar\\\\.cache\\\\firebase\\\\emulators\\\\cloud-firestore-emulator-v1.14.4.jar\",\"--host\",\"localhost\",\"--port\",9000,\"--rules\",\"C:\\\\Users\\\\hogar\\\\OneDrive\\\\Documentos\\\\00programacion\\\\01projects\\\\Web\\\\next\\\\intellicards-firebase\\\\firestore.rules\"],\"optionalArgs\":[\"port\",\"webchannel_port\",\"host\",\"rules\",\"functions_emulator\",\"seed_from_export\"],\"joinArgs\":false}"}}
 [info] i  firestore: Firestore Emulator logging to firestore-debug.log {"metadata":{"emulator":{"name":"firestore"},"message":"Firestore Emulator logging to \u001b[1mfirestore-debug.log\u001b[22m"}}
-[debug] [2022-07-23T22:56:44.096Z] Jul 23, 2022 7:56:44 PM com.google.cloud.datastore.emulator.firestore.websocket.WebSocketServer start
-INFO: Started WebSocket server on ws://localhost:52130
- {"metadata":{"emulator":{"name":"firestore"},"message":"Jul 23, 2022 7:56:44 PM com.google.cloud.datastore.emulator.firestore.websocket.WebSocketServer start\r\nINFO: Started WebSocket server on ws://localhost:52130\r\n"}}
-[debug] [2022-07-23T22:56:44.145Z] API endpoint: http:// {"metadata":{"emulator":{"name":"firestore"},"message":"API endpoint: http://"}}
-[debug] [2022-07-23T22:56:44.145Z] localhost:9000
-If you are using a library that supports the FIRESTORE_EMULATOR_HOST environment variable, run:
-
+[debug] [2022-07-25T01:51:03.320Z] Jul 24, 2022 10:51:03 PM com.google.cloud.datastore.emulator.firestore.websocket.WebSocketServer start
+INFO: Started WebSocket server on ws://localhost:61460
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Jul 24, 2022 10:51:03 PM com.google.cloud.datastore.emulator.firestore.websocket.WebSocketServer start\r\nINFO: Started WebSocket server on ws://localhost:61460\r\n"}}
+[debug] [2022-07-25T01:51:03.448Z] API endpoint: http:// {"metadata":{"emulator":{"name":"firestore"},"message":"API endpoint: http://"}}
+[debug] [2022-07-25T01:51:03.449Z] localhost:9000 {"metadata":{"emulator":{"name":"firestore"},"message":"localhost:9000"}}
+[debug] [2022-07-25T01:51:03.449Z] 
+ {"metadata":{"emulator":{"name":"firestore"},"message":"\n"}}
+[debug] [2022-07-25T01:51:03.450Z] If you are using a library that supports the FIRESTORE_EMULATOR_HOST environment variable, run:
+ {"metadata":{"emulator":{"name":"firestore"},"message":"If you are using a library that supports the FIRESTORE_EMULATOR_HOST environment variable, run:\r\n"}}
+[debug] [2022-07-25T01:51:03.450Z] 
    export FIRESTORE_EMULATOR_HOST=localhost:9000
 
 Dev App Server is now running.
 
- {"metadata":{"emulator":{"name":"firestore"},"message":"localhost:9000\nIf you are using a library that supports the FIRESTORE_EMULATOR_HOST environment variable, run:\r\n\n   export FIRESTORE_EMULATOR_HOST=localhost:9000\n\nDev App Server is now running.\n\r\n"}}
-[debug] [2022-07-23T22:56:56.014Z] Ignoring unsupported arg: port {"metadata":{"emulator":{"name":"storage"},"message":"Ignoring unsupported arg: port"}}
-[debug] [2022-07-23T22:56:57.501Z] Temp file directory for storage emulator: C:\Users\hogar\AppData\Local\Temp/firebase/storage/blobs {"metadata":{"emulator":{"name":"storage"},"message":"Temp file directory for storage emulator: C:\\Users\\hogar\\AppData\\Local\\Temp/firebase/storage/blobs"}}
-[debug] [2022-07-23T22:56:57.511Z] > refreshing access token with scopes: []
-[debug] [2022-07-23T22:56:57.513Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
-[debug] [2022-07-23T22:56:57.513Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
-[debug] [2022-07-23T22:56:57.695Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
-[debug] [2022-07-23T22:56:57.695Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
-[debug] [2022-07-23T22:56:57.712Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/intellicards/sites 
-[debug] [2022-07-23T22:56:58.984Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/intellicards/sites 200
-[debug] [2022-07-23T22:56:58.985Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/intellicards/sites {"sites":[{"name":"projects/intellicards/sites/intellicards","defaultUrl":"https://intellicards.web.app","type":"DEFAULT_SITE"}]}
-[debug] [2022-07-23T22:56:58.986Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/intellicards/webApps/-/config [none]
-[debug] [2022-07-23T22:57:00.258Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/intellicards/webApps/-/config 200
-[debug] [2022-07-23T22:57:00.258Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/intellicards/webApps/-/config {"projectId":"intellicards","appId":"1:155055458560:web:bb99b5e7917a2a95b2cbe5","storageBucket":"intellicards.appspot.com","locationId":"southamerica-east1","apiKey":"AIzaSyDEC8HFlrPphz4VX4lhUtICGJwB-_YJpA4","authDomain":"intellicards.firebaseapp.com","messagingSenderId":"155055458560","measurementId":"G-9WJF6GVJ4F"}
+ {"metadata":{"emulator":{"name":"firestore"},"message":"\n   export FIRESTORE_EMULATOR_HOST=localhost:9000\n\nDev App Server is now running.\n\r\n"}}
+[debug] [2022-07-25T01:51:25.925Z] Ignoring unsupported arg: port {"metadata":{"emulator":{"name":"storage"},"message":"Ignoring unsupported arg: port"}}
+[debug] [2022-07-25T01:51:27.807Z] Temp file directory for storage emulator: C:\Users\hogar\AppData\Local\Temp/firebase/storage/blobs {"metadata":{"emulator":{"name":"storage"},"message":"Temp file directory for storage emulator: C:\\Users\\hogar\\AppData\\Local\\Temp/firebase/storage/blobs"}}
+[debug] [2022-07-25T01:51:27.823Z] > refreshing access token with scopes: []
+[debug] [2022-07-25T01:51:27.826Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2022-07-25T01:51:27.826Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2022-07-25T01:51:28.009Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2022-07-25T01:51:28.009Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2022-07-25T01:51:28.031Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/intellicards/sites 
+[debug] [2022-07-25T01:51:29.441Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/intellicards/sites 200
+[debug] [2022-07-25T01:51:29.441Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/intellicards/sites {"sites":[{"name":"projects/intellicards/sites/intellicards","defaultUrl":"https://intellicards.web.app","type":"DEFAULT_SITE"}]}
+[debug] [2022-07-25T01:51:29.442Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/intellicards/webApps/-/config [none]
+[debug] [2022-07-25T01:51:30.664Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/intellicards/webApps/-/config 200
+[debug] [2022-07-25T01:51:30.664Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/intellicards/webApps/-/config {"projectId":"intellicards","appId":"1:155055458560:web:bb99b5e7917a2a95b2cbe5","storageBucket":"intellicards.appspot.com","locationId":"southamerica-east1","apiKey":"AIzaSyDEC8HFlrPphz4VX4lhUtICGJwB-_YJpA4","authDomain":"intellicards.firebaseapp.com","messagingSenderId":"155055458560","measurementId":"G-9WJF6GVJ4F"}
 [info] i  hosting: Serving hosting files from: public {"metadata":{"emulator":{"name":"hosting"},"message":"Serving hosting files from: \u001b[1mpublic\u001b[22m"}}
 [info] +  hosting: Local server: http://localhost:5000 {"metadata":{"emulator":{"name":"hosting"},"message":"Local server: \u001b[4m\u001b[1mhttp://localhost:5000\u001b[22m\u001b[24m"}}
-[debug] [2022-07-23T22:57:00.326Z] Ignoring unsupported arg: auto_download {"metadata":{"emulator":{"name":"ui"},"message":"Ignoring unsupported arg: auto_download"}}
-[debug] [2022-07-23T22:57:00.326Z] Ignoring unsupported arg: port {"metadata":{"emulator":{"name":"ui"},"message":"Ignoring unsupported arg: port"}}
-[debug] [2022-07-23T22:57:00.327Z] Starting Emulator UI with command {"binary":"node","args":["C:\\Users\\hogar\\.cache\\firebase\\emulators\\ui-v1.7.0\\server.bundle.js"],"optionalArgs":[],"joinArgs":false} {"metadata":{"emulator":{"name":"ui"},"message":"Starting Emulator UI with command {\"binary\":\"node\",\"args\":[\"C:\\\\Users\\\\hogar\\\\.cache\\\\firebase\\\\emulators\\\\ui-v1.7.0\\\\server.bundle.js\"],\"optionalArgs\":[],\"joinArgs\":false}"}}
+[debug] [2022-07-25T01:51:30.713Z] Ignoring unsupported arg: auto_download {"metadata":{"emulator":{"name":"ui"},"message":"Ignoring unsupported arg: auto_download"}}
+[debug] [2022-07-25T01:51:30.713Z] Ignoring unsupported arg: port {"metadata":{"emulator":{"name":"ui"},"message":"Ignoring unsupported arg: port"}}
+[debug] [2022-07-25T01:51:30.713Z] Starting Emulator UI with command {"binary":"node","args":["C:\\Users\\hogar\\.cache\\firebase\\emulators\\ui-v1.7.0\\server.bundle.js"],"optionalArgs":[],"joinArgs":false} {"metadata":{"emulator":{"name":"ui"},"message":"Starting Emulator UI with command {\"binary\":\"node\",\"args\":[\"C:\\\\Users\\\\hogar\\\\.cache\\\\firebase\\\\emulators\\\\ui-v1.7.0\\\\server.bundle.js\"],\"optionalArgs\":[],\"joinArgs\":false}"}}
 [info] i  ui: Emulator UI logging to ui-debug.log {"metadata":{"emulator":{"name":"ui"},"message":"Emulator UI logging to \u001b[1mui-debug.log\u001b[22m"}}
-[debug] [2022-07-23T22:57:00.521Z] Web / API server started at localhost:4000
+[debug] [2022-07-25T01:51:31.054Z] Web / API server started at localhost:4000
  {"metadata":{"emulator":{"name":"ui"},"message":"Web / API server started at localhost:4000\n"}}
 [info] 
 ┌─────────────────────────────────────────────────────────────┐
@@ -75,11 +81,10 @@ Dev App Server is now running.
 
 Issues? Report them at https://github.com/firebase/firebase-tools/issues and attach the *-debug.log files.
  
-[warn] !  Error: Internal state invariant broken: no user with ID: aHmEQfbX8RXCioernX08lLhLaQAW
+[warn] !  Error: Internal state invariant broken: no user with ID: mo4G4QJNb8ZbZedxOKjWgzWq8jIc
     at AgentProjectState.getUserByLocalIdAssertingExists (C:\Users\hogar\AppData\Roaming\npm\node_modules\firebase-tools\lib\emulator\auth\state.js:207:19)
     at AgentProjectState.validateRefreshToken (C:\Users\hogar\AppData\Roaming\npm\node_modules\firebase-tools\lib\emulator\auth\state.js:294:24)
     at grantToken (C:\Users\hogar\AppData\Roaming\npm\node_modules\firebase-tools\lib\emulator\auth\operations.js:1287:38)
     at Proxy.<anonymous> (C:\Users\hogar\AppData\Roaming\npm\node_modules\firebase-tools\lib\emulator\auth\server.js:375:20)
     at C:\Users\hogar\AppData\Roaming\npm\node_modules\firebase-tools\node_modules\promise-breaker\index.js:265:46
-    at processTicksAndRejections (node:internal/process/task_queues:96:5) {"metadata":{"emulator":{"name":"auth"},"message":"Error: Internal state invariant broken: no user with ID: aHmEQfbX8RXCioernX08lLhLaQAW\n    at AgentProjectState.getUserByLocalIdAssertingExists (C:\\Users\\hogar\\AppData\\Roaming\\npm\\node_modules\\firebase-tools\\lib\\emulator\\auth\\state.js:207:19)\n    at AgentProjectState.validateRefreshToken (C:\\Users\\hogar\\AppData\\Roaming\\npm\\node_modules\\firebase-tools\\lib\\emulator\\auth\\state.js:294:24)\n    at grantToken (C:\\Users\\hogar\\AppData\\Roaming\\npm\\node_modules\\firebase-tools\\lib\\emulator\\auth\\operations.js:1287:38)\n    at Proxy.<anonymous> (C:\\Users\\hogar\\AppData\\Roaming\\npm\\node_modules\\firebase-tools\\lib\\emulator\\auth\\server.js:375:20)\n    at C:\\Users\\hogar\\AppData\\Roaming\\npm\\node_modules\\firebase-tools\\node_modules\\promise-breaker\\index.js:265:46\n    at processTicksAndRejections (node:internal/process/task_queues:96:5)"}}
-[error] 
+    at processTicksAndRejections (node:internal/process/task_queues:96:5) {"metadata":{"emulator":{"name":"auth"},"message":"Error: Internal state invariant broken: no user with ID: mo4G4QJNb8ZbZedxOKjWgzWq8jIc\n    at AgentProjectState.getUserByLocalIdAssertingExists (C:\\Users\\hogar\\AppData\\Roaming\\npm\\node_modules\\firebase-tools\\lib\\emulator\\auth\\state.js:207:19)\n    at AgentProjectState.validateRefreshToken (C:\\Users\\hogar\\AppData\\Roaming\\npm\\node_modules\\firebase-tools\\lib\\emulator\\auth\\state.js:294:24)\n    at grantToken (C:\\Users\\hogar\\AppData\\Roaming\\npm\\node_modules\\firebase-tools\\lib\\emulator\\auth\\operations.js:1287:38)\n    at Proxy.<anonymous> (C:\\Users\\hogar\\AppData\\Roaming\\npm\\node_modules\\firebase-tools\\lib\\emulator\\auth\\server.js:375:20)\n    at C:\\Users\\hogar\\AppData\\Roaming\\npm\\node_modules\\firebase-tools\\node_modules\\promise-breaker\\index.js:265:46\n    at processTicksAndRejections (node:internal/process/task_queues:96:5)"}}

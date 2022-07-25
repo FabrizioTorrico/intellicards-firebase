@@ -1,42 +1,28 @@
-import Container from "../../hocs/Container";
-import Header from "../Header";
-import NextLink from "next/link";
-import {
-  Button,
-  Box,
-  Stack,
-  Text,
-  Link,
-  Grid,
-  GridItem,
-  Heading,
-} from "@chakra-ui/react";
-import styles from "../../styles/Home.module.scss";
-import {
-  deleteDeck,
-  getRealTimeDeck,
-  getRealTimeHeart,
-} from "../../firebase/firestore";
-import HeartButton from "../HeartButton";
-import { useState, useEffect } from "react";
-import usePlay from "../play/PlayContext";
-import { useAuth } from "../../firebase/auth";
+import Container from '../../hocs/Container'
+import Header from '../Header'
+import NextLink from 'next/link'
+import { Button, Box, Text, Link, Grid, GridItem } from '@chakra-ui/react'
+import styles from '../../styles/Home.module.scss'
+import { getRealTimeDeck, getRealTimeHeart } from '../../firebase/firestore'
+import HeartButton from '../HeartButton'
+import { useState, useEffect } from 'react'
+import usePlay from '../play/PlayContext'
 
-function DeckStats({ deckUid, deckId, heart_count }) {
-  const { setPlayActive } = usePlay();
-  const [myHeart, setMyHeart] = useState(null);
+function DeckStats({ deckUid, deckId, heartCount }) {
+  const { setPlayActive } = usePlay()
+  const [myHeart, setMyHeart] = useState(null)
   useEffect(() => {
-    return getRealTimeHeart(deckUid, deckId, setMyHeart);
-  }, []);
+    return getRealTimeHeart(deckUid, deckId, setMyHeart)
+  }, [])
 
   return (
-    <Grid templateColumns="1fr 1fr" fontSize={"xl"} gap={6}>
+    <Grid templateColumns="1fr 1fr" fontSize={'xl'} gap={6}>
       <GridItem>
         <HeartButton
           deckUid={deckUid}
           deckId={deckId}
           myHeart={myHeart}
-          heartCount={heart_count}
+          heartCount={heartCount}
         />
       </GridItem>
       <GridItem>
@@ -49,7 +35,7 @@ function DeckStats({ deckUid, deckId, heart_count }) {
         </Button>
       </GridItem>
     </Grid>
-  );
+  )
 }
 
 /**
@@ -57,12 +43,17 @@ function DeckStats({ deckUid, deckId, heart_count }) {
  * @param {props} props
  */
 export default function DeckHeader({ deckData, deckUid, canPlay, admin }) {
-  const [realTimeDeck, setRealTimeDeck] = useState(deckData);
-  const { title, username, heart_count, created_at, deckId } = realTimeDeck;
+  const [realTimeDeck, setRealTimeDeck] = useState(deckData)
+  const {
+    title,
+    username,
+    heartCount,
+    deckId,
+  } = realTimeDeck
 
   useEffect(() => {
-    return getRealTimeDeck(deckUid, deckId, setRealTimeDeck);
-  }, []);
+    return getRealTimeDeck(deckUid, deckId, setRealTimeDeck)
+  }, [])
 
   return (
     <Box
@@ -73,7 +64,7 @@ export default function DeckHeader({ deckData, deckUid, canPlay, admin }) {
     >
       <Container>
         <Text mb="2rem" fontSize="xl">
-          Created by{" "}
+          Created by{' '}
           <NextLink href={`/${username}`}>
             <Link>@{username}</Link>
           </NextLink>
@@ -84,7 +75,7 @@ export default function DeckHeader({ deckData, deckUid, canPlay, admin }) {
             <DeckStats
               deckUid={deckUid}
               deckId={deckId}
-              heart_count={heart_count}
+              heartCount={heartCount}
               canPlay={canPlay}
             />
           }
@@ -99,10 +90,10 @@ export default function DeckHeader({ deckData, deckUid, canPlay, admin }) {
         >
           <path
             d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z"
-            className={styles["shape-fill"]}
+            className={styles['shape-fill']}
           ></path>
         </svg>
       </div>
     </Box>
-  );
+  )
 }

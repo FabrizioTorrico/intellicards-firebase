@@ -1,20 +1,4 @@
-import {
-  Flex,
-  Text,
-  /* Button,
-  IconButton,
-  Box,
-  Spacer,
-  useDisclosure,
-  Collapse,
-  ButtonGroup, */
-} from '@chakra-ui/react'
-/* import { TriangleDownIcon, DeleteIcon } from '@chakra-ui/icons'
-import NextLink from 'next/link'
-import Divider from '../Divider'
-import MarkDown from '../MarkDown'
-import { deleteCard } from '../../firebase/firestore'
-import toast from 'react-hot-toast' */
+import { Flex, Text } from '@chakra-ui/react'
 import { useCard } from './CardContext'
 
 export default function CardPreview({ deckId, index, cardData }) {
@@ -71,15 +55,6 @@ export default function CardPreview({ deckId, index, cardData }) {
       >
         {front}
       </Text>
-      {/* <ButtonGroup>
-          {admin && (
-            <IconButton
-              icon={<DeleteIcon />}
-              type="button"
-              onClick={deleteHandler}
-            />
-          )}
-        </ButtonGroup> */}
     </Flex>
   )
 }

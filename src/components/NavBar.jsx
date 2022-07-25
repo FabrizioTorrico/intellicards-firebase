@@ -1,7 +1,6 @@
 import {
   Flex,
   Spacer,
-  Text,
   Button,
   Heading,
   useDisclosure,
@@ -12,38 +11,38 @@ import {
   InputGroup,
   Input,
   InputLeftElement,
-} from "@chakra-ui/react";
-import { HamburgerIcon, CloseIcon, Search2Icon } from "@chakra-ui/icons";
-import NextLink from "next/link";
-import scroll from "./scroll";
-import { logout } from "../firebase/auth";
-import { useAuth } from "../firebase/auth";
-const links = ["Blog", "Help", "About"];
+} from '@chakra-ui/react'
+import { HamburgerIcon, CloseIcon, Search2Icon } from '@chakra-ui/icons'
+import NextLink from 'next/link'
+import scroll from './scroll'
+import { logout, useAuth } from '../firebase/auth'
+
+const links = ['Blog', 'Help', 'About']
 
 const NavLink = ({ children, link }) => (
   <NextLink href={`/${link.toLowerCase()}`}>
     <Link
       px={2}
       py={1}
-      rounded={"md"}
+      rounded={'md'}
       _hover={{
-        textDecoration: "none",
-        bg: "gray.200",
+        textDecoration: 'none',
+        bg: 'gray.200',
       }}
     >
       {children}
     </Link>
   </NextLink>
-);
+)
 
 /**
  * It's the main navBar, changes on auth and user Data, and it's responsive. POSITION FIXED
  * @param {boolean} home  checks the home for scrolling on click instead of routing and specific design
  */
 export default function NavBar({ home }) {
-  const { currentUser, currentUserData } = useAuth();
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const isAuthenticated = currentUser ? true : false;
+  const { currentUser, currentUserData } = useAuth()
+  const { isOpen, onOpen, onClose } = useDisclosure()
+  const isAuthenticated = Boolean(currentUser)
 
   return (
     <Box
@@ -54,11 +53,11 @@ export default function NavBar({ home }) {
       pos="fixed"
       bg="white"
       zIndex="50"
-      boxShadow={home ? "" : "lg"}
+      boxShadow={home ? '' : 'lg'}
     >
-      <Flex alignItems={"center"}>
+      <Flex alignItems={'center'}>
         <NextLink
-          href={currentUserData ? `/${currentUserData.username}` : "/#"}
+          href={currentUserData ? `/${currentUserData.username}` : '/#'}
         >
           <a>
             <Heading size="md" color="main.500">
@@ -79,19 +78,19 @@ export default function NavBar({ home }) {
         )}
 
         <IconButton
-          size={"md"}
+          size={'md'}
           icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
-          aria-label={"Open Menu"}
-          display={{ md: "none" }}
+          aria-label={'Open Menu'}
+          display={{ md: 'none' }}
           onClick={isOpen ? onClose : onOpen}
           bg="white"
         />
 
         <Stack
-          as={"nav"}
-          display={{ base: "none", md: "flex" }}
-          direction={"row"}
-          alignItems={"center"}
+          as={'nav'}
+          display={{ base: 'none', md: 'flex' }}
+          direction={'row'}
+          alignItems={'center'}
         >
           {links.map((link) => (
             <NavLink key={link} link={link}>
@@ -100,17 +99,17 @@ export default function NavBar({ home }) {
           ))}
 
           {isAuthenticated ? (
-            <Button rounded={"full"} colorScheme={"main"} onClick={logout}>
+            <Button rounded={'full'} colorScheme={'main'} onClick={logout}>
               Logout
             </Button>
           ) : (
             <NextLink href="/#login">
               <a>
                 <Button
-                  rounded={"full"}
-                  colorScheme={"main"}
+                  rounded={'full'}
+                  colorScheme={'main'}
                   onClick={(e) => {
-                    home && scroll("login", e);
+                    home && scroll('login', e)
                   }}
                 >
                   Start now
@@ -121,25 +120,25 @@ export default function NavBar({ home }) {
         </Stack>
       </Flex>
       {isOpen ? (
-        <Box pb={4} display={{ md: "none" }}>
-          <Stack as={"nav"} spacing={4}>
+        <Box pb={4} display={{ md: 'none' }}>
+          <Stack as={'nav'} spacing={4}>
             {links.map((link) => (
               <NavLink key={link} link={link}>
                 {link}
               </NavLink>
             ))}
             {isAuthenticated ? (
-              <Button rounded={"full"} colorScheme={"main"} onClick={logout}>
+              <Button rounded={'full'} colorScheme={'main'} onClick={logout}>
                 Logout
               </Button>
             ) : (
               <NextLink href="/#login">
                 <a>
                   <Button
-                    rounded={"full"}
-                    colorScheme={"main"}
+                    rounded={'full'}
+                    colorScheme={'main'}
                     onClick={(e) => {
-                      home && scroll("login", e);
+                      home && scroll('login', e)
                     }}
                   >
                     Start now
@@ -151,5 +150,5 @@ export default function NavBar({ home }) {
         </Box>
       ) : null}
     </Box>
-  );
+  )
 }

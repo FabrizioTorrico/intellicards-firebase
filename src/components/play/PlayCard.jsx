@@ -29,7 +29,7 @@ export default function CardPlay({ cards, deckData }) {
     if (cardIndex < cards.length - 1) setCardIndex(cardIndex + 1)
     else setPlayActive(false) /* setFinished(true); */
   }
-  console.log(cardIndex)
+
   return (
     <Box minH={'100vh'} bg={'main.500'} p={6}>
       <Flex gap={3} alignItems={'center'} mb={'3rem'}>

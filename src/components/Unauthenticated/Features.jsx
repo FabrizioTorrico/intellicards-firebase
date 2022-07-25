@@ -1,9 +1,7 @@
 import {
-  Flex,
   Box,
   Stack,
   Text,
-  Button,
   Heading,
   Spacer,
 } from "@chakra-ui/react";

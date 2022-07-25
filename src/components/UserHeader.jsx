@@ -1,16 +1,16 @@
-import { Text, Avatar, Stack, Box, Grid, GridItem } from "@chakra-ui/react";
+import { Text, Avatar, Stack, Grid, GridItem } from '@chakra-ui/react'
 export default function UserHeader({ user }) {
   return (
     <Stack
       spacing={{ base: 8, md: 24 }}
-      direction={{ base: "column", md: "row" }}
-      alignItems={"center"}
+      direction={{ base: 'column', md: 'row' }}
+      alignItems={'center'}
     >
-      <Avatar size={"2xl"} name={user.name} src={user.photo_URL} />
+      <Avatar size={'2xl'} name={user.name} src={user.photo_URL} />
       <Grid
-        templateColumns={"1fr 1fr"}
+        templateColumns={'1fr 1fr'}
         color="gray.700"
-        fontSize={"xl"}
+        fontSize={'xl'}
         gap={[2, 6]}
       >
         <Text>{user.deck_count} decks</Text>
@@ -20,5 +20,5 @@ export default function UserHeader({ user }) {
         </GridItem>
       </Grid>
     </Stack>
-  );
+  )
 }
