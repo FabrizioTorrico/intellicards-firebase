@@ -1,13 +1,7 @@
-import { useRef, useState } from "react";
-import {
-  Button,
-  InputGroup,
-  Input,
-  Spinner,
-  Image,
-} from "@chakra-ui/react";
-import { IoCamera } from "react-icons/io5";
-import { uploadImageToStorage } from "../firebase/storage";
+import { useRef, useState } from 'react'
+import { Button, InputGroup, Input, Spinner, Image } from '@chakra-ui/react'
+import { IoCamera } from 'react-icons/io5'
+import { uploadImageToStorage } from '../firebase/storage'
 
 /**
  * reacts conditionally if there is a downloadURL, it allows uploading images and checking erros
@@ -16,52 +10,53 @@ import { uploadImageToStorage } from "../firebase/storage";
  * @property {function} clearErrors clears the error to parent component
  */
 export default function ImageUploader({ setError, clearErrors }) {
-  const inputRef = useRef();
-  const [uploading, setUploading] = useState(false);
-  const [downloadURL, setDownloadURL] = useState(null);
-  const [copied, setCopied] = useState(false);
+  const inputRef = useRef()
+  const [uploading, setUploading] = useState(false)
+  const [downloadURL, setDownloadURL] = useState(null)
+  const [copied, setCopied] = useState(false)
 
   // for replacing default styling and replacing it with chakra ui
-  const handleClick = () => inputRef.current?.click();
+  const handleClick = () => inputRef.current?.click()
 
   const uploadFile = async (e) => {
-    setUploading(true);
-    clearErrors("image");
-    const file = e.target.files[0];
-    if (!file) return;
+    setUploading(true)
+    clearErrors('image')
+    const file = e.target.files[0]
+    if (!file) return
 
     // check fileMB
-    const fileMB = file.size / (1024 * 1024);
-    const MAX_FILE_SIZE = 5;
+    const fileMB = file.size / (1024 * 1024)
+    const MAX_FILE_SIZE = 5
     if (fileMB > MAX_FILE_SIZE) {
-      setError("image", { message: "Max file size is 5mb" });
+      setError('image', { message: 'Max file size is 5mb' })
     }
 
-    uploadImageToStorage(file, setDownloadURL, setUploading);
-  };
+    uploadImageToStorage(file, setDownloadURL, setUploading)
+  }
 
   return downloadURL ? (
     <InputGroup>
       <Image
         src={downloadURL}
-        maxW={{ base: "0px", md: "128px" }}
-        maxH={"128px"}
+        maxW={{ base: '0px', md: '128px' }}
+        maxH={'128px'}
+        alt=""
       />
       <Button
         onClick={() => {
-          navigator.clipboard.writeText(`![alt](${downloadURL})`);
-          setCopied(true);
+          navigator.clipboard.writeText(`![alt](${downloadURL})`)
+          setCopied(true)
         }}
       >
-        {copied ? "copied!" : "Get Image Link"}
+        {copied ? 'copied!' : 'Get Image Link'}
       </Button>
     </InputGroup>
   ) : (
-    <InputGroup maxW={{ base: "", md: "50%" }}>
+    <InputGroup>
       <Input
-        type={"file"}
+        type={'file'}
         id="image"
-        accept={"image/*"}
+        accept={'image/*'}
         hidden
         ref={inputRef}
         onChange={uploadFile}
@@ -70,10 +65,10 @@ export default function ImageUploader({ setError, clearErrors }) {
       <Button
         isDisabled={uploading}
         onClick={handleClick}
-        leftIcon={uploading ? <Spinner /> : <IoCamera size={"32px"} />}
+        leftIcon={uploading ? <Spinner /> : <IoCamera size={'32px'} />}
       >
         Upload Image
       </Button>
     </InputGroup>
-  );
+  )
 }

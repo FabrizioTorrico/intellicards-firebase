@@ -62,7 +62,7 @@ function CardContent() {
       <Box
         py={16}
         px={24}
-        h="86%"
+        h="70vh"
         className={triggerAnimation ? styles.fade_in : ''}
         onAnimationEnd={() => setTriggerAnimation(false)}
         overflow={'auto'}
@@ -70,7 +70,7 @@ function CardContent() {
         <MarkDown>{showBack ? card?.back : card?.front}</MarkDown>
       </Box>
       <Divider width="100%" borderWidth="2px" />
-      <Flex h="14%" mx={8} alignItems="center">
+      <Flex h="15vh" mx={8} alignItems="center">
         <Button
           colorScheme="main"
           onClick={() => {

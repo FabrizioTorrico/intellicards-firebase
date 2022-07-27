@@ -20,7 +20,7 @@ import { logout, useAuth } from '../firebase/auth'
 const links = ['Blog', 'Help', 'About']
 
 const NavLink = ({ children, link }) => (
-  <NextLink href={`/${link.toLowerCase()}`}>
+  <NextLink href={`/${link.toLowerCase()}`} passHref>
     <Link
       px={2}
       py={1}

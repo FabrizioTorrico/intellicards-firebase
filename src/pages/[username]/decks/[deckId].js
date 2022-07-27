@@ -21,6 +21,7 @@ export default function DeckId({ deckProps }) {
   const { setCards, createCard } = useCard()
   const { currentUser } = useAuth()
   const [admin, setAdmin] = useState(false)
+  const { cards } = useCard()
   // const shuffledCards = cards?.sort((a, b) => 0.5 - Math.random());
 
   useEffect(() => {
@@ -37,8 +38,12 @@ export default function DeckId({ deckProps }) {
   return (
     <Layout priv>
       <CardList admin={admin} deckId={deckData.deckId} />
-      <Box ml={80} h="85vh" position="relative">
-        {createCard ? <CardForm /> : <CardContent deckData={deckData} />}
+      <Box ml={80} minH="85vh" position="relative">
+        {createCard || (Array.isArray(cards) && cards.length === 0) ? (
+          <CardForm />
+        ) : (
+          <CardContent deckData={deckData} />
+        )}
       </Box>
       {/* <DeckHeader deckData={deckData} deckUid={deckUid} admin={admin} /> */}
     </Layout>

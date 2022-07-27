@@ -43,8 +43,9 @@ export default function Login() {
 
   const onSubmit = async (data) => {
     const error = await loginWithEmail(data.email, data.password)
-    if (error)
+    if (error) {
       setError('password', { message: 'No matches with info provided' })
+    }
   }
 
   return (
@@ -104,7 +105,7 @@ export default function Login() {
                     {...register('password')}
                     mb={errors.password ? '' : '28px'}
                   />
-                  <FormErrorMessage display="block">
+                  <FormErrorMessage display="block" h="28px">
                     {errors.password?.message}
                   </FormErrorMessage>
                 </FormControl>
@@ -144,6 +145,7 @@ export default function Login() {
                       onClick={loginWithGoogle}
                       leftIcon={
                         <Image
+                          alt='Google login'
                           src="/img/google-logo.png"
                           height="25px"
                           width="25px"

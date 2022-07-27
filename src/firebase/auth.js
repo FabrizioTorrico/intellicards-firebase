@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from 'react'
 import {
   GoogleAuthProvider,
   signInWithPopup,
@@ -6,42 +6,39 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   updateProfile,
-  onAuthStateChanged,
-} from "firebase/auth";
-import { auth } from "./index";
-import { getUserData } from "./firestore";
-import { useRouter } from "next/router";
-import Layout from "../hocs/Layout";
-import DisconnectedPage from "../components/Unauthenticated/DisconnectedPage";
-import CompleteLogin from "../components/Unauthenticated/CompleteLogin";
-import toast from "react-hot-toast";
+} from 'firebase/auth'
+import { auth } from './index'
+import { getUserData } from './firestore'
+import Layout from '../hocs/Layout'
+import CompleteLogin from '../components/Unauthenticated/CompleteLogin'
+// import toast from 'react-hot-toast'
 
-const AuthContext = createContext({});
+const AuthContext = createContext({})
 
 export const AuthProvider = ({ children }) => {
-  const [currentUser, setCurrentUser] = useState(null);
-  const [currentUserData, setCurrentUserData] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [currentUser, setCurrentUser] = useState(null)
+  const [currentUserData, setCurrentUserData] = useState(null)
+  const [loading, setLoading] = useState(true)
 
   async function refreshUserData(uid) {
-    setCurrentUserData(await getUserData(uid));
+    setCurrentUserData(await getUserData(uid))
   }
-  
+
   useEffect(() => {
     return auth.onIdTokenChanged(async (user) => {
-      setLoading(true);
+      setLoading(true)
       if (!user) {
-        setCurrentUser(null);
-        setCurrentUserData(null);
-        setLoading(false);
-        return;
+        setCurrentUser(null)
+        setCurrentUserData(null)
+        setLoading(false)
+        return
       }
-      const token = await user.getIdToken();
-      setCurrentUser(user);
-      setCurrentUserData(await getUserData(user.uid));
-      setLoading(false);
-    });
-  }, []);
+      // const token = await user.getIdToken()
+      setCurrentUser(user)
+      setCurrentUserData(await getUserData(user.uid))
+      setLoading(false)
+    })
+  }, [])
 
   /* function PageToRender() {
     if (!currentUserData) {
@@ -63,8 +60,8 @@ export const AuthProvider = ({ children }) => {
         <Layout>
           <CompleteLogin />
         </Layout>
-      );
-    return children;
+      )
+    return children
   }
 
   return (
@@ -73,35 +70,34 @@ export const AuthProvider = ({ children }) => {
     >
       <PageToRender />
     </AuthContext.Provider>
-  );
-};
-export const useAuth = () => useContext(AuthContext);
+  )
+}
+export const useAuth = () => useContext(AuthContext)
 
 export const loginWithGoogle = () => {
   signInWithPopup(auth, new GoogleAuthProvider()).catch((error) =>
     console.log(error)
-  );
-};
+  )
+}
 
 export const createUserForAuth = (data) => {
   createUserWithEmailAndPassword(auth, data.email, data.password)
     .then((result) => {
       updateProfile(result.user, {
         displayName: `${data.first_name} ${data.last_name}`,
-      }).catch((err) => console.log(err));
+      }).catch((err) => console.log(err))
     })
     .catch((error) => {
-      console.log(error);
-    });
-};
+      console.log(error)
+    })
+}
 
 export const loginWithEmail = async (email, password) => {
-  let error;
-  error = await signInWithEmailAndPassword(auth, email, password).catch(
+  return await signInWithEmailAndPassword(auth, email, password).catch(
     (err) => {
-      return err;
+      return err
     }
-  );
-  return error;
-};
-export const logout = () => signOut(auth);
+  )
+}
+
+export const logout = () => signOut(auth)

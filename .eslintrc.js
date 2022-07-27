@@ -14,12 +14,14 @@ module.exports = {
   plugins: ['react'],
   rules: {
     'no-console': 'warn',
+    'no-warning-comments': 'warn',
     'react/jsx-curly-newline': 'off',
     'react/jsx-props-no-spreading': 'off',
     'react/jsx-wrap-multilines': 'off',
     'react/react-in-jsx-scope': 'off',
     'react/prop-types': 'off',
     'react/require-default-props': 'off',
+
     // 'react/no-unknown-property': ['RULES.WARN', {}],
   },
 }

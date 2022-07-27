@@ -1,10 +1,10 @@
-import { Stack, Box } from '@chakra-ui/react'
+import { Stack, Container } from '@chakra-ui/react'
 
 /**
  * @param {{ children: JSX.Element}} [Props]
  * @returns the children component aligned and with global padding
  */
-export default function Container({
+export default function CustomContainer({
   children,
   bg,
   py,
@@ -14,7 +14,7 @@ export default function Container({
 }) {
   return (
     <Stack align={'center'} pt={pt} pb={pb} bg={bg} py={py}>
-      <Box maxW={maxW}>{children}</Box>
+      <Container maxW={maxW}>{children}</Container>
     </Stack>
   )
 }

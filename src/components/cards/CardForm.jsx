@@ -1,19 +1,16 @@
+import styles from '../../styles/Cards.module.scss'
 import {
-  Box,
   FormControl,
   FormLabel,
   FormErrorMessage,
   Textarea,
   Select,
   Button,
-  Stack,
-  useDisclosure,
-  useOutsideClick,
-  Collapse,
+  Grid,
+  Box,
 } from '@chakra-ui/react'
 import React, { useState } from 'react'
-import Divider from '../Divider'
-import ImageUploader from '../ImageUploader.js'
+import ImageUploader from '../ImageUploader'
 import toast from 'react-hot-toast'
 import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
@@ -28,6 +25,8 @@ const TextInput = React.forwardRef(function TextInput(props, ref) {
         _placeholder={{ fontSize: 'xl' }}
         {...props}
         ref={ref}
+        h={'44vh'}
+        maxH={'44vh'}
       />
       <FormErrorMessage>{props.errors[props.id]?.message}</FormErrorMessage>
     </FormControl>
@@ -35,28 +34,21 @@ const TextInput = React.forwardRef(function TextInput(props, ref) {
 })
 
 export default function CardForm() {
-  const [cardEdit, setCardEdit] = useState({ front: '', back: '' })
-  const frontRef = React.useRef()
-  const { isOpen, onOpen, onClose } = useDisclosure()
-
-  useOutsideClick({
-    ref: frontRef,
-    handler: () => {
-      clearErrors()
-      onClose()
-    },
-  })
+  const [triggerAnimation, setTriggerAnimation] = useState(false)
+  // const [cardFace, setCardFace] = useState('front')
   const router = useRouter()
   const { deckId } = router.query
   const {
     register,
     handleSubmit,
     setError,
+    reset,
     clearErrors,
     formState: { errors },
   } = useForm()
 
   const onSubmit = async (data) => {
+    data.back = 'asdasd'
     toast
       .promise(createCard(deckId, data), {
         loading: <b>Creating card...</b>,
@@ -64,70 +56,64 @@ export default function CardForm() {
         error: <b>Could not create.</b>,
       })
       .then(() => {
-        setCardEdit({ front: '', back: '', type: 'basic' })
-        onClose()
+        reset({ front: '', back: '', type: 'basic' })
       })
+      .catch(() => {})
   }
 
   return (
-    <Box
-      border="2px"
-      borderColor={'gray.300'}
-      borderRadius="10px"
-      ref={frontRef}
-      p={4}
-    >
-      <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <Box
+        py={16}
+        px={8}
+        h="64vh"
+        className={triggerAnimation ? styles.fade_in : ''}
+        onAnimationEnd={() => setTriggerAnimation(false)}
+        // overflow={'auto'}
+      >
         <TextInput
-          {...register('front', {
+          {...register('cardFace', {
             required: 'front is required',
             maxLength: { value: 1500, message: 'Max length is 1500 char' },
           })}
           errors={errors}
-          label={isOpen ? 'Front' : 'Create New Card'}
+          label={'Start writing'}
           id="front"
-          defaultValue={cardEdit.front || ''}
-          onClick={onOpen}
         />
-        <Collapse in={isOpen}>
-          <Stack spacing={4}>
-            <Divider />
-            <TextInput
-              {...register('back', {
-                required: 'back is required',
-                maxLength: { value: 1500, message: 'Max length is 1500 char' },
-              })}
-              errors={errors}
-              label="Back"
-              id="back"
-              defaultValue={cardEdit.back || ''}
-            />
-            <Divider />
-            <Stack direction={'row'} px={4}>
-              <FormControl>
-                <FormLabel htmlFor="type">Type: </FormLabel>
-                <Select
-                  id="type"
-                  maxW={{ base: '', md: '50%' }}
-                  {...register('type')}
-                >
-                  <option value="basic">Basic</option>
-                  <option value="Perfect">Perfect</option>
-                </Select>
-              </FormControl>
-              <FormControl isInvalid={errors.image}>
-                <FormLabel htmlFor="image">Image: </FormLabel>
-                <ImageUploader setError={setError} clearErrors={clearErrors} />
-                <FormErrorMessage>{errors.image?.message}</FormErrorMessage>
-              </FormControl>
-            </Stack>
+      </Box>
+      {/* <Divider width="100%" borderWidth="2px" /> */}
+      <Grid mx={8} gap={4} templateColumns={'repeat(4, 1fr)'}>
+        <FormControl>
+          <FormLabel htmlFor="type">Type: </FormLabel>
+          <Select id="type" {...register('type')}>
+            <option value="basic">Basic</option>
+            <option value="Perfect">Perfect</option>
+          </Select>
+        </FormControl>
+        <FormControl isInvalid={errors.image}>
+          <FormLabel htmlFor="image">Image: </FormLabel>
+          <ImageUploader setError={setError} clearErrors={clearErrors} />
+          <FormErrorMessage>{errors.image?.message}</FormErrorMessage>
+        </FormControl>
+        {/* <GridItem alignSelf="end" colSpan={2}> */}
+        <Button colorScheme="main" alignSelf="end">
+          Show Back
+        </Button>
+        <Button colorScheme="main" type="submit" alignSelf="end">
+          Create
+        </Button>
+      </Grid>
+      {/* <TextInput
+            {...register('back', {
+              required: 'back is required',
+              maxLength: { value: 1500, message: 'Max length is 1500 char' },
+            })}
+            errors={errors}
+            label="Back"
+            id="back"
+          /> */}
 
-            <Button colorScheme="main" size={'md'} type="submit">
-              Create new card
-            </Button>
-          </Stack>
-        </Collapse>
-      </form>
-    </Box>
+      {/* </GridItem> */}
+    </form>
   )
 }
