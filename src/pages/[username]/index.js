@@ -1,5 +1,4 @@
 import {
-  getUsernamePaths,
   getUidWithUsername,
   getUserData,
   getUserDecks,
