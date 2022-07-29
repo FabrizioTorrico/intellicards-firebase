@@ -3,6 +3,7 @@ import { chakra, Link, Table, TableContainer } from '@chakra-ui/react'
 import ChakraUIRenderer from 'chakra-ui-markdown-renderer'
 import { ExternalLinkIcon } from '@chakra-ui/icons'
 import remarkGfm from 'remark-gfm'
+import Image from './Image'
 
 const ChakraMarkDown = chakra(ReactMarkdown)
 
@@ -25,6 +26,15 @@ const markdownTheme = {
         <Table variant="simple">{children}</Table>
       </TableContainer>
     )
+  },
+  img: (props) => {
+    return <Image {...props} layout="fill" />
+    /* return <Image
+        src={downloadURL}
+        maxW={{ base: '0px', md: '128px' }}
+        maxH={'128px'}
+        alt=""
+      /> */
   },
 }
 

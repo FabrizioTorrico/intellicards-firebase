@@ -3,49 +3,49 @@ import {
   getUidWithUsername,
   getUserData,
   getUserDecks,
-} from "../../firebase/firestore";
-import Layout from "../../hocs/Layout";
-import Hero from "../../components/Hero";
-import UserHeader from "../../components/UserHeader";
-import DeckList from "../../components/decks/DeckList";
-import { useAuth } from "../../firebase/auth";
-import { useEffect, useState } from "react";
+} from '../../firebase/firestore'
+import Layout from '../../hocs/Layout'
+import Hero from '../../components/Hero'
+import UserHeader from '../../components/UserHeader'
+import DeckList from '../../components/decks/DeckList'
+import { useAuth } from '../../firebase/auth'
+import { useEffect, useState } from 'react'
 
 export default function UserPage({ userProps }) {
-  const { userData, userDecks, userId } = JSON.parse(userProps);
-  const [admin, setAdmin] = useState(false);
-  const { currentUser } = useAuth();
+  const { userData, userDecks, userId } = JSON.parse(userProps)
+  const [admin, setAdmin] = useState(false)
+  const { currentUser } = useAuth()
 
   useEffect(() => {
-    setAdmin(userId === currentUser?.uid);
-  }, [userId, currentUser?.uid]);
+    setAdmin(userId === currentUser?.uid)
+  }, [userId, currentUser?.uid])
 
   return (
-    <Layout priv>
+    <Layout>
       <Hero title={<UserHeader user={userData} admin={admin} />} />
       <DeckList userDecks={userDecks} admin={admin} />
     </Layout>
-  );
+  )
 }
 
 export const getServerSideProps = async ({ query }) => {
-  const { username } = query;
-  const uid = await getUidWithUsername(username);
+  const { username } = query
+  const uid = await getUidWithUsername(username)
 
   if (!uid) {
     return {
       notFound: true,
-    };
+    }
   }
-  const userData = await getUserData(uid);
-  const userDecks = await getUserDecks(uid);
+  const userData = await getUserData(uid)
+  const userDecks = await getUserDecks(uid)
 
   return {
     props: {
       userProps: JSON.stringify({ userData, userDecks, userId: uid }) || null,
     },
-  };
-};
+  }
+}
 /* export const getStaticPaths = async () => {
   const paths = await getUsernamePaths();
   return { paths, fallback: false };

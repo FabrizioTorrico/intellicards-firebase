@@ -80,7 +80,7 @@ function CardContent() {
             }
           }}
         >
-          {showBack ? 'Show Front' : 'Show answer'}
+          {showBack ? 'Show Front' : 'Show Back'}
         </Button>
         <Spacer />
         {showBack && (
@@ -90,9 +90,9 @@ function CardContent() {
             className={triggerAnimation ? styles.fade_in : ''}
           >
             <Text>Do you know the answer ? </Text>
-            <Button colorScreme={'green'}>Yes</Button>
-            <Button colorScreme={'gray'}>Almost</Button>
-            <Button colorScreme={'red'}>No</Button>
+            <Button colorScheme={'green'}>Yes</Button>
+            <Button colorScheme={'red'}>No</Button>
+            <Button colorScheme={'gray'}>Almost</Button>
           </Flex>
         )}
       </Flex>

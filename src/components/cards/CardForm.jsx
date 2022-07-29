@@ -18,8 +18,9 @@ import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
 import { createCard } from '../../firebase/firestore'
 import Divider from '../Divider'
+import MarkDown from '../MarkDown'
 
-const TextInput = React.forwardRef(function TextInput(props, ref) {
+function TextArea(props) {
   const error = props.errors.front?.message || props.errors.back?.message
   return (
     <FormControl
@@ -27,20 +28,29 @@ const TextInput = React.forwardRef(function TextInput(props, ref) {
       isInvalid={error}
       hidden={props.id !== props.cardFace}
     >
-      <Textarea
-        border={'none'}
-        id={props.id}
-        placeholder={props.label}
-        _placeholder={{ fontSize: 'xl' }}
-        {...props}
-        ref={ref}
-        h={'44vh'}
-        maxH={'44vh'}
-      />
+      {props.preview ? (
+        <Box py={2} pl={4} h="70vh" overflow={'auto'}>
+          <MarkDown>{props.watch(props.id) || 'Nothing here'}</MarkDown>
+        </Box>
+      ) : (
+        <Textarea
+          {...props.register(props.id, {
+            required: `${
+              props.id[0].toUpperCase() + props.id.substring(1)
+            } is required.`,
+            maxLength: { value: 1500, message: 'Max length is 1500 char' },
+          })}
+          border={'none'}
+          placeholder={props.label}
+          _placeholder={{ fontSize: 'xl' }}
+          h={'44vh'}
+          maxH={'44vh'}
+        />
+      )}
       <FormErrorMessage>{error}</FormErrorMessage>
     </FormControl>
   )
-})
+}
 
 export default function CardForm() {
   const [triggerAnimation, setTriggerAnimation] = useState(false)
@@ -59,12 +69,16 @@ export default function CardForm() {
     setError,
     reset,
     clearErrors,
+    watch,
     formState: { errors },
   } = useForm({
-    front: '',
+    front: '# Card Title',
     back: '',
   })
-  console.log(errors)
+
+  const changeFace = () =>
+    setCardFace((curFace) => (curFace === 'front' ? 'back' : 'front'))
+
   const onSubmit = async (data) => {
     toast
       .promise(createCard(deckId, data), {
@@ -87,7 +101,6 @@ export default function CardForm() {
         h="64vh"
         className={triggerAnimation ? styles.fade_in : ''}
         onAnimationEnd={() => setTriggerAnimation(false)}
-        // overflow={'auto'}
       >
         <Flex pl={4} gap={8}>
           <Text
@@ -97,7 +110,7 @@ export default function CardForm() {
             {...(!preview ? previewStyleText : {})}
             onClick={() => setPreview(false)}
           >
-            Editing {cardFace[0].toUpperCase() + cardFace.substring(1)}
+            {cardFace[0].toUpperCase() + cardFace.substring(1)} text
           </Text>
           <Text
             p={3}
@@ -110,55 +123,43 @@ export default function CardForm() {
           </Text>
         </Flex>
         <Divider />
-        <TextInput
-          {...register('front', {
-            required: `Front is required.`,
-            maxLength: { value: 1500, message: 'Max length is 1500 char' },
-          })}
-          errors={errors}
-          label={'Start writing'}
-          id={'front'}
-          cardFace={cardFace}
-        />
-        <TextInput
-          {...register('back', {
-            required: `Back is required.`,
-            maxLength: { value: 1500, message: 'Max length is 1500 char' },
-          })}
-          errors={errors}
-          label={'Start writing'}
-          id={'back'}
-          cardFace={cardFace}
-        />
+        {['front', 'back'].map((face) => (
+          <TextArea
+            key={face}
+            errors={errors}
+            label={'# Start writing'}
+            id={face}
+            register={register}
+            watch={watch}
+            cardFace={cardFace}
+            preview={preview}
+          />
+        ))}
       </Box>
 
-      <Grid mx={8} gap={4} templateColumns={'repeat(4, 1fr)'}>
-        <FormControl>
-          <FormLabel htmlFor="type">Type: </FormLabel>
-          <Select id="type" {...register('type')}>
-            <option value="basic">Basic</option>
-            <option value="Perfect">Perfect</option>
-          </Select>
-        </FormControl>
-        <FormControl isInvalid={errors.image}>
-          <FormLabel htmlFor="image">Image: </FormLabel>
-          <ImageUploader setError={setError} clearErrors={clearErrors} />
-          <FormErrorMessage>{errors.image?.message}</FormErrorMessage>
-        </FormControl>
-        {/* <GridItem alignSelf="end" colSpan={2}> */}
-        <Button
-          colorScheme="main"
-          alignSelf="end"
-          onClick={() =>
-            setCardFace((curFace) => (curFace === 'front' ? 'back' : 'front'))
-          }
-        >
-          Show {cardFace === 'front' ? 'Back' : 'Front'}
-        </Button>
-        <Button colorScheme="main" type="submit" alignSelf="end">
-          Create
-        </Button>
-      </Grid>
+      {!preview && (
+        <Grid mx={8} gap={4} templateColumns={'repeat(4, 1fr)'}>
+          <FormControl>
+            <FormLabel htmlFor="type">Type: </FormLabel>
+            <Select id="type" {...register('type')}>
+              <option value="basic">Basic</option>
+              <option value="Perfect">Perfect</option>
+            </Select>
+          </FormControl>
+          <FormControl isInvalid={errors.image}>
+            <FormLabel htmlFor="image">Image: </FormLabel>
+            <ImageUploader setError={setError} clearErrors={clearErrors} />
+            <FormErrorMessage>{errors.image?.message}</FormErrorMessage>
+          </FormControl>
+          {/* <GridItem alignSelf="end" colSpan={2}> */}
+          <Button colorScheme="main" alignSelf="end" onClick={changeFace}>
+            Show {cardFace === 'front' ? 'Back' : 'Front'}
+          </Button>
+          <Button colorScheme="main" type="submit" alignSelf="end">
+            Create
+          </Button>
+        </Grid>
+      )}
     </form>
   )
 }

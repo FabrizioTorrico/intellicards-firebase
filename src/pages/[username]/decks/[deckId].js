@@ -30,13 +30,14 @@ export default function DeckId({ deckProps }) {
 
   useEffect(() => {
     setAdmin(deckUid === currentUser?.uid)
+    console.log(admin, deckUid, currentUser?.uid)
     if (admin) {
       return getRealTimeCardList(deckData.deckId, setCards)
     }
-  }, [admin, currentUser?.uid, deckData.deckId, deckUid])
+  }, [deckUid, currentUser?.uid])
 
   return (
-    <Layout priv>
+    <Layout>
       <CardList admin={admin} deckId={deckData.deckId} />
       <Box ml={80} minH="85vh" position="relative">
         {createCard || (Array.isArray(cards) && cards.length === 0) ? (
