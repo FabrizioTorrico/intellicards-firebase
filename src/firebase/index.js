@@ -23,7 +23,6 @@ const auth = getAuth()
 
 const EMULATORS_STARTED = 'EMULATORS_STARTED'
 if (process.env.NODE_ENV === 'development') {
-  console.log('emulator')
   if (!global[EMULATORS_STARTED]) {
     global[EMULATORS_STARTED] = true
     connectFirestoreEmulator(db, 'localhost', 8080)

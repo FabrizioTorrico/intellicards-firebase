@@ -30,7 +30,7 @@ export default function DeckId({ deckProps }) {
 
   useEffect(() => {
     setAdmin(deckUid === currentUser?.uid)
-    console.log(admin, deckUid, currentUser?.uid)
+
     if (admin) {
       return getRealTimeCardList(deckData.deckId, setCards)
     }
