@@ -1,0 +1,15 @@
+.bounceX {
+  animation: bounce-x 1s infinite;
+}
+
+@keyframes bounce-x {
+  0% {
+    transform: translateX(5px);
+  }
+  40% {
+    transform: translateX(-5px);
+  }
+  100% {
+    transform: translateX(5px);
+  }
+}
