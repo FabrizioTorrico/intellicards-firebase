@@ -7,11 +7,11 @@
 - [x] Create Cards
 - [x] Play Decks
 - [x] Responsive
+- [x] Customization on cards and design
 - [ ] Shared decks
 - [ ] Blog
 - [ ] About
 - [ ] Help
-- [ ] Customization on cards and design
 - [ ] Get statistics from cards played
 - [ ] Search for deck / users
 - [ ] Images directory
