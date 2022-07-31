@@ -20,7 +20,7 @@ export default function UserPage({ userProps }) {
   }, [userId, currentUser?.uid])
 
   return (
-    <Layout>
+    <Layout priv>
       <Hero title={<UserHeader user={userData} admin={admin} />} />
       <DeckList userDecks={userDecks} admin={admin} />
     </Layout>

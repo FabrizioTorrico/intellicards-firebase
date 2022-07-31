@@ -201,7 +201,8 @@ export const getRealTimeDeckList = (setDeckList) => {
 }
 
 export const getRealTimeCardList = (deckId, setCardList) => {
-  const { uid } = auth.currentUser
+  const uid = auth.currentUser?.uid
+  if (!uid) return
   const userRef = doc(db, 'users', uid)
   const deckRef = doc(userRef, 'decks', deckId)
   const cardsCollection = collection(deckRef, 'cards')

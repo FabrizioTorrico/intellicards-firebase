@@ -4,11 +4,19 @@ import CardPreviewAdmin from './CardPreviewAdmin'
 import { useCard } from './CardContext'
 import styles from '../../styles/Animations.module.scss'
 import { ArrowForwardIcon } from '@chakra-ui/icons'
+import { getRealTimeCardList } from '../../firebase/firestore'
+import { useEffect } from 'react'
 export default function CardList({ deckId, admin }) {
-  const { cards } = useCard()
+  const { cards, setCards } = useCard()
+
+  useEffect(() => {
+    if (admin) {
+      return getRealTimeCardList(deckId, setCards)
+    }
+  }, [admin])
 
   const renderCardList = () => {
-    if (!cards || (Array.isArray(cards) && cards.length === 0))
+    if (admin && (!cards || (Array.isArray(cards) && cards.length === 0)))
       return (
         <Flex flexDirection={'column'} alignItems={'center'} gap={6}>
           <Text color="gray.600" fontSize={{ base: 'lg', md: '2xl' }}>

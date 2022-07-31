@@ -2,7 +2,6 @@ import Layout from '../../../hocs/Layout'
 import CardList from '../../../components/cards/CardList'
 import {
   getDeckCards,
-  getRealTimeCardList,
   getDeckData,
   getUidWithUsername,
 } from '../../../firebase/firestore'
@@ -22,7 +21,6 @@ export default function DeckId({ deckProps }) {
   const { currentUser } = useAuth()
   const [admin, setAdmin] = useState(false)
   const { cards } = useCard()
-  // const shuffledCards = cards?.sort((a, b) => 0.5 - Math.random());
 
   useEffect(() => {
     setCards(deckCards)
@@ -30,17 +28,14 @@ export default function DeckId({ deckProps }) {
 
   useEffect(() => {
     setAdmin(deckUid === currentUser?.uid)
-
-    if (admin) {
-      return getRealTimeCardList(deckData.deckId, setCards)
-    }
   }, [deckUid, currentUser?.uid])
 
   return (
-    <Layout>
+    <Layout priv>
       <CardList admin={admin} deckId={deckData.deckId} />
       <Box ml={80} minH="85vh" position="relative">
-        {createCard || (Array.isArray(cards) && cards.length === 0) ? (
+        {admin &&
+        (createCard || (Array.isArray(cards) && cards.length === 0)) ? (
           <CardForm />
         ) : (
           <CardContent deckData={deckData} />
