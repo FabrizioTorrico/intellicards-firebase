@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react'
-import { Button, InputGroup, Input, Spinner, Image } from '@chakra-ui/react'
+import { Button, InputGroup, Input, Spinner } from '@chakra-ui/react'
 import { IoCamera } from 'react-icons/io5'
 import { uploadImageToStorage } from '../firebase/storage'
 
@@ -36,12 +36,12 @@ export default function ImageUploader({ setError, clearErrors }) {
 
   return downloadURL ? (
     <InputGroup>
-      <Image
+      {/* <Image
         src={downloadURL}
         maxW={{ base: '0px', md: '128px' }}
         maxH={'128px'}
         alt=""
-      />
+      /> */}
       <Button
         onClick={() => {
           navigator.clipboard.writeText(`![alt](${downloadURL})`)

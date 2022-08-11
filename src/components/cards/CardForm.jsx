@@ -3,7 +3,6 @@ import {
   FormControl,
   FormLabel,
   FormErrorMessage,
-  Textarea,
   Select,
   Button,
   Grid,
@@ -19,7 +18,7 @@ import { useForm } from 'react-hook-form'
 import { createCard } from '../../firebase/firestore'
 import Divider from '../Divider'
 import MarkDown from '../MarkDown'
-
+import MarkdownArea from '../SimpleMDE'
 function TextArea(props) {
   const error = props.errors.front?.message || props.errors.back?.message
   return (
@@ -33,7 +32,11 @@ function TextArea(props) {
           <MarkDown>{props.watch(props.id) || 'Nothing here'}</MarkDown>
         </Box>
       ) : (
-        <Textarea
+        <MarkdownArea
+          value={props.watch(props.id)}
+          onChange={(value) => props.setValue(props.id, value)}
+        /> /* ({
+           <Textarea
           {...props.register(props.id, {
             required: `${
               props.id[0].toUpperCase() + props.id.substring(1)
@@ -45,7 +48,8 @@ function TextArea(props) {
           _placeholder={{ fontSize: 'xl' }}
           h={'44vh'}
           maxH={'44vh'}
-        />
+        /> 
+        }) */
       )}
       <FormErrorMessage>{error}</FormErrorMessage>
     </FormControl>
@@ -65,6 +69,7 @@ export default function CardForm() {
   const { deckId } = router.query
   const {
     register,
+    setValue,
     handleSubmit,
     setError,
     reset,
@@ -129,7 +134,7 @@ export default function CardForm() {
             errors={errors}
             label={'# Start writing'}
             id={face}
-            register={register}
+            setValue={setValue}
             watch={watch}
             cardFace={cardFace}
             preview={preview}
