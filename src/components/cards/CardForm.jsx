@@ -29,7 +29,10 @@ function CardFace(props) {
     >
       {props.preview ? (
         <Box pt={16} pb={2} pl={4} h="70vh" overflow={'auto'}>
-          <MarkDown>{props.watch(props.id) || 'Nothing here'}</MarkDown>
+          <MarkDown>
+            {props.getValues(props.id)?.replace(/\n/gi, '  ' + '\n') ||
+              'Nothing here'}
+          </MarkDown>
         </Box>
       ) : (
         <Controller
@@ -40,9 +43,11 @@ function CardFace(props) {
               props.id[0].toUpperCase() + props.id.substring(1)
             } is required.`,
           }}
-          render={({ field }) => (
-            <MarkdownInput value={field.value} onChange={field.onChange} />
-          )}
+          render={({ field }) => {
+            return (
+              <MarkdownInput value={field.value} onChange={field.onChange} />
+            )
+          }}
         />
       )}
       <FormErrorMessage mt="-1.5rem">{error}</FormErrorMessage>
@@ -67,7 +72,7 @@ export default function CardForm() {
     setError,
     reset,
     clearErrors,
-    watch,
+    getValues,
     control,
     formState: { errors },
   } = useForm({
@@ -128,7 +133,7 @@ export default function CardForm() {
             key={face}
             errors={errors}
             id={face}
-            watch={watch}
+            getValues={getValues}
             curFace={curFace}
             preview={preview}
             control={control}

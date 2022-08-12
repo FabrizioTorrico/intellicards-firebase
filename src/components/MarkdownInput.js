@@ -24,6 +24,7 @@ export default function MarkdownInput({ value, onChange }) {
         'guide',
       ],
       maxHeight: '38vh',
+      placeholder: '# start writing',
     }
   }, [])
 
