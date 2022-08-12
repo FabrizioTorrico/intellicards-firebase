@@ -6,7 +6,7 @@ const SimpleMDE = dynamic(() => import('react-simplemde-editor'), {
   ssr: false,
 })
 
-export default function MarkdownArea({ value, onChange }) {
+export default function MarkdownInput({ value, onChange }) {
   const options = useMemo(() => {
     return {
       spellChecker: false,
@@ -23,6 +23,7 @@ export default function MarkdownArea({ value, onChange }) {
         'table',
         'guide',
       ],
+      maxHeight: '38vh',
     }
   }, [])
 

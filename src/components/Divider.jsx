@@ -1,9 +1,9 @@
-import { Center } from "@chakra-ui/react";
+import { Center } from '@chakra-ui/react'
 
 /**
  * @param {String | number} my margin on y axis
  */
-export default function Divider({ my, width = "90%", borderWidth = "1px" }) {
+export default function Divider({ my, width = '90%', borderWidth = '1px' }) {
   return (
     <Center my={my}>
       <hr
@@ -13,5 +13,5 @@ export default function Divider({ my, width = "90%", borderWidth = "1px" }) {
         }}
       />
     </Center>
-  );
+  )
 }

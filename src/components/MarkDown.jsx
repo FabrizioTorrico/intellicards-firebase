@@ -28,7 +28,6 @@ const markdownTheme = {
     )
   },
   img: (props) => {
-    console.log(props)
     return (
       <Box boxSize={'xs'} pos="relative">
         <Image {...props} layout="fill" objectFit="contain" />

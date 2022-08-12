@@ -14,51 +14,45 @@ import React, { useState } from 'react'
 import ImageUploader from '../ImageUploader'
 import toast from 'react-hot-toast'
 import { useRouter } from 'next/router'
-import { useForm } from 'react-hook-form'
+import { useForm, Controller } from 'react-hook-form'
 import { createCard } from '../../firebase/firestore'
-import Divider from '../Divider'
 import MarkDown from '../MarkDown'
-import MarkdownArea from '../SimpleMDE'
-function TextArea(props) {
+import MarkdownInput from '../MarkdownInput'
+
+function CardFace(props) {
   const error = props.errors.front?.message || props.errors.back?.message
   return (
     <FormControl
       id={props.id}
       isInvalid={error}
-      hidden={props.id !== props.cardFace}
+      hidden={props.id !== props.curFace}
     >
       {props.preview ? (
-        <Box py={2} pl={4} h="70vh" overflow={'auto'}>
+        <Box pt={16} pb={2} pl={4} h="70vh" overflow={'auto'}>
           <MarkDown>{props.watch(props.id) || 'Nothing here'}</MarkDown>
         </Box>
       ) : (
-        <MarkdownArea
-          value={props.watch(props.id)}
-          onChange={(value) => props.setValue(props.id, value)}
-        /> /* ({
-           <Textarea
-          {...props.register(props.id, {
+        <Controller
+          name={props.id}
+          control={props.control}
+          rules={{
             required: `${
               props.id[0].toUpperCase() + props.id.substring(1)
             } is required.`,
-            maxLength: { value: 1500, message: 'Max length is 1500 char' },
-          })}
-          border={'none'}
-          placeholder={props.label}
-          _placeholder={{ fontSize: 'xl' }}
-          h={'44vh'}
-          maxH={'44vh'}
-        /> 
-        }) */
+          }}
+          render={({ field }) => (
+            <MarkdownInput value={field.value} onChange={field.onChange} />
+          )}
+        />
       )}
-      <FormErrorMessage>{error}</FormErrorMessage>
+      <FormErrorMessage mt="-1.5rem">{error}</FormErrorMessage>
     </FormControl>
   )
 }
 
 export default function CardForm() {
   const [triggerAnimation, setTriggerAnimation] = useState(false)
-  const [cardFace, setCardFace] = useState('front')
+  const [curFace, setCurFace] = useState('front')
   const [preview, setPreview] = useState(false)
   const previewStyleText = {
     color: 'main.500',
@@ -69,12 +63,12 @@ export default function CardForm() {
   const { deckId } = router.query
   const {
     register,
-    setValue,
     handleSubmit,
     setError,
     reset,
     clearErrors,
     watch,
+    control,
     formState: { errors },
   } = useForm({
     front: '# Card Title',
@@ -82,7 +76,7 @@ export default function CardForm() {
   })
 
   const changeFace = () =>
-    setCardFace((curFace) => (curFace === 'front' ? 'back' : 'front'))
+    setCurFace((curFace) => (curFace === 'front' ? 'back' : 'front'))
 
   const onSubmit = async (data) => {
     toast
@@ -100,6 +94,7 @@ export default function CardForm() {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Box
+        position="relative"
         pb={16}
         pt={4}
         px={8}
@@ -107,7 +102,7 @@ export default function CardForm() {
         className={triggerAnimation ? styles.fade_in : ''}
         onAnimationEnd={() => setTriggerAnimation(false)}
       >
-        <Flex pl={4} gap={8}>
+        <Flex gap={8} position="absolute" right={'3rem'} top="1rem" zIndex="30">
           <Text
             p={3}
             cursor={'pointer'}
@@ -115,7 +110,7 @@ export default function CardForm() {
             {...(!preview ? previewStyleText : {})}
             onClick={() => setPreview(false)}
           >
-            {cardFace[0].toUpperCase() + cardFace.substring(1)} text
+            {curFace[0].toUpperCase() + curFace.substring(1)} text
           </Text>
           <Text
             p={3}
@@ -127,17 +122,16 @@ export default function CardForm() {
             Preview
           </Text>
         </Flex>
-        <Divider />
+
         {['front', 'back'].map((face) => (
-          <TextArea
+          <CardFace
             key={face}
             errors={errors}
-            label={'# Start writing'}
             id={face}
-            setValue={setValue}
             watch={watch}
-            cardFace={cardFace}
+            curFace={curFace}
             preview={preview}
+            control={control}
           />
         ))}
       </Box>
@@ -158,7 +152,7 @@ export default function CardForm() {
           </FormControl>
           {/* <GridItem alignSelf="end" colSpan={2}> */}
           <Button colorScheme="main" alignSelf="end" onClick={changeFace}>
-            Show {cardFace === 'front' ? 'Back' : 'Front'}
+            Show {curFace === 'front' ? 'Back' : 'Front'}
           </Button>
           <Button colorScheme="main" type="submit" alignSelf="end">
             Create

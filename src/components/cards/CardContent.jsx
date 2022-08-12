@@ -15,6 +15,7 @@ function CardContent() {
   function Arrow({ direction }) {
     return (
       <Flex
+        as="button"
         h={12}
         w={8}
         bg={
