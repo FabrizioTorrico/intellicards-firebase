@@ -10,7 +10,7 @@ export default function CardPreview({ deckId, index, cardData }) {
       deleteCard(deckId, cardId),
       {
         loading: 'Deleting...',
-        success: <b>card Deleted!</b>,
+        success: <b>Card Deleted!</b>,
         error: <b>Could not delete.</b>,
       },
       {
@@ -53,7 +53,7 @@ export default function CardPreview({ deckId, index, cardData }) {
         noOfLines={2}
         color={'gray.900'}
       >
-        {front}
+        {front.split('\n', 1)[0]}
       </Text>
     </Flex>
   )

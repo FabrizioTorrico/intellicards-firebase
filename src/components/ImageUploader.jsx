@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react'
-import { Button, InputGroup, Input, Spinner, Image } from '@chakra-ui/react'
+import { Button, InputGroup, Input, Spinner, Tooltip } from '@chakra-ui/react'
 import { IoCamera } from 'react-icons/io5'
 import { uploadImageToStorage } from '../firebase/storage'
 
@@ -36,20 +36,23 @@ export default function ImageUploader({ setError, clearErrors }) {
 
   return downloadURL ? (
     <InputGroup>
-      <Image
+      {/* <Image
         src={downloadURL}
         maxW={{ base: '0px', md: '128px' }}
         maxH={'128px'}
         alt=""
-      />
-      <Button
-        onClick={() => {
-          navigator.clipboard.writeText(`![alt](${downloadURL})`)
-          setCopied(true)
-        }}
-      >
-        {copied ? 'copied!' : 'Get Image Link'}
-      </Button>
+      /> */}
+      <Tooltip label="Only one Image is allowed per face" openDelay={500}>
+        <Button
+          width={'100%'}
+          onClick={() => {
+            navigator.clipboard.writeText(`![alt](${downloadURL})`)
+            setCopied(true)
+          }}
+        >
+          {copied ? 'copied!' : 'Get Image Link'}
+        </Button>
+      </Tooltip>
     </InputGroup>
   ) : (
     <InputGroup>
@@ -63,11 +66,13 @@ export default function ImageUploader({ setError, clearErrors }) {
       />
 
       <Button
+        width={'100%'}
+        overflow="hidden"
         isDisabled={uploading}
         onClick={handleClick}
         leftIcon={uploading ? <Spinner /> : <IoCamera size={'32px'} />}
       >
-        Upload Image
+        Upload
       </Button>
     </InputGroup>
   )

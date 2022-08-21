@@ -3,58 +3,67 @@ import {
   FormControl,
   FormLabel,
   FormErrorMessage,
-  Textarea,
   Select,
   Button,
-  Grid,
   Box,
   Text,
   Flex,
+  SimpleGrid,
 } from '@chakra-ui/react'
 import React, { useState } from 'react'
 import ImageUploader from '../ImageUploader'
 import toast from 'react-hot-toast'
 import { useRouter } from 'next/router'
-import { useForm } from 'react-hook-form'
+import { useForm, Controller } from 'react-hook-form'
 import { createCard } from '../../firebase/firestore'
-import Divider from '../Divider'
 import MarkDown from '../MarkDown'
+import MarkdownInput from '../MarkdownInput'
 
-function TextArea(props) {
+function CardFace(props) {
   const error = props.errors.front?.message || props.errors.back?.message
   return (
     <FormControl
       id={props.id}
       isInvalid={error}
-      hidden={props.id !== props.cardFace}
+      hidden={props.id !== props.curFace}
     >
-      {props.preview ? (
-        <Box py={2} pl={4} h="70vh" overflow={'auto'}>
-          <MarkDown>{props.watch(props.id) || 'Nothing here'}</MarkDown>
-        </Box>
-      ) : (
-        <Textarea
-          {...props.register(props.id, {
-            required: `${
-              props.id[0].toUpperCase() + props.id.substring(1)
-            } is required.`,
-            maxLength: { value: 1500, message: 'Max length is 1500 char' },
-          })}
-          border={'none'}
-          placeholder={props.label}
-          _placeholder={{ fontSize: 'xl' }}
-          h={'44vh'}
-          maxH={'44vh'}
-        />
-      )}
-      <FormErrorMessage>{error}</FormErrorMessage>
+      <Box
+        mt={16}
+        pb={2}
+        pr={24}
+        pl={4}
+        h="44vh"
+        overflow={'auto'}
+        hidden={!props.preview}
+      >
+        <MarkDown>{props.getValues(props.id) || 'Nothing here'}</MarkDown>
+      </Box>
+
+      <Controller
+        name={props.id}
+        control={props.control}
+        rules={{
+          required: `${
+            props.id[0].toUpperCase() + props.id.substring(1)
+          } is required.`,
+        }}
+        render={({ field }) => {
+          return (
+            <Box hidden={props.preview}>
+              <MarkdownInput value={field.value} onChange={field.onChange} />
+            </Box>
+          )
+        }}
+      />
+
+      <FormErrorMessage mt="-1.5rem">{error}</FormErrorMessage>
     </FormControl>
   )
 }
 
 export default function CardForm() {
   const [triggerAnimation, setTriggerAnimation] = useState(false)
-  const [cardFace, setCardFace] = useState('front')
+  const [curFace, setCurFace] = useState('front')
   const [preview, setPreview] = useState(false)
   const previewStyleText = {
     color: 'main.500',
@@ -69,7 +78,8 @@ export default function CardForm() {
     setError,
     reset,
     clearErrors,
-    watch,
+    getValues,
+    control,
     formState: { errors },
   } = useForm({
     front: '# Card Title',
@@ -77,7 +87,7 @@ export default function CardForm() {
   })
 
   const changeFace = () =>
-    setCardFace((curFace) => (curFace === 'front' ? 'back' : 'front'))
+    setCurFace((curFace) => (curFace === 'front' ? 'back' : 'front'))
 
   const onSubmit = async (data) => {
     toast
@@ -95,6 +105,7 @@ export default function CardForm() {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Box
+        position="relative"
         pb={16}
         pt={4}
         px={8}
@@ -102,7 +113,13 @@ export default function CardForm() {
         className={triggerAnimation ? styles.fade_in : ''}
         onAnimationEnd={() => setTriggerAnimation(false)}
       >
-        <Flex pl={4} gap={8}>
+        <Flex
+          gap={8}
+          position="absolute"
+          right={'3.5rem'}
+          top="1rem"
+          zIndex="30"
+        >
           <Text
             p={3}
             cursor={'pointer'}
@@ -110,7 +127,7 @@ export default function CardForm() {
             {...(!preview ? previewStyleText : {})}
             onClick={() => setPreview(false)}
           >
-            {cardFace[0].toUpperCase() + cardFace.substring(1)} text
+            {curFace[0].toUpperCase() + curFace.substring(1)} text
           </Text>
           <Text
             p={3}
@@ -122,44 +139,41 @@ export default function CardForm() {
             Preview
           </Text>
         </Flex>
-        <Divider />
+
         {['front', 'back'].map((face) => (
-          <TextArea
+          <CardFace
             key={face}
             errors={errors}
-            label={'# Start writing'}
             id={face}
-            register={register}
-            watch={watch}
-            cardFace={cardFace}
+            getValues={getValues}
+            curFace={curFace}
             preview={preview}
+            control={control}
           />
         ))}
       </Box>
 
-      {!preview && (
-        <Grid mx={8} gap={4} templateColumns={'repeat(4, 1fr)'}>
-          <FormControl>
-            <FormLabel htmlFor="type">Type: </FormLabel>
-            <Select id="type" {...register('type')}>
-              <option value="basic">Basic</option>
-              <option value="Perfect">Perfect</option>
-            </Select>
-          </FormControl>
-          <FormControl isInvalid={errors.image}>
-            <FormLabel htmlFor="image">Image: </FormLabel>
-            <ImageUploader setError={setError} clearErrors={clearErrors} />
-            <FormErrorMessage>{errors.image?.message}</FormErrorMessage>
-          </FormControl>
-          {/* <GridItem alignSelf="end" colSpan={2}> */}
-          <Button colorScheme="main" alignSelf="end" onClick={changeFace}>
-            Show {cardFace === 'front' ? 'Back' : 'Front'}
-          </Button>
-          <Button colorScheme="main" type="submit" alignSelf="end">
-            Create
-          </Button>
-        </Grid>
-      )}
+      <SimpleGrid mx={8} gap={4} columns={{ base: 2, md: 4 }}>
+        <FormControl>
+          <FormLabel htmlFor="type">Type: </FormLabel>
+          <Select id="type" {...register('type')}>
+            <option value="basic">Basic</option>
+            <option value="Perfect">Perfect</option>
+          </Select>
+        </FormControl>
+        <FormControl isInvalid={errors.image}>
+          <FormLabel htmlFor="image">Image: </FormLabel>
+          <ImageUploader setError={setError} clearErrors={clearErrors} />
+          <FormErrorMessage>{errors.image?.message}</FormErrorMessage>
+        </FormControl>
+        {/* <GridItem alignSelf="end" colSpan={2}> */}
+        <Button colorScheme="main" alignSelf="end" onClick={changeFace}>
+          Show {curFace === 'front' ? 'Back' : 'Front'}
+        </Button>
+        <Button colorScheme="main" type="submit" alignSelf="end">
+          Create
+        </Button>
+      </SimpleGrid>
     </form>
   )
 }

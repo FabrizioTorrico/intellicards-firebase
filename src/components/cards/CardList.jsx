@@ -6,6 +6,7 @@ import styles from '../../styles/Animations.module.scss'
 import { ArrowForwardIcon } from '@chakra-ui/icons'
 import { getRealTimeCardList } from '../../firebase/firestore'
 import { useEffect } from 'react'
+
 export default function CardList({ deckId, admin }) {
   const { cards, setCards } = useCard()
 
@@ -16,6 +17,7 @@ export default function CardList({ deckId, admin }) {
   }, [admin])
 
   const renderCardList = () => {
+    // no cards condition
     if (admin && (!cards || (Array.isArray(cards) && cards.length === 0)))
       return (
         <Flex flexDirection={'column'} alignItems={'center'} gap={6}>
@@ -31,18 +33,24 @@ export default function CardList({ deckId, admin }) {
         </Flex>
       )
 
+    // deck with cards
     return cards.map((card, i) => (
       <CardPreview key={i} index={i} deckId={deckId} cardData={card} />
     ))
   }
+
   return (
     <Box
-      position="fixed"
+      as="aside"
+      position={{ md: 'fixed' }}
+      left={0}
+      top={'4rem'}
       bg="white"
-      zIndex={50}
-      w={80}
+      zIndex={40}
+      w={{ md: 80 }}
       h={'85vh'}
       overflow={'auto'}
+      boxShadow="lg"
     >
       <Flex py={8} px={6} gap={6} direction={'column'}>
         {admin && <CardPreviewAdmin />}

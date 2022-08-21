@@ -1,5 +1,5 @@
 import ReactMarkdown from 'react-markdown'
-import { chakra, Link, Table, TableContainer } from '@chakra-ui/react'
+import { chakra, Link, Table, TableContainer, Box } from '@chakra-ui/react'
 import ChakraUIRenderer from 'chakra-ui-markdown-renderer'
 import { ExternalLinkIcon } from '@chakra-ui/icons'
 import remarkGfm from 'remark-gfm'
@@ -28,7 +28,11 @@ const markdownTheme = {
     )
   },
   img: (props) => {
-    return <Image {...props} layout="fill" />
+    return (
+      <Box boxSize={'xs'} pos="relative">
+        <Image {...props} layout="fill" objectFit="contain" />
+      </Box>
+    )
     /* return <Image
         src={downloadURL}
         maxW={{ base: '0px', md: '128px' }}
@@ -38,14 +42,14 @@ const markdownTheme = {
   },
 }
 
-const MarkDown = ({ children, props }) => (
+const MarkDown = ({ children, ...props }) => (
   <ChakraMarkDown
     {...props}
     components={ChakraUIRenderer(markdownTheme)}
     remarkPlugins={[remarkGfm]}
     skipHtml
   >
-    {children}
+    {children?.replace(/\n/gi, '  ' + '\n')}
   </ChakraMarkDown>
 )
 
