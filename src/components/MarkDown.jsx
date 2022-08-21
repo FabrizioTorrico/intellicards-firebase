@@ -49,7 +49,7 @@ const MarkDown = ({ children, ...props }) => (
     remarkPlugins={[remarkGfm]}
     skipHtml
   >
-    {children}
+    {children?.replace(/\n/gi, '  ' + '\n')}
   </ChakraMarkDown>
 )
 

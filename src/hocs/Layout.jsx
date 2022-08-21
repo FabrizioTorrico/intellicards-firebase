@@ -1,19 +1,26 @@
-import Head from "next/head";
-import NavBar from "../components/NavBar";
-import Footer from "../components/Footer";
-import { useAuth } from "../firebase/auth";
-import DisconnectedPage from "../components/Unauthenticated/DisconnectedPage";
+import Head from 'next/head'
+import NavBar from '../components/NavBar'
+import Footer from '../components/Footer'
+import { useAuth } from '../firebase/auth'
+import DisconnectedPage from '../components/Unauthenticated/DisconnectedPage'
 
 /**
  * the children component with nav bar and footer
  * @param {string} title The Head title
  * @param {string} description The Head description
- * @param {JSX.Element} children The Head description
- * @param {boolean} home Checks if it's the home for special interactinos
+ * @param {boolean} home Checks if it's the home for special interactions
+ * @param {boolean} priv
  * @author Fabrizio Torrico
  */
-export default function Layout({ title, description, children, home, priv }) {
-  const { currentUser } = useAuth();
+export default function Layout({
+  title,
+  description,
+  home,
+  priv,
+  children,
+  noFooter,
+}) {
+  const { currentUser } = useAuth()
 
   return (
     <>
@@ -31,19 +38,19 @@ export default function Layout({ title, description, children, home, priv }) {
       <NavBar home={home} />
       <main
         style={{
-          paddingTop: "4rem",
-          minHeight: "60vh",
+          paddingTop: '4rem',
+          minHeight: '60vh',
         }}
       >
         {priv ? currentUser ? children : <DisconnectedPage /> : children}
       </main>
-      <Footer />
+      {!noFooter && <Footer />}
     </>
-  );
+  )
 }
 
 Layout.defaultProps = {
-  title: "",
+  title: '',
   description:
-    "Intellicards will help you study better and increase your productivity by merging different educational tools and games",
-};
+    'Intellicards will help you study better and increase your productivity by merging different educational tools and games',
+}

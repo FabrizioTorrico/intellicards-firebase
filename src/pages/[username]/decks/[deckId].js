@@ -31,9 +31,8 @@ export default function DeckId({ deckProps }) {
   }, [deckUid, currentUser?.uid])
 
   return (
-    <Layout priv>
-      <CardList admin={admin} deckId={deckData.deckId} />
-      <Box ml={80} minH="85vh" position="relative">
+    <Layout noFooter priv>
+      <Box ml={{ md: 80 }} minH="85vh" position="relative">
         {admin &&
         (createCard || (Array.isArray(cards) && cards.length === 0)) ? (
           <CardForm />
@@ -41,6 +40,7 @@ export default function DeckId({ deckProps }) {
           <CardContent deckData={deckData} />
         )}
       </Box>
+      <CardList admin={admin} deckId={deckData.deckId} />
       {/* <DeckHeader deckData={deckData} deckUid={deckUid} admin={admin} /> */}
     </Layout>
   )

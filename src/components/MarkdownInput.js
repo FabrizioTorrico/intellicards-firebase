@@ -12,19 +12,18 @@ export default function MarkdownInput({ value, onChange }) {
       spellChecker: false,
       sideBySideFullscreen: false,
       toolbar: [
+        'heading',
         'bold',
         'italic',
-        'heading',
         'quote',
         'unordered-list',
-        'ordered-list',
         'link',
         'image',
         'table',
         'guide',
       ],
-      maxHeight: '38vh',
-      placeholder: '# start writing',
+      maxHeight: '44vh',
+      placeholder: '# An amazing Title',
     }
   }, [])
 

@@ -45,6 +45,7 @@ function CardContent() {
             if (newPos > cards.length - 1) return
             setSelectedCard(newPos)
           }
+          setShowBack(false)
         }}
       >
         {direction === 'left' ? (
@@ -62,7 +63,7 @@ function CardContent() {
       <Arrow direction="right" />
       <Box
         py={16}
-        px={24}
+        px={{ base: 10, md: 24 }}
         h="70vh"
         className={triggerAnimation ? styles.fade_in : ''}
         onAnimationEnd={() => setTriggerAnimation(false)}

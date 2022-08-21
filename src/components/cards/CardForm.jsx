@@ -5,10 +5,10 @@ import {
   FormErrorMessage,
   Select,
   Button,
-  Grid,
   Box,
   Text,
   Flex,
+  SimpleGrid,
 } from '@chakra-ui/react'
 import React, { useState } from 'react'
 import ImageUploader from '../ImageUploader'
@@ -27,29 +27,35 @@ function CardFace(props) {
       isInvalid={error}
       hidden={props.id !== props.curFace}
     >
-      {props.preview ? (
-        <Box pt={16} pb={2} pl={4} h="70vh" overflow={'auto'}>
-          <MarkDown>
-            {props.getValues(props.id)?.replace(/\n/gi, '  ' + '\n') ||
-              'Nothing here'}
-          </MarkDown>
-        </Box>
-      ) : (
-        <Controller
-          name={props.id}
-          control={props.control}
-          rules={{
-            required: `${
-              props.id[0].toUpperCase() + props.id.substring(1)
-            } is required.`,
-          }}
-          render={({ field }) => {
-            return (
+      <Box
+        mt={16}
+        pb={2}
+        pr={24}
+        pl={4}
+        h="44vh"
+        overflow={'auto'}
+        hidden={!props.preview}
+      >
+        <MarkDown>{props.getValues(props.id) || 'Nothing here'}</MarkDown>
+      </Box>
+
+      <Controller
+        name={props.id}
+        control={props.control}
+        rules={{
+          required: `${
+            props.id[0].toUpperCase() + props.id.substring(1)
+          } is required.`,
+        }}
+        render={({ field }) => {
+          return (
+            <Box hidden={props.preview}>
               <MarkdownInput value={field.value} onChange={field.onChange} />
-            )
-          }}
-        />
-      )}
+            </Box>
+          )
+        }}
+      />
+
       <FormErrorMessage mt="-1.5rem">{error}</FormErrorMessage>
     </FormControl>
   )
@@ -107,7 +113,13 @@ export default function CardForm() {
         className={triggerAnimation ? styles.fade_in : ''}
         onAnimationEnd={() => setTriggerAnimation(false)}
       >
-        <Flex gap={8} position="absolute" right={'3rem'} top="1rem" zIndex="30">
+        <Flex
+          gap={8}
+          position="absolute"
+          right={'3.5rem'}
+          top="1rem"
+          zIndex="30"
+        >
           <Text
             p={3}
             cursor={'pointer'}
@@ -141,29 +153,27 @@ export default function CardForm() {
         ))}
       </Box>
 
-      {!preview && (
-        <Grid mx={8} gap={4} templateColumns={'repeat(4, 1fr)'}>
-          <FormControl>
-            <FormLabel htmlFor="type">Type: </FormLabel>
-            <Select id="type" {...register('type')}>
-              <option value="basic">Basic</option>
-              <option value="Perfect">Perfect</option>
-            </Select>
-          </FormControl>
-          <FormControl isInvalid={errors.image}>
-            <FormLabel htmlFor="image">Image: </FormLabel>
-            <ImageUploader setError={setError} clearErrors={clearErrors} />
-            <FormErrorMessage>{errors.image?.message}</FormErrorMessage>
-          </FormControl>
-          {/* <GridItem alignSelf="end" colSpan={2}> */}
-          <Button colorScheme="main" alignSelf="end" onClick={changeFace}>
-            Show {curFace === 'front' ? 'Back' : 'Front'}
-          </Button>
-          <Button colorScheme="main" type="submit" alignSelf="end">
-            Create
-          </Button>
-        </Grid>
-      )}
+      <SimpleGrid mx={8} gap={4} columns={{ base: 2, md: 4 }}>
+        <FormControl>
+          <FormLabel htmlFor="type">Type: </FormLabel>
+          <Select id="type" {...register('type')}>
+            <option value="basic">Basic</option>
+            <option value="Perfect">Perfect</option>
+          </Select>
+        </FormControl>
+        <FormControl isInvalid={errors.image}>
+          <FormLabel htmlFor="image">Image: </FormLabel>
+          <ImageUploader setError={setError} clearErrors={clearErrors} />
+          <FormErrorMessage>{errors.image?.message}</FormErrorMessage>
+        </FormControl>
+        {/* <GridItem alignSelf="end" colSpan={2}> */}
+        <Button colorScheme="main" alignSelf="end" onClick={changeFace}>
+          Show {curFace === 'front' ? 'Back' : 'Front'}
+        </Button>
+        <Button colorScheme="main" type="submit" alignSelf="end">
+          Create
+        </Button>
+      </SimpleGrid>
     </form>
   )
 }
