@@ -14,7 +14,7 @@ import {
 } from '@chakra-ui/react'
 import { useAuth } from '../../firebase/auth'
 import { useForm } from 'react-hook-form'
-import Container from '../../hocs/Container'
+import Container from '../../lib/Container'
 import { createFirestoreUser, usernameExists } from '../../firebase/firestore'
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'

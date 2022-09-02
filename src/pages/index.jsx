@@ -1,13 +1,13 @@
-import Layout from "../hocs/Layout";
-import DisconnectedPage from "../components/Unauthenticated/DisconnectedPage";
-import { useEffect } from "react";
-import toast from "react-hot-toast";
-import { useRouter } from "next/router";
-import { useAuth } from "../firebase/auth";
+import Layout from '../lib/Layout'
+import DisconnectedPage from '../components/Unauthenticated/DisconnectedPage'
+import { useEffect } from 'react'
+import toast from 'react-hot-toast'
+import { useRouter } from 'next/router'
+import { useAuth } from '../firebase/auth'
 
 export default function Home() {
-  const router = useRouter();
-  const { currentUserData } = useAuth();
+  const router = useRouter()
+  const { currentUserData } = useAuth()
 
   useEffect(() => {
     if (currentUserData) {
@@ -18,14 +18,14 @@ export default function Home() {
           loading: <b>Loading user...</b>,
           error: <b>Could not load user.</b>,
         },
-        { id: "loadingUser" }
-      );
+        { id: 'loadingUser' }
+      )
     }
-  }, [currentUserData, router]);
+  }, [currentUserData, router])
 
   return (
     <Layout home>
       <DisconnectedPage />
     </Layout>
-  );
+  )
 }

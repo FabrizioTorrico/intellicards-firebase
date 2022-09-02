@@ -1,6 +1,6 @@
-import Layout from '../hocs/Layout'
+import Layout from '../lib/Layout'
 import Header from '../components/Header'
-import Container from '../hocs/Container'
+import Container from '../lib/Container'
 import { Text, Input, InputLeftElement, InputGroup } from '@chakra-ui/react'
 import { Search2Icon } from '@chakra-ui/icons'
 

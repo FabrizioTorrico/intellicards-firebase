@@ -1,4 +1,4 @@
-import Layout from '../../../hocs/Layout'
+import Layout from '../../../lib/Layout'
 import CardList from '../../../components/cards/CardList'
 import {
   getDeckCards,

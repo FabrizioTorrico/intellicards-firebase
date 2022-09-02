@@ -1,4 +1,4 @@
-import Container from '../../hocs/Container'
+import Container from '../../lib/Container'
 import Header from '../Header'
 import NextLink from 'next/link'
 import { Button, Box, Text, Link, Grid, GridItem } from '@chakra-ui/react'
@@ -44,12 +44,7 @@ function DeckStats({ deckUid, deckId, heartCount }) {
  */
 export default function DeckHeader({ deckData, deckUid, canPlay, admin }) {
   const [realTimeDeck, setRealTimeDeck] = useState(deckData)
-  const {
-    title,
-    username,
-    heartCount,
-    deckId,
-  } = realTimeDeck
+  const { title, username, heartCount, deckId } = realTimeDeck
 
   useEffect(() => {
     return getRealTimeDeck(deckUid, deckId, setRealTimeDeck)

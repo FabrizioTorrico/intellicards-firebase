@@ -21,7 +21,7 @@ import {
 import NextLink from 'next/link'
 import Signup from '../SignUp'
 import { loginWithGoogle, loginWithEmail } from '../../firebase/auth'
-import Image from '../Image'
+import Image from '../../lib/Image'
 
 export default function Login() {
   const { isOpen, onOpen, onClose } = useDisclosure()
@@ -145,7 +145,7 @@ export default function Login() {
                       onClick={loginWithGoogle}
                       leftIcon={
                         <Image
-                          alt='Google login'
+                          alt="Google login"
                           src="/img/google-logo.png"
                           height="25px"
                           width="25px"

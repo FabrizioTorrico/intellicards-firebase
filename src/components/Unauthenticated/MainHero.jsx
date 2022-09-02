@@ -1,5 +1,5 @@
 import { Flex, Container, Stack, Text, Button, Heading } from '@chakra-ui/react'
-import scroll from '../scroll'
+import scroll from '../../utils/scroll'
 
 export default function MainHero({ title, text }) {
   return (
