@@ -11,7 +11,7 @@ import {
 } from '@chakra-ui/react'
 import NextLink from 'next/link'
 import studyingImage from '../../public/img/celebration.jpg'
-import Image from '../components/Image'
+import Image from '../lib/Image'
 import Header from '../lib/Header'
 import Container from '../lib/Container'
 
