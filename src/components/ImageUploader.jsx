@@ -46,7 +46,7 @@ export default function ImageUploader({ setError, clearErrors }) {
         <Button
           width={'100%'}
           onClick={() => {
-            navigator.clipboard.writeText(`![alt](${downloadURL})`)
+            navigator.clipboard.writeText(`![ Image Title ](${downloadURL})`)
             setCopied(true)
           }}
         >
