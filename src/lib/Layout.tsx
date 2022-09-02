@@ -4,13 +4,16 @@ import Footer from './Footer'
 import { useAuth } from '../firebase/auth'
 import DisconnectedPage from '../components/Unauthenticated/DisconnectedPage'
 
+interface LayoutProps {
+  title?: string
+  description?: string
+  home?: boolean
+  priv?: boolean
+  children: React.ReactNode
+  noFooter?: boolean
+}
 /**
  * the children component with nav bar and footer
- * @param {string} title The Head title
- * @param {string} description The Head description
- * @param {boolean} home Checks if it's the home for special interactions
- * @param {boolean} priv
- * @author Fabrizio Torrico
  */
 export default function Layout({
   title,
@@ -19,7 +22,7 @@ export default function Layout({
   priv,
   children,
   noFooter,
-}) {
+}: LayoutProps) {
   const { currentUser } = useAuth()
 
   return (

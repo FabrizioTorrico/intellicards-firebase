@@ -12,7 +12,7 @@ import Features from './Features'
 import Login from './Login'
 
 // You can change all the Index page info from here
-export default function DisconnectedPage({ loading }) {
+export default function DisconnectedPage({ loading }: { loading?: boolean }) {
   const featureCardsText = [
     'Create and Edit Flash Cards',
     'Share and download summaries',
@@ -56,7 +56,7 @@ results faster!"
       />
       <Login />
 
-      <Modal isOpen={loading} isCentered>
+      <Modal isOpen={loading} onClose={() => null} isCentered>
         <ModalOverlay />
         <ModalContent>
           <Center py={'4rem'}>
