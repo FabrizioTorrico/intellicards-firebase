@@ -13,6 +13,8 @@
     "@emotion/react": "^11.7.1",
     "@emotion/styled": "^11.6.0",
     "@hookform/resolvers": "^2.8.5",
+    "@typescript-eslint/eslint-plugin": "^5.36.1",
+    "@typescript-eslint/parser": "^5.36.1",
     "aos": "^2.3.4",
     "axios": "^0.24.0",
     "chakra-ui-markdown-renderer": "^4.1.0",

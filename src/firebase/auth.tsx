@@ -22,7 +22,7 @@ interface AuthContextProps {
 const AuthContext = createContext<AuthContextProps>({
   currentUser: null,
   currentUserData: null,
-  refreshUserData: () => {},
+  refreshUserData: () => null,
 })
 
 export const AuthProvider = ({ children }) => {

@@ -99,7 +99,7 @@ export default function CardForm() {
       .then(() => {
         reset({ front: '', back: '', type: 'basic' })
       })
-      .catch(() => {})
+      .catch(() => null)
   }
 
   return (
