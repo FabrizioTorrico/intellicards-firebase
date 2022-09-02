@@ -1,7 +1,7 @@
-import Header from '../components/Header'
+import Header from '../lib/Header'
 import Layout from '../lib/Layout'
 import Container from '../lib/Container'
-import Image from '../components/Image'
+import Image from '../lib/Image'
 import { Text, Heading } from '@chakra-ui/react'
 import aboutImage from '../../public/img/friends.jpg'
 

@@ -12,7 +12,7 @@ import {
 import NextLink from 'next/link'
 import studyingImage from '../../public/img/celebration.jpg'
 import Image from '../components/Image'
-import Header from '../components/Header'
+import Header from '../lib/Header'
 import Container from '../lib/Container'
 
 const blogFeaturesData = [
