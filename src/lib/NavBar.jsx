@@ -14,7 +14,7 @@ import {
 } from '@chakra-ui/react'
 import { HamburgerIcon, CloseIcon, Search2Icon } from '@chakra-ui/icons'
 import NextLink from 'next/link'
-import scroll from './scroll'
+import scroll from '../utils/scroll'
 import { logout, useAuth } from '../firebase/auth'
 
 const links = ['Blog', 'Help', 'About']
@@ -35,6 +35,30 @@ const NavLink = ({ children, link }) => (
   </NextLink>
 )
 
+const LogButton = ({ isAuthenticated, home }) => {
+  if (isAuthenticated)
+    return (
+      <Button rounded={'full'} colorScheme={'main'} onClick={logout}>
+        Logout
+      </Button>
+    )
+
+  return (
+    <NextLink href="/#login">
+      <a>
+        <Button
+          rounded={'full'}
+          colorScheme={'main'}
+          onClick={(e) => {
+            home && scroll('login', e)
+          }}
+        >
+          Start now
+        </Button>
+      </a>
+    </NextLink>
+  )
+}
 /**
  * It's the main navBar, changes on auth and user Data, and it's responsive. POSITION FIXED
  * @param {boolean} home  checks the home for scrolling on click instead of routing and specific design
@@ -98,25 +122,7 @@ export default function NavBar({ home }) {
             </NavLink>
           ))}
 
-          {isAuthenticated ? (
-            <Button rounded={'full'} colorScheme={'main'} onClick={logout}>
-              Logout
-            </Button>
-          ) : (
-            <NextLink href="/#login">
-              <a>
-                <Button
-                  rounded={'full'}
-                  colorScheme={'main'}
-                  onClick={(e) => {
-                    home && scroll('login', e)
-                  }}
-                >
-                  Start now
-                </Button>
-              </a>
-            </NextLink>
-          )}
+          <LogButton isAuthenticated={isAuthenticated} home={home} />
         </Stack>
       </Flex>
       {isOpen ? (
@@ -127,25 +133,7 @@ export default function NavBar({ home }) {
                 {link}
               </NavLink>
             ))}
-            {isAuthenticated ? (
-              <Button rounded={'full'} colorScheme={'main'} onClick={logout}>
-                Logout
-              </Button>
-            ) : (
-              <NextLink href="/#login">
-                <a>
-                  <Button
-                    rounded={'full'}
-                    colorScheme={'main'}
-                    onClick={(e) => {
-                      home && scroll('login', e)
-                    }}
-                  >
-                    Start now
-                  </Button>
-                </a>
-              </NextLink>
-            )}
+            <LogButton isAuthenticated={isAuthenticated} home={home} />
           </Stack>
         </Box>
       ) : null}

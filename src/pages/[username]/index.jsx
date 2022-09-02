@@ -3,8 +3,8 @@ import {
   getUserData,
   getUserDecks,
 } from '../../firebase/firestore'
-import Layout from '../../hocs/Layout'
-import Hero from '../../components/Hero'
+import Layout from '../../lib/Layout'
+import Hero from '../../lib/Hero'
 import UserHeader from '../../components/UserHeader'
 import DeckList from '../../components/decks/DeckList'
 import { useAuth } from '../../firebase/auth'

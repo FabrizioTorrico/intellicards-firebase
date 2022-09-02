@@ -1,6 +1,6 @@
 import { Box, Button, Flex, Spacer, Text } from '@chakra-ui/react'
 import React, { useState } from 'react'
-import Divider from '../Divider'
+import Divider from '../../lib/Divider'
 import MarkDown from '../MarkDown'
 import { useCard } from './CardContext'
 import styles from '../../styles/Cards.module.scss'

@@ -9,7 +9,7 @@ import {
 } from 'firebase/auth'
 import { auth } from './index'
 import { getUserData } from './firestore'
-import Layout from '../hocs/Layout'
+import Layout from '../lib/Layout'
 import CompleteLogin from '../components/Unauthenticated/CompleteLogin'
 // import toast from 'react-hot-toast'
 

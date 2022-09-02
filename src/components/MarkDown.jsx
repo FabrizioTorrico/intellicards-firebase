@@ -10,7 +10,7 @@ import {
 import ChakraUIRenderer from 'chakra-ui-markdown-renderer'
 import { ExternalLinkIcon } from '@chakra-ui/icons'
 import remarkGfm from 'remark-gfm'
-import Image from './Image'
+import Image from '../lib/Image'
 
 const ChakraMarkDown = chakra(ReactMarkdown)
 
