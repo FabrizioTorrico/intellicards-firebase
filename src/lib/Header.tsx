@@ -1,20 +1,26 @@
-import { Heading, Stack, Box } from '@chakra-ui/react'
+import { Heading, Stack, Box, ResponsiveValue } from '@chakra-ui/react'
+
 /**
  * Takes the title and secondary to do a responsive header resusable
- * @param {props} props
- * @property {String} title
- * @property {String} secondary
- * @property {Number} pb padding bottom
- * @property {Number} py padding on y axis
- * @returns
  */
-export default function Header({ title, secondary, pb, py, textAlign="inherit" }) {
+
+interface HeaderProps {
+  title: string
+  secondary?: string
+  pb: string
+  py: string
+  textAlign: ResponsiveValue<CanvasTextAlign>
+}
+
+export default function Header({
+  title,
+  secondary,
+  pb,
+  py,
+  textAlign,
+}: HeaderProps) {
   return (
-    <Box
-      pb={'4rem'}
-      py={py}
-      textAlign={textAlign}
-    >
+    <Box pb={'4rem'} py={py} textAlign={textAlign}>
       <Stack
         direction={{ base: 'column', md: 'row' }}
         alignItems="center"

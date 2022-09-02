@@ -6,6 +6,7 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   updateProfile,
+  User,
 } from 'firebase/auth'
 import { auth } from './index'
 import { getUserData } from './firestore'
@@ -13,14 +14,23 @@ import Layout from '../lib/Layout'
 import CompleteLogin from '../components/Unauthenticated/CompleteLogin'
 // import toast from 'react-hot-toast'
 
-const AuthContext = createContext({})
+interface AuthContextProps {
+  currentUser: User | null
+  currentUserData: any
+  refreshUserData: (uid: number) => void
+}
+const AuthContext = createContext<AuthContextProps>({
+  currentUser: null,
+  currentUserData: null,
+  refreshUserData: () => {},
+})
 
 export const AuthProvider = ({ children }) => {
-  const [currentUser, setCurrentUser] = useState(null)
+  const [currentUser, setCurrentUser] = useState<User>(null)
   const [currentUserData, setCurrentUserData] = useState(null)
   const [loading, setLoading] = useState(true)
 
-  async function refreshUserData(uid) {
+  async function refreshUserData(uid: number) {
     setCurrentUserData(await getUserData(uid))
   }
 
@@ -55,12 +65,13 @@ export const AuthProvider = ({ children }) => {
   } */
 
   function PageToRender() {
-    if (!currentUserData && currentUser && !loading)
+    if (!currentUserData && currentUser && !loading) {
       return (
         <Layout>
           <CompleteLogin />
         </Layout>
       )
+    }
     return children
   }
 

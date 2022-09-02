@@ -1,5 +1,5 @@
 import { Box, Stack } from '@chakra-ui/react'
-import Container from '../lib/Container'
+import Container from './Container'
 
 export default function Hero({ title, secondary }) {
   return (
