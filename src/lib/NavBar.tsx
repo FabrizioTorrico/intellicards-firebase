@@ -63,9 +63,9 @@ const LogButton = ({ isAuthenticated, home }) => {
  * It's the main navBar, changes on auth and user Data, and it's responsive. POSITION FIXED
  */
 export default function NavBar({ home }: { home?: boolean }) {
-  const { currentUser, currentUserData } = useAuth()
+  const { currentUserData } = useAuth()
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const isAuthenticated = Boolean(currentUser)
+  const isAuthenticated = Boolean(currentUserData)
 
   return (
     <Box
