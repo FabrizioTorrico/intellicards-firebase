@@ -3,6 +3,8 @@ import NavBar from './NavBar'
 import Footer from './Footer'
 import { useAuth } from '../firebase/auth'
 import DisconnectedPage from '../components/Unauthenticated/DisconnectedPage'
+import { usePomodoro } from '../context/PomoContext'
+import { formatPomodoro } from '../utils/formats'
 
 interface LayoutProps {
   title?: string
@@ -24,11 +26,15 @@ export default function Layout({
   noFooter,
 }: LayoutProps) {
   const { currentUser } = useAuth()
-
+  const {
+    state: { currentTime },
+  } = usePomodoro()
   return (
     <>
       <Head>
-        <title>{`${title} • Intellicards`}</title>
+        <title>{`${
+          currentTime ? formatPomodoro(currentTime) : title
+        } • Intellicards`}</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
         <meta name="copyright" content="© 2021 intellicards"></meta>
         <meta
