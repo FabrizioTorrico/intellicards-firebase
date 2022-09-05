@@ -1,10 +1,12 @@
 import {
   Box,
   Button,
+  Flex,
   Modal,
   ModalBody,
   ModalCloseButton,
   ModalContent,
+  ModalFooter,
   ModalHeader,
   ModalOverlay,
   Text,
@@ -25,10 +27,11 @@ export default function PomoTimer() {
     dispatch,
   } = usePomodoro()
 
-  function Buttons() {
+  function ActionButtons() {
     if (!currentTime)
       return (
         <Button
+          colorScheme={'main'}
           onClick={() => {
             dispatch({ type: PomoActions.START, payload: STUDY_TIME })
           }}
@@ -38,20 +41,21 @@ export default function PomoTimer() {
       )
 
     return (
-      <Box>
+      <>
         <Button
           onClick={() =>
             dispatch({
               type: isRunning ? PomoActions.PAUSE : PomoActions.RESUME,
             })
           }
+          mr={'3'}
         >
           {isRunning ? 'Pause' : 'Resume'}
         </Button>
         <Button onClick={() => dispatch({ type: PomoActions.RESET })}>
           Reset
         </Button>
-      </Box>
+      </>
     )
   }
   useEffect(() => {
@@ -70,18 +74,25 @@ export default function PomoTimer() {
 
   return (
     <>
-      <Button onClick={onOpen}>Open Modal</Button>
-      <Modal isOpen={isOpen} onClose={onClose}>
+      <Button onClick={onOpen}>Pomodoro</Button>
+      <Modal isOpen={isOpen} onClose={onClose} size="xs">
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Pomodoro Timer</ModalHeader>
           <ModalCloseButton />
-          <ModalBody>
-            <Text fontSize="5xl">
-              {formatPomodoro(currentTime ?? STUDY_TIME)}
-            </Text>
-            <Buttons />
-          </ModalBody>
+          <Flex direction={'column'} textAlign="center">
+            <ModalBody>
+              <Text fontSize="6xl" fontWeight={'semibold'}>
+                {formatPomodoro(currentTime ?? STUDY_TIME)}
+              </Text>
+              {/* <Text>
+                Time to <Highlight></Highlight>Focus!
+              </Text> */}
+              <ModalFooter>
+                <ActionButtons />
+              </ModalFooter>
+            </ModalBody>
+          </Flex>
         </ModalContent>
       </Modal>
     </>

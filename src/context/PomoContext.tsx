@@ -49,9 +49,10 @@ function pomoReducer(state: PomoState, action: PomoAction) {
         isRunning: setIsRunning(false),
       }
     case PomoActions.RESET:
+      sessionStorage.removeItem('pomoTime')
       return {
         ...state,
-        currentTime: action.payload,
+        currentTime: null,
         isRunning: setIsRunning(false),
       }
     case PomoActions.DECREASE:

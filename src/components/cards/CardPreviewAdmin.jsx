@@ -1,6 +1,6 @@
 import { AddIcon } from '@chakra-ui/icons'
 import { Flex, Text } from '@chakra-ui/react'
-import { useCard } from './CardContext'
+import { useCard } from './../../context/CardContext'
 
 export default function CardPreview() {
   const { setCreateCard } = useCard()

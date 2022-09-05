@@ -1,7 +1,7 @@
 import { Box, Flex, Text } from '@chakra-ui/react'
 import CardPreview from './CardPreview'
 import CardPreviewAdmin from './CardPreviewAdmin'
-import { useCard } from './CardContext'
+import { useCard } from './../../context/CardContext'
 import styles from '../../styles/Animations.module.scss'
 import { ArrowForwardIcon } from '@chakra-ui/icons'
 import { getRealTimeCardList } from '../../firebase/firestore'
