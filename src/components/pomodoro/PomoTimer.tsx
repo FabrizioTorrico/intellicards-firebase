@@ -1,5 +1,5 @@
+import { ArrowLeftIcon, ArrowRightIcon } from '@chakra-ui/icons'
 import {
-  Box,
   Button,
   Flex,
   Modal,
@@ -14,28 +14,62 @@ import {
 } from '@chakra-ui/react'
 import { useEffect } from 'react'
 import toast from 'react-hot-toast'
-import { PomoActions, usePomodoro } from '../../context/PomoContext'
+import { usePomodoro } from '../../context/PomoContext'
+import { PomoActions } from '../../models/pomotimer'
 import { formatPomodoro } from '../../utils/formats'
 
-const STUDY_TIME = 25 * 60
-const BREAK_TIME = 5 * 60
-
+function Arrow({
+  direction,
+  onClick,
+  disabled,
+}: {
+  direction: string
+  onClick?: () => void
+  disabled: boolean
+}) {
+  return (
+    <Flex
+      as="button"
+      h="fit-content"
+      p="0.5rem"
+      alignItems="center"
+      justifyContent="center"
+      position="absolute"
+      top="0"
+      bottom="0"
+      margin="auto"
+      left={direction === 'left' ? 6 : null}
+      right={direction !== 'left' ? 6 : null}
+      zIndex={40}
+      cursor="pointer"
+      onClick={onClick}
+      disabled={disabled}
+    >
+      {direction === 'left' ? <ArrowLeftIcon /> : <ArrowRightIcon />}
+    </Flex>
+  )
+}
 export default function PomoTimer() {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const {
-    state: { currentTime, isRunning },
+    state: { currentTime, isRunning, timer },
     dispatch,
   } = usePomodoro()
+  const formattedTime = formatPomodoro(currentTime ?? timer.time)
+
+  function handleStart() {
+    if (!('Notification' in window)) {
+      alert('This browser does not support desktop notification')
+    } else {
+      Notification.requestPermission()
+      dispatch({ type: PomoActions.START })
+    }
+  }
 
   function ActionButtons() {
     if (!currentTime)
       return (
-        <Button
-          colorScheme={'main'}
-          onClick={() => {
-            dispatch({ type: PomoActions.START, payload: STUDY_TIME })
-          }}
-        >
+        <Button colorScheme={'main'} onClick={handleStart}>
           Start
         </Button>
       )
@@ -58,13 +92,15 @@ export default function PomoTimer() {
       </>
     )
   }
+
   useEffect(() => {
     if (currentTime === null || !isRunning) return
     if (currentTime === 0) {
-      toast.success('Time up! Take a break.', {
-        icon: '🎉',
+      new Notification(timer.label)
+      toast.success(timer.label, {
+        icon: timer.icon,
       })
-      dispatch({ type: PomoActions.RESET, payload: BREAK_TIME })
+      dispatch({ type: PomoActions.RESET })
     }
     const interval = setInterval(() => {
       dispatch({ type: PomoActions.DECREASE })
@@ -74,20 +110,33 @@ export default function PomoTimer() {
 
   return (
     <>
-      <Button onClick={onOpen}>Pomodoro</Button>
+      <Button onClick={onOpen} pos="relative" colorScheme={'main'}>
+        {formattedTime}
+      </Button>
+
       <Modal isOpen={isOpen} onClose={onClose} size="xs">
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Pomodoro Timer</ModalHeader>
+          <ModalHeader>
+            <Text color="main.500">Pomodoro Timer</Text>
+          </ModalHeader>
           <ModalCloseButton />
           <Flex direction={'column'} textAlign="center">
             <ModalBody>
+              {isRunning && <Text color="#f45d324">{timer.message}</Text>}
               <Text fontSize="6xl" fontWeight={'semibold'}>
-                {formatPomodoro(currentTime ?? STUDY_TIME)}
+                {formattedTime}
               </Text>
-              {/* <Text>
-                Time to <Highlight></Highlight>Focus!
-              </Text> */}
+              <Arrow
+                direction="left"
+                disabled={isRunning}
+                onClick={() => dispatch({ type: PomoActions.PREV_TIMER })}
+              />
+              <Arrow
+                direction="right"
+                disabled={isRunning}
+                onClick={() => dispatch({ type: PomoActions.NEXT_TIMER })}
+              />
               <ModalFooter>
                 <ActionButtons />
               </ModalFooter>

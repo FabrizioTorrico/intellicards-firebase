@@ -1,22 +1,36 @@
 import { createContext, useContext, useEffect, useReducer } from 'react'
+import {
+  PomoAction,
+  PomoActions,
+  PomoContext,
+  PomoState,
+  Timer,
+} from '../models/pomotimer'
 
-export enum PomoActions {
-  RETRIEVE,
-  START,
-  RESUME,
-  PAUSE,
-  RESET,
-  DECREASE,
-}
+const timers: Timer[] = [
+  {
+    time: 25 * 60,
+    label: 'Time up! Take a break.',
+    icon: '🎉',
+    message: 'Time to Focus!',
+  },
+  {
+    time: 5 * 60,
+    label: 'Time up! Back to work.',
+    message: 'Time to Take a Break!',
+  },
+  {
+    time: 15 * 60,
+    label: 'Time up! Back to work.',
+    message: 'Time to Take a Long Break!',
+  },
+]
 
-interface PomoAction {
-  type: PomoActions
-  payload?: number
-}
-
-interface PomoState {
-  currentTime: number | null
-  isRunning: boolean
+const DEFAULT_STATE = {
+  currentTime: null,
+  _timerIndex: 0,
+  isRunning: false,
+  timer: timers[0],
 }
 
 function setIsRunning(isRunning: boolean) {
@@ -24,10 +38,22 @@ function setIsRunning(isRunning: boolean) {
   return isRunning
 }
 
-function runningParser() {
+function retrieveRunning() {
   const isRunning = sessionStorage.getItem('isRunning')
   if (!isRunning) return false
   return isRunning === 'true'
+}
+
+function retrieveCurrentTime() {
+  const pomoTime = sessionStorage.getItem('pomoTime')
+  if (!pomoTime) return null
+  return parseInt(pomoTime)
+}
+
+function retrieveTimerIndex() {
+  const timerIndex = sessionStorage.getItem('timerIndex')
+  if (!timerIndex) return 0
+  return parseInt(timerIndex)
 }
 
 function pomoReducer(state: PomoState, action: PomoAction) {
@@ -35,7 +61,7 @@ function pomoReducer(state: PomoState, action: PomoAction) {
     case PomoActions.START:
       return {
         ...state,
-        currentTime: action.payload,
+        currentTime: state.timer.time,
         isRunning: setIsRunning(true),
       }
     case PomoActions.RESUME:
@@ -65,25 +91,39 @@ function pomoReducer(state: PomoState, action: PomoAction) {
     case PomoActions.RETRIEVE:
       return {
         ...state,
-        currentTime: action.payload,
-        isRunning: runningParser(),
+        currentTime: retrieveCurrentTime(),
+        isRunning: retrieveRunning(),
+        _timerIndex: retrieveTimerIndex(),
+        timer: timers[retrieveTimerIndex()],
       }
-
+    case PomoActions.NEXT_TIMER:
+      let newIndex = state._timerIndex + 1
+      newIndex = newIndex >= timers.length ? 0 : newIndex
+      sessionStorage.setItem('timerIndex', newIndex.toString())
+      return {
+        ...state,
+        _timerIndex: newIndex,
+        timer: timers[newIndex],
+        currentTime: null,
+        isRunning: setIsRunning(false),
+      }
+    case PomoActions.PREV_TIMER:
+      let prevIndex = state._timerIndex - 1
+      prevIndex = prevIndex < 0 ? timers.length - 1 : prevIndex
+      sessionStorage.setItem('timerIndex', prevIndex.toString())
+      return {
+        ...state,
+        _timerIndex: prevIndex,
+        timer: timers[prevIndex],
+        currentTime: null,
+        isRunning: setIsRunning(false),
+      }
     default:
       throw new Error('Action not supported')
   }
 }
 
-interface ContextProps {
-  state: PomoState
-  dispatch: React.Dispatch<PomoAction>
-}
-
-const DEFAULT_STATE = {
-  currentTime: null,
-  isRunning: false,
-}
-const PomodoroContext = createContext<ContextProps>({
+const PomodoroContext = createContext<PomoContext>({
   state: DEFAULT_STATE,
   dispatch: () => null,
 })
@@ -92,10 +132,8 @@ export const PomodoroProvider = ({ children }) => {
   const [state, dispatch] = useReducer(pomoReducer, DEFAULT_STATE)
 
   useEffect(() => {
-    const storedTime = sessionStorage.getItem('pomoTime')
     dispatch({
       type: PomoActions.RETRIEVE,
-      payload: storedTime ? parseInt(storedTime) : null,
     })
   }, [])
 
