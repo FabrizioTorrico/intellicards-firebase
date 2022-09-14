@@ -2,7 +2,7 @@ import { Box, Button, Flex, Spacer, Text } from '@chakra-ui/react'
 import React, { useState } from 'react'
 import Divider from '../../lib/Divider'
 import MarkDown from '../MarkDown'
-import { useCard } from './CardContext'
+import { useCard } from './../../context/CardContext'
 import styles from '../../styles/Cards.module.scss'
 import { ArrowBackIcon, ArrowForwardIcon } from '@chakra-ui/icons'
 

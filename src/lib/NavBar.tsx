@@ -16,6 +16,7 @@ import { HamburgerIcon, CloseIcon, Search2Icon } from '@chakra-ui/icons'
 import NextLink from 'next/link'
 import scroll from '../utils/scroll'
 import { logout, useAuth } from '../firebase/auth'
+import PomoTimer from '../components/pomodoro/PomoTimer'
 
 const links = ['Blog', 'Help', 'About']
 
@@ -65,7 +66,7 @@ const LogButton = ({ isAuthenticated, home }) => {
 export default function NavBar({ home }: { home?: boolean }) {
   const { currentUser, currentUserData } = useAuth()
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const isAuthenticated = Boolean(currentUser)
+  const isAuthenticated = Boolean(currentUserData ?? currentUser)
 
   return (
     <Box
@@ -115,12 +116,12 @@ export default function NavBar({ home }: { home?: boolean }) {
           direction={'row'}
           alignItems={'center'}
         >
+          <PomoTimer />
           {links.map((link) => (
             <NavLink key={link} link={link}>
               {link}
             </NavLink>
           ))}
-
           <LogButton isAuthenticated={isAuthenticated} home={home} />
         </Stack>
       </Flex>

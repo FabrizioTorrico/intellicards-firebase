@@ -1,7 +1,7 @@
 import { Flex, Text } from '@chakra-ui/react'
-import { useCard } from './CardContext'
+import { useCard } from './../../context/CardContext'
 
-export default function CardPreview({ deckId, index, cardData }) {
+export default function CardPreview({ index, cardData }) {
   const { front /* back, type , cardId */ } = cardData
   const { selectedCard, setSelectedCard, setCreateCard } = useCard()
 

@@ -11,7 +11,7 @@ import { useEffect, useState } from 'react'
 import PlayCard from '../../../components/play/PlayCard' */
 import CardContent from '../../../components/cards/CardContent'
 import CardForm from '../../../components/cards/CardForm'
-import { useCard } from '../../../components/cards/CardContext'
+import { useCard } from '../../../context/CardContext'
 
 import { Box } from '@chakra-ui/layout'
 
