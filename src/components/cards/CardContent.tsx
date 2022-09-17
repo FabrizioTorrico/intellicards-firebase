@@ -2,8 +2,8 @@ import { Box, Button, Flex, Spacer, Text } from '@chakra-ui/react'
 import React, { useState } from 'react'
 import Divider from '../../lib/Divider'
 import MarkDown from '../MarkDown'
-import { useCard } from './../../context/CardContext'
-import styles from '../../styles/Cards.module.scss'
+import { useCard } from '../../context/CardContext'
+import animate from '../../styles/Animations.module.scss'
 import { ArrowBackIcon, ArrowForwardIcon } from '@chakra-ui/icons'
 
 function CardContent() {
@@ -65,7 +65,7 @@ function CardContent() {
         py={16}
         px={{ base: 10, md: 24 }}
         h="70vh"
-        className={triggerAnimation ? styles.fade_in : ''}
+        className={triggerAnimation ? animate.fadeIn : ''}
         onAnimationEnd={() => setTriggerAnimation(false)}
         overflow={'auto'}
       >
@@ -89,7 +89,7 @@ function CardContent() {
           <Flex
             alignItems={'center'}
             gap={2}
-            className={triggerAnimation ? styles.fade_in : ''}
+            className={triggerAnimation ? animate.fadeIn : ''}
           >
             <Text>Do you know the answer ? </Text>
             <Button colorScheme={'green'}>Yes</Button>

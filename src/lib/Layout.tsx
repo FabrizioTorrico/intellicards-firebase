@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import NavBar from './NavBar'
 import Footer from './Footer'
-import { useAuth } from '../firebase/auth'
+import { useAuth } from '@context/AuthContext'
 import DisconnectedPage from '../components/Unauthenticated/DisconnectedPage'
 import { usePomodoro } from '../context/PomoContext'
 import { formatPomodoro } from '../utils/formats'

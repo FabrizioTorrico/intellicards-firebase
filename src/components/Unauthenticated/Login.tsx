@@ -20,8 +20,8 @@ import {
 } from '@chakra-ui/react'
 import NextLink from 'next/link'
 import Signup from '../SignUp'
-import { loginWithGoogle, loginWithEmail } from '../../firebase/auth'
-import Image from '../../lib/Image'
+import { loginWithGoogle, loginWithEmail } from '@database/auth'
+import Image from '@lib/Image'
 
 export default function Login() {
   const { isOpen, onOpen, onClose } = useDisclosure()
@@ -86,7 +86,7 @@ export default function Login() {
           <Box rounded={'lg'} bg={'white'} boxShadow={'2xl'} p={8}>
             <Stack spacing={4}>
               <form onSubmit={handleSubmit(onSubmit)}>
-                <FormControl id="email" isInvalid={errors.email}>
+                <FormControl id="email" isInvalid={!!errors.email}>
                   <FormLabel>Email</FormLabel>
                   <Input
                     type="email"
@@ -95,9 +95,11 @@ export default function Login() {
                     name="email"
                     autoComplete="true"
                   />
-                  <FormErrorMessage>{errors.email?.message}</FormErrorMessage>
+                  <FormErrorMessage>
+                    {errors.email?.message as string}
+                  </FormErrorMessage>
                 </FormControl>
-                <FormControl id="password" isInvalid={errors.password}>
+                <FormControl id="password" isInvalid={!!errors.password}>
                   <FormLabel>Password</FormLabel>
                   <Input
                     type="password"
@@ -106,7 +108,7 @@ export default function Login() {
                     mb={errors.password ? '' : '28px'}
                   />
                   <FormErrorMessage display="block" h="28px">
-                    {errors.password?.message}
+                    {errors.password?.message as string}
                   </FormErrorMessage>
                 </FormControl>
                 <Stack spacing={10}>

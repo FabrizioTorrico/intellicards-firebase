@@ -16,6 +16,7 @@ import {
   orderBy , */
 } from 'firebase/firestore'
 import kebabcase from 'lodash.kebabcase'
+import { UserData } from '@models/users'
 
 export async function createFirestoreUser(uid, data) {
   data.deck_count = 0
@@ -62,7 +63,7 @@ export const getUidWithUsername = async (username) => {
   return uid
 }
 
-export async function getUserData(uid) {
+export const getUserData = async (uid) => {
   const userRef = doc(db, 'users', uid)
   const userSnap = await getDoc(userRef)
   const userData = userSnap.data()

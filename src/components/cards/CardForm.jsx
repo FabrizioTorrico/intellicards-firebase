@@ -1,4 +1,4 @@
-import styles from '../../styles/Cards.module.scss'
+import styles from '../../styles/Animations.module.scss'
 import {
   FormControl,
   FormLabel,
@@ -15,7 +15,7 @@ import ImageUploader from '../ImageUploader'
 import toast from 'react-hot-toast'
 import { useRouter } from 'next/router'
 import { useForm, Controller } from 'react-hook-form'
-import { createCard } from '../../firebase/firestore'
+import { createCard } from '../../database/firestore'
 import MarkDown from '../MarkDown'
 import MarkdownInput from '../MarkdownInput'
 

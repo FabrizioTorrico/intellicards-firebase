@@ -2,12 +2,12 @@ import {
   getUidWithUsername,
   getUserData,
   getUserDecks,
-} from '../../firebase/firestore'
+} from '../../database/firestore'
 import Layout from '../../lib/Layout'
 import Hero from '../../lib/Hero'
 import UserHeader from '../../components/UserHeader'
 import DeckList from '../../components/decks/DeckList'
-import { useAuth } from '../../firebase/auth'
+import { useAuth } from '@context/AuthContext'
 import { useEffect, useState } from 'react'
 
 export default function UserPage({ userProps }) {

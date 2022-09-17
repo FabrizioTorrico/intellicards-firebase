@@ -3,7 +3,7 @@ import { Text, Stack, Heading } from '@chakra-ui/react'
 import DeckPreview from './DeckPreview'
 import DeckForm from './DeckForm'
 import { useState, useEffect } from 'react'
-import { getRealTimeDeckList } from '../../firebase/firestore'
+import { getRealTimeDeckList } from '../../database/firestore'
 
 export default function DeckList({ userDecks, admin }) {
   const [deckList, setDeckList] = useState(userDecks)

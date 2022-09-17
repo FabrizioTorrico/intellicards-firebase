@@ -2,9 +2,10 @@ import { useEffect } from 'react'
 import { ChakraProvider, extendTheme } from '@chakra-ui/react'
 import AOS from 'aos'
 import 'aos/dist/aos.css'
-import { AuthProvider } from '../firebase/auth'
+import { AuthProvider } from './AuthContext'
 import { PlayProvider } from './PlayContext'
 import { CardProvider } from './CardContext'
+import { DeckProvider } from './DeckContext'
 import { PomodoroProvider } from './PomoContext'
 
 const theme = extendTheme({
@@ -46,7 +47,9 @@ export default function ContextProviders({
       <AuthProvider>
         <PlayProvider>
           <PomodoroProvider>
-            <CardProvider>{children}</CardProvider>
+            <DeckProvider>
+              <CardProvider>{children}</CardProvider>
+            </DeckProvider>
           </PomodoroProvider>
         </PlayProvider>
       </AuthProvider>

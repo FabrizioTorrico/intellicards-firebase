@@ -3,7 +3,7 @@ import DisconnectedPage from '../components/Unauthenticated/DisconnectedPage'
 import { useEffect } from 'react'
 import toast from 'react-hot-toast'
 import { useRouter } from 'next/router'
-import { useAuth } from '../firebase/auth'
+import { useAuth } from '@context/AuthContext'
 
 export default function Home() {
   const router = useRouter()

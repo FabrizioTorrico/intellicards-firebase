@@ -4,26 +4,28 @@ import {
   getDeckCards,
   getDeckData,
   getUidWithUsername,
-} from '../../../firebase/firestore'
-import { useAuth } from '../../../firebase/auth'
+} from '../../../database/firestore'
+import { useAuth } from '@context/AuthContext'
 import { useEffect, useState } from 'react'
 /* import usePlay from '../../../components/play/PlayContext'
 import PlayCard from '../../../components/play/PlayCard' */
 import CardContent from '../../../components/cards/CardContent'
 import CardForm from '../../../components/cards/CardForm'
-import { useCard } from '../../../context/CardContext'
 
 import { Box } from '@chakra-ui/layout'
+import { useCard, useDeck } from 'src/context'
 
 export default function DeckId({ deckProps }) {
   const { deckData, deckCards, deckUid } = JSON.parse(deckProps)
   const { setCards, createCard } = useCard()
+  const { setDeckData } = useDeck()
   const { currentUser } = useAuth()
   const [admin, setAdmin] = useState(false)
   const { cards } = useCard()
 
   useEffect(() => {
     setCards(deckCards)
+    setDeckData(deckData)
   }, [])
 
   useEffect(() => {
@@ -37,7 +39,7 @@ export default function DeckId({ deckProps }) {
         (createCard || (Array.isArray(cards) && cards.length === 0)) ? (
           <CardForm />
         ) : (
-          <CardContent deckData={deckData} />
+          <CardContent />
         )}
       </Box>
       <CardList admin={admin} deckId={deckData.deckId} />

@@ -1,10 +1,11 @@
+import animate from '@styles/Animations.module.scss'
 import { Box, Flex, Text } from '@chakra-ui/react'
 import CardPreview from './CardPreview'
 import CardPreviewAdmin from './CardPreviewAdmin'
-import { useCard } from './../../context/CardContext'
-import styles from '../../styles/Animations.module.scss'
+import CardNavBar from './CardNavBar'
+import { useCard } from '../../context/CardContext'
 import { ArrowForwardIcon } from '@chakra-ui/icons'
-import { getRealTimeCardList } from '../../firebase/firestore'
+import { getRealTimeCardList } from '../../database/firestore'
 import { useEffect } from 'react'
 
 export default function CardList({ deckId, admin }) {
@@ -28,14 +29,14 @@ export default function CardList({ deckId, admin }) {
             color="gray.600"
             w={8}
             h={8}
-            className={styles.bounceX}
+            className={animate.bounceX}
           />
         </Flex>
       )
 
     // deck with cards
     return cards.map((card, i) => (
-      <CardPreview key={i} index={i} deckId={deckId} cardData={card} />
+      <CardPreview key={i} index={i} cardData={card} />
     ))
   }
 
@@ -53,6 +54,7 @@ export default function CardList({ deckId, admin }) {
       boxShadow="lg"
     >
       <Flex py={8} px={6} gap={6} direction={'column'}>
+        <CardNavBar />
         {admin && <CardPreviewAdmin />}
         {renderCardList()}
       </Flex>

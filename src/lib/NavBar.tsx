@@ -15,7 +15,8 @@ import {
 import { HamburgerIcon, CloseIcon, Search2Icon } from '@chakra-ui/icons'
 import NextLink from 'next/link'
 import scroll from '../utils/scroll'
-import { logout, useAuth } from '../firebase/auth'
+import { useAuth } from '@context/AuthContext'
+import { logout } from '@database/auth'
 import PomoTimer from '../components/pomodoro/PomoTimer'
 
 const links = ['Blog', 'Help', 'About']
