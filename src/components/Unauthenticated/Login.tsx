@@ -23,6 +23,12 @@ import Signup from '../SignUp'
 import { loginWithGoogle, loginWithEmail } from '@database/auth'
 import Image from '@lib/Image'
 
+type FormProps = {
+  email: string
+  password: string
+  remember: boolean
+}
+
 export default function Login() {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const validationSchema = Yup.object().shape({
@@ -39,9 +45,9 @@ export default function Login() {
     formState: { errors },
     handleSubmit,
     setError,
-  } = useForm(formOptions)
+  } = useForm<FormProps>(formOptions)
 
-  const onSubmit = async (data) => {
+  const onSubmit = async (data: FormProps) => {
     const error = await loginWithEmail(data.email, data.password)
     if (error) {
       setError('password', { message: 'No matches with info provided' })
@@ -128,7 +134,6 @@ export default function Login() {
                     colorScheme={'main.yellow'}
                     color={'white'}
                     type="submit"
-                    onClick={loginWithEmail}
                   >
                     Log in
                   </Button>

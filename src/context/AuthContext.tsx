@@ -30,7 +30,7 @@ export const AuthProvider = ({ children }) => {
   const [isAdmin, setAdmin] = useState(false)
 
   async function refreshUserData(uid: number) {
-    setCurrentUserData((await getUserData(uid)) as UserData)
+    setCurrentUserData(await getUserData(uid))
   }
 
   useEffect(() => {
@@ -44,7 +44,7 @@ export const AuthProvider = ({ children }) => {
       }
       // const token = await user.getIdToken()
       setCurrentUser(user)
-      setCurrentUserData((await getUserData(user.uid)) as UserData)
+      setCurrentUserData(await getUserData(user.uid))
       setLoading(false)
     })
   }, [])

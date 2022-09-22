@@ -19,8 +19,6 @@ import { useAuth } from '@context/AuthContext'
 import { logout } from '@database/auth'
 import PomoTimer from '../components/pomodoro/PomoTimer'
 
-const links = ['Blog', 'Help', 'About']
-
 const NavLink = ({ children, link }) => (
   <NextLink href={`/${link.toLowerCase()}`} passHref>
     <Link
@@ -37,7 +35,7 @@ const NavLink = ({ children, link }) => (
   </NextLink>
 )
 
-const LogButton = ({ isAuthenticated, home }) => {
+const LogInButton = ({ isAuthenticated, home }) => {
   if (isAuthenticated)
     return (
       <Button rounded={'full'} colorScheme={'main'} onClick={logout}>
@@ -61,6 +59,8 @@ const LogButton = ({ isAuthenticated, home }) => {
     </NextLink>
   )
 }
+
+const links = ['Blog', 'Help', 'About']
 /**
  * It's the main navBar, changes on auth and user Data, and it's responsive. POSITION FIXED
  */
@@ -71,6 +71,7 @@ export default function NavBar({ home }: { home?: boolean }) {
 
   return (
     <Box
+      height={'var(--nav-height)'}
       id="navbar"
       py={3}
       px={{ base: 6, md: 10 }}
@@ -123,7 +124,7 @@ export default function NavBar({ home }: { home?: boolean }) {
               {link}
             </NavLink>
           ))}
-          <LogButton isAuthenticated={isAuthenticated} home={home} />
+          <LogInButton isAuthenticated={isAuthenticated} home={home} />
         </Stack>
       </Flex>
       {isOpen ? (
@@ -134,7 +135,7 @@ export default function NavBar({ home }: { home?: boolean }) {
                 {link}
               </NavLink>
             ))}
-            <LogButton isAuthenticated={isAuthenticated} home={home} />
+            <LogInButton isAuthenticated={isAuthenticated} home={home} />
           </Stack>
         </Box>
       ) : null}

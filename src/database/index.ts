@@ -6,7 +6,6 @@ import {
   collection,
   CollectionReference,
   DocumentData,
-  DocumentReference,
   Firestore,
 } from 'firebase/firestore'
 import { getStorage, connectStorageEmulator } from 'firebase/storage'

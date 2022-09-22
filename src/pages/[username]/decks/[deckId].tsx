@@ -1,5 +1,5 @@
 import Layout from '../../../lib/Layout'
-import CardList from '../../../components/cards/CardList'
+import CardList from '../../../components/cards/cardAside/CardList'
 import {
   getDeckCards,
   getDeckData,
@@ -21,7 +21,7 @@ export default function DeckId({ deckProps }) {
   const { setDeckData } = useDeck()
   const { currentUser } = useAuth()
   const [admin, setAdmin] = useState(false)
-  const { cards } = useCard()
+  const { cards, cardListOpen } = useCard()
 
   useEffect(() => {
     setCards(deckCards)
@@ -34,7 +34,12 @@ export default function DeckId({ deckProps }) {
 
   return (
     <Layout noFooter priv>
-      <Box ml={{ md: 80 }} minH="85vh" position="relative">
+      <Box
+        ml={{ md: cardListOpen ? 80 : 16 }}
+        transition="margin-left 1s"
+        minH="85vh"
+        position="relative"
+      >
         {admin &&
         (createCard || (Array.isArray(cards) && cards.length === 0)) ? (
           <CardForm />

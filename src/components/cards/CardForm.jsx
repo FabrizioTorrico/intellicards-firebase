@@ -106,10 +106,8 @@ export default function CardForm() {
     <form onSubmit={handleSubmit(onSubmit)}>
       <Box
         position="relative"
-        pb={16}
         pt={4}
         px={8}
-        h="64vh"
         className={triggerAnimation ? styles.fade_in : ''}
         onAnimationEnd={() => setTriggerAnimation(false)}
       >

@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from 'react'
+import { createContext, Dispatch, useContext, useState } from 'react'
 import { Card } from 'src/models/cards'
 
 interface ContextProps {
@@ -8,6 +8,8 @@ interface ContextProps {
   setCards: (x: Card[]) => void
   createCard: boolean
   setCreateCard: (x: boolean) => void
+  cardListOpen: boolean
+  setCardListOpen: Dispatch<React.SetStateAction<boolean>>
 }
 const CardContext = createContext<ContextProps>({
   selectedCard: 0,
@@ -16,12 +18,15 @@ const CardContext = createContext<ContextProps>({
   setCards: () => undefined,
   createCard: false,
   setCreateCard: () => undefined,
+  cardListOpen: false,
+  setCardListOpen: () => undefined,
 })
 
 export const CardProvider = ({ children }) => {
   const [selectedCard, setSelectedCard] = useState(0)
   const [cards, setCards] = useState<Card[]>([])
   const [createCard, setCreateCard] = useState(false)
+  const [cardListOpen, setCardListOpen] = useState(true)
   return (
     <CardContext.Provider
       value={{
@@ -31,6 +36,8 @@ export const CardProvider = ({ children }) => {
         setCards,
         createCard,
         setCreateCard,
+        cardListOpen,
+        setCardListOpen,
       }}
     >
       {children}
