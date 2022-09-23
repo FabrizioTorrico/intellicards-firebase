@@ -4,7 +4,7 @@ import Footer from './Footer'
 import { useAuth } from '@context/AuthContext'
 import DisconnectedPage from '../components/Unauthenticated/DisconnectedPage'
 import { usePomodoro } from '../context/PomoContext'
-import { formatPomodoro } from '../utils/formats'
+import { formatTimer } from '../utils/formats'
 
 interface LayoutProps {
   title?: string
@@ -33,7 +33,7 @@ export default function Layout({
     <>
       <Head>
         <title>{`${
-          currentTime ? formatPomodoro(currentTime) : title
+          currentTime ? formatTimer(currentTime) : title
         } • Intellicards`}</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
         <meta name="copyright" content="© 2021 intellicards"></meta>

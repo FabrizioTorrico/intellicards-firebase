@@ -16,7 +16,7 @@ import { useEffect } from 'react'
 import toast from 'react-hot-toast'
 import { usePomodoro } from '../../context/PomoContext'
 import { PomoActions } from '../../models/pomotimer'
-import { formatPomodoro } from '../../utils/formats'
+import { formatTimer } from '../../utils/formats'
 
 function Arrow({
   direction,
@@ -55,7 +55,7 @@ export default function PomoTimer() {
     state: { currentTime, isRunning, timer },
     dispatch,
   } = usePomodoro()
-  const formattedTime = formatPomodoro(currentTime ?? timer.time)
+  const formattedTime = formatTimer(currentTime ?? timer.time * 1000 * 60)
 
   function handleStart() {
     if (!('Notification' in window)) {
@@ -94,7 +94,7 @@ export default function PomoTimer() {
   }
 
   useEffect(() => {
-    if (currentTime === null || !isRunning) return
+    if (!isRunning) return
     if (currentTime === 0) {
       new Notification(timer.label)
       toast.success(timer.label, {
