@@ -32,7 +32,7 @@ function CardFace(props) {
         pb={2}
         pr={24}
         pl={4}
-        h="44vh"
+        h="52vh"
         overflow={'auto'}
         hidden={!props.preview}
       >
@@ -106,6 +106,7 @@ export default function CardForm() {
     <form onSubmit={handleSubmit(onSubmit)}>
       <Box
         position="relative"
+        h="68vh"
         pt={4}
         px={8}
         className={triggerAnimation ? styles.fade_in : ''}

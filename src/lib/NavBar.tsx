@@ -11,6 +11,8 @@ import {
   InputGroup,
   Input,
   InputLeftElement,
+  Tooltip,
+  Text,
 } from '@chakra-ui/react'
 import { HamburgerIcon, CloseIcon, Search2Icon } from '@chakra-ui/icons'
 import NextLink from 'next/link'
@@ -19,20 +21,28 @@ import { useAuth } from '@context/AuthContext'
 import { logout } from '@database/auth'
 import PomoTimer from '../components/pomodoro/PomoTimer'
 
-const NavLink = ({ children, link }) => (
-  <NextLink href={`/${link.toLowerCase()}`} passHref>
-    <Link
-      px={2}
-      py={1}
-      rounded={'md'}
-      _hover={{
-        textDecoration: 'none',
-        bg: 'gray.200',
-      }}
-    >
-      {children}
-    </Link>
-  </NextLink>
+const NavLink = ({ children, link, disabled }) => (
+  <Tooltip isDisabled={!disabled} label="Feature in progress 😊">
+    {disabled ? (
+      <Text px={2} py={1} cursor="not-allowed">
+        {children}
+      </Text>
+    ) : (
+      <NextLink href={`/${link.toLowerCase()}`} passHref>
+        <Link
+          px={2}
+          py={1}
+          rounded={'md'}
+          _hover={{
+            textDecoration: 'none',
+            bg: 'gray.200',
+          }}
+        >
+          {children}
+        </Link>
+      </NextLink>
+    )}
+  </Tooltip>
 )
 
 const LogInButton = ({ isAuthenticated, home }) => {
@@ -61,6 +71,7 @@ const LogInButton = ({ isAuthenticated, home }) => {
 }
 
 const links = ['Blog', 'Help', 'About']
+const disabledLinks = ['Blog', 'Help']
 /**
  * It's the main navBar, changes on auth and user Data, and it's responsive. POSITION FIXED
  */
@@ -120,7 +131,11 @@ export default function NavBar({ home }: { home?: boolean }) {
         >
           <PomoTimer />
           {links.map((link) => (
-            <NavLink key={link} link={link}>
+            <NavLink
+              key={link}
+              link={link}
+              disabled={disabledLinks.includes(link)}
+            >
               {link}
             </NavLink>
           ))}

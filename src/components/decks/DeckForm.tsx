@@ -10,8 +10,10 @@ import { useState } from 'react'
 import { useAuth } from '@context/AuthContext'
 import { createDeck } from '../../database/firestore'
 import toast from 'react-hot-toast'
+import { useDeck } from '@context/DeckContext'
 
 export default function DeckForm() {
+  const { decks } = useDeck()
   const [deckName, setDeckName] = useState('')
   const [error, setError] = useState('')
   const { currentUserData } = useAuth()
@@ -23,15 +25,20 @@ export default function DeckForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    if (deckName.length < 2) {
+    const deckNameFormatted = deckName.trim()
+    if (deckNameFormatted.length < 2) {
       setError('Min length is 2 characters')
       return
     }
-    if (deckName.length > 80) {
+    if (deckNameFormatted.length > 80) {
       setError('Max length is 80 characters')
       return
     }
-    toast.promise(createDeck(currentUserData.username, deckName), {
+    if (decks.some((deck) => deck.title === deckNameFormatted)) {
+      setError('This deck name already exists')
+      return
+    }
+    toast.promise(createDeck(currentUserData.username, deckNameFormatted), {
       success: <b>Deck created!</b>,
       loading: <b>Creating deck...</b>,
       error: <b>Could not create.</b>,
@@ -43,7 +50,7 @@ export default function DeckForm() {
     <Box border="2px" borderColor={'gray.300'} borderRadius="10px" p={4}>
       <form onSubmit={handleSubmit}>
         <Flex alignItems={'flex-start'} gap={8}>
-          <FormControl isInvalid={error} flex={3}>
+          <FormControl isInvalid={!!error} flex={3}>
             <Input
               focusBorderColor="white"
               errorBorderColor="white"
@@ -58,7 +65,7 @@ export default function DeckForm() {
             />
             <FormErrorMessage pl={4}>{error}</FormErrorMessage>
           </FormControl>
-          <Button type="submit" flex={1} colorScheme={'main'} heigh={'100%'}>
+          <Button type="submit" flex={1} colorScheme={'main'}>
             Create New Deck
           </Button>
         </Flex>
