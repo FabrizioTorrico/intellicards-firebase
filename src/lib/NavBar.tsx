@@ -146,7 +146,11 @@ export default function NavBar({ home }: { home?: boolean }) {
         <Box pb={4} display={{ md: 'none' }}>
           <Stack as={'nav'} spacing={4}>
             {links.map((link) => (
-              <NavLink key={link} link={link}>
+              <NavLink
+                key={link}
+                link={link}
+                disabled={disabledLinks.includes(link)}
+              >
                 {link}
               </NavLink>
             ))}
