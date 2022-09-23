@@ -1,4 +1,4 @@
-import styles from '../../styles/Cards.module.scss'
+import styles from '../../styles/Animations.module.scss'
 import {
   FormControl,
   FormLabel,
@@ -15,7 +15,7 @@ import ImageUploader from '../ImageUploader'
 import toast from 'react-hot-toast'
 import { useRouter } from 'next/router'
 import { useForm, Controller } from 'react-hook-form'
-import { createCard } from '../../firebase/firestore'
+import { createCard } from '../../database/firestore'
 import MarkDown from '../MarkDown'
 import MarkdownInput from '../MarkdownInput'
 
@@ -32,7 +32,7 @@ function CardFace(props) {
         pb={2}
         pr={24}
         pl={4}
-        h="44vh"
+        h="52vh"
         overflow={'auto'}
         hidden={!props.preview}
       >
@@ -106,10 +106,9 @@ export default function CardForm() {
     <form onSubmit={handleSubmit(onSubmit)}>
       <Box
         position="relative"
-        pb={16}
+        h="68vh"
         pt={4}
         px={8}
-        h="64vh"
         className={triggerAnimation ? styles.fade_in : ''}
         onAnimationEnd={() => setTriggerAnimation(false)}
       >

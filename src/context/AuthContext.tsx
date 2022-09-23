@@ -1,34 +1,33 @@
 import { createContext, useContext, useEffect, useState } from 'react'
-import {
-  GoogleAuthProvider,
-  signInWithPopup,
-  signOut,
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  updateProfile,
-  User,
-} from 'firebase/auth'
-import { auth } from './index'
-import { getUserData } from './firestore'
+
+import { User } from 'firebase/auth'
+import { getUserData } from 'src/database/firestore'
 import Layout from '../lib/Layout'
 import CompleteLogin from '../components/Unauthenticated/CompleteLogin'
+import { UserData } from '@models/users'
+import { auth } from 'src/database/'
 // import toast from 'react-hot-toast'
 
 interface AuthContextProps {
   currentUser: User | null
-  currentUserData: any
+  currentUserData: UserData | null
   refreshUserData: (uid: number) => void
+  isAdmin: boolean
+  setAdmin: (isAdmin: boolean) => void
 }
 const AuthContext = createContext<AuthContextProps>({
   currentUser: null,
   currentUserData: null,
   refreshUserData: () => null,
+  isAdmin: false,
+  setAdmin: () => null,
 })
 
 export const AuthProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState<User>(null)
-  const [currentUserData, setCurrentUserData] = useState(null)
+  const [currentUserData, setCurrentUserData] = useState<UserData>(null)
   const [loading, setLoading] = useState(true)
+  const [isAdmin, setAdmin] = useState(false)
 
   async function refreshUserData(uid: number) {
     setCurrentUserData(await getUserData(uid))
@@ -77,38 +76,16 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ currentUser, currentUserData, refreshUserData }}
+      value={{
+        currentUser,
+        currentUserData,
+        refreshUserData,
+        isAdmin,
+        setAdmin,
+      }}
     >
       <PageToRender />
     </AuthContext.Provider>
   )
 }
 export const useAuth = () => useContext(AuthContext)
-
-export const loginWithGoogle = () => {
-  signInWithPopup(auth, new GoogleAuthProvider()).catch((error) =>
-    console.log(error)
-  )
-}
-
-export const createUserForAuth = (data) => {
-  createUserWithEmailAndPassword(auth, data.email, data.password)
-    .then((result) => {
-      updateProfile(result.user, {
-        displayName: `${data.first_name} ${data.last_name}`,
-      }).catch((err) => console.log(err))
-    })
-    .catch((error) => {
-      console.log(error)
-    })
-}
-
-export const loginWithEmail = async (email, password) => {
-  return await signInWithEmailAndPassword(auth, email, password).catch(
-    (err) => {
-      return err
-    }
-  )
-}
-
-export const logout = () => signOut(auth)

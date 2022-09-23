@@ -1,6 +1,13 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from 'firebase/app'
-import { getFirestore, connectFirestoreEmulator } from 'firebase/firestore'
+import {
+  getFirestore,
+  connectFirestoreEmulator,
+  collection,
+  CollectionReference,
+  DocumentData,
+  Firestore,
+} from 'firebase/firestore'
 import { getStorage, connectStorageEmulator } from 'firebase/storage'
 import { getAuth, connectAuthEmulator } from 'firebase/auth'
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -30,5 +37,21 @@ if (process.env.NODE_ENV === 'development') {
     connectStorageEmulator(storage, 'localhost', 9199)
   }
 }
-
 export { db, auth, storage }
+
+// TYPED COLLECTIONS
+import { UserData } from '@models/users'
+import { Deck } from '@models/decks'
+import { Card } from '@models/cards'
+
+const typedCollection = <T = DocumentData>(
+  reference: CollectionReference<UserData | Deck | Card> | Firestore,
+  collectionName: string
+) => {
+  return collection(db, collectionName) as CollectionReference<T>
+}
+
+// export all your collections
+export const usersCol = typedCollection<UserData>(db, 'users')
+export const decksCol = typedCollection<Deck>(usersCol, 'authors')
+export const booksCol = typedCollection<Card>(decksCol, 'cards')

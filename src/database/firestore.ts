@@ -1,4 +1,4 @@
-import { db, auth } from './index'
+import { db, auth, usersCol } from './index'
 import {
   doc,
   getDoc,
@@ -62,8 +62,8 @@ export const getUidWithUsername = async (username) => {
   return uid
 }
 
-export async function getUserData(uid) {
-  const userRef = doc(db, 'users', uid)
+export const getUserData = async (uid) => {
+  const userRef = doc(usersCol, uid)
   const userSnap = await getDoc(userRef)
   const userData = userSnap.data()
 

@@ -1,5 +1,13 @@
 {
   "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@styles/*": ["src/styles/*"],
+      "@models/*": ["src/models/*"],
+      "@lib/*": ["src/lib/*"],
+      "@database/*": ["src/database/*"],
+      "@context/*": ["src/context/*"]
+    },
     "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
@@ -15,6 +23,12 @@
     "isolatedModules": true,
     "jsx": "preserve"
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/lib/NavBar.tsx"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "src/lib/NavBar.tsx",
+    "src/components/cards/CardForm.jsx"
+  ],
   "exclude": ["node_modules"]
 }

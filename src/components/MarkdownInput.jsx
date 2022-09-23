@@ -22,7 +22,7 @@ export default function MarkdownInput({ value, onChange }) {
         'table',
         'guide',
       ],
-      maxHeight: '44vh',
+      maxHeight: '48vh',
       placeholder: '# An amazing Title',
     }
   }, [])

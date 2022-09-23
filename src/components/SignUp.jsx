@@ -19,7 +19,7 @@ import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons'
 import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { createUserForAuth } from '../firebase/auth'
+import { createUserForAuth } from '../database/auth'
 
 /**
  * opens a modal to create a user with first name, last name, email and password. After this, Complete login should be called

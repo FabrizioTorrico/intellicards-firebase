@@ -2,27 +2,32 @@ import Container from '../../lib/Container'
 import { Text, Stack, Heading } from '@chakra-ui/react'
 import DeckPreview from './DeckPreview'
 import DeckForm from './DeckForm'
-import { useState, useEffect } from 'react'
-import { getRealTimeDeckList } from '../../firebase/firestore'
+import { useEffect } from 'react'
+import { getRealTimeDeckList } from '../../database/firestore'
+import { useDeck } from '@context/DeckContext'
 
 export default function DeckList({ userDecks, admin }) {
-  const [deckList, setDeckList] = useState(userDecks)
+  const { decks, setDecks } = useDeck()
+
+  useEffect(() => {
+    setDecks(userDecks)
+  }, [])
 
   useEffect(() => {
     if (admin) {
-      return getRealTimeDeckList(setDeckList)
+      return getRealTimeDeckList(setDecks)
     }
   }, [admin])
 
   const renderDecks = () => {
-    if (!deckList || (Array.isArray(deckList) && deckList.length === 0))
+    if (!decks || (Array.isArray(decks) && decks.length === 0))
       return (
         <Text color="gray.600" fontSize={{ base: 'lg', md: '2xl' }}>
           There is no Decks!
         </Text>
       )
 
-    return deckList.map((deck, i) => (
+    return decks.map((deck, i) => (
       <DeckPreview key={i} deckData={deck} id={i + 1} />
     ))
   }

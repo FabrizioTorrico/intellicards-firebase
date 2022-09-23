@@ -1,15 +1,15 @@
+import animate from '@styles/Animations.module.scss'
 import { Box, Flex, Text } from '@chakra-ui/react'
-import CardPreview from './CardPreview'
-import CardPreviewAdmin from './CardPreviewAdmin'
-import { useCard } from './../../context/CardContext'
-import styles from '../../styles/Animations.module.scss'
+import CardPreview from '../CardPreview'
+import CardPreviewAdmin from '../CardPreviewAdmin'
+import DeckAside from './CardAsideHeader'
+import { useCard } from '../../../context/CardContext'
 import { ArrowForwardIcon } from '@chakra-ui/icons'
-import { getRealTimeCardList } from '../../firebase/firestore'
-import { useEffect } from 'react'
+import { getRealTimeCardList } from '../../../database/firestore'
+import { useEffect, useState } from 'react'
 
 export default function CardList({ deckId, admin }) {
-  const { cards, setCards } = useCard()
-
+  const { cards, setCards, cardListOpen } = useCard()
   useEffect(() => {
     if (admin) {
       return getRealTimeCardList(deckId, setCards)
@@ -28,33 +28,39 @@ export default function CardList({ deckId, admin }) {
             color="gray.600"
             w={8}
             h={8}
-            className={styles.bounceX}
+            className={animate.bounceX}
           />
         </Flex>
       )
 
     // deck with cards
     return cards.map((card, i) => (
-      <CardPreview key={i} index={i} deckId={deckId} cardData={card} />
+      <CardPreview key={i} index={i} cardData={card} />
     ))
   }
 
   return (
     <Box
       as="aside"
+      transition={'width 1s'}
       position={{ md: 'fixed' }}
       left={0}
       top={'4rem'}
       bg="white"
       zIndex={40}
-      w={{ md: 80 }}
-      h={'85vh'}
+      w={{ md: cardListOpen ? 80 : 16 }}
+      h={'calc(100vh - var(--nav-height))'}
       overflow={'auto'}
       boxShadow="lg"
     >
       <Flex py={8} px={6} gap={6} direction={'column'}>
-        {admin && <CardPreviewAdmin />}
-        {renderCardList()}
+        <DeckAside />
+        {cardListOpen && (
+          <>
+            {admin && <CardPreviewAdmin />}
+            {renderCardList()}
+          </>
+        )}
       </Flex>
     </Box>
   )
