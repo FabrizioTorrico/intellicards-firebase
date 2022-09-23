@@ -23,12 +23,20 @@ export interface Timer {
 
 export interface PomoState {
   currentTime: number | null
-  _timerIndex: number
   isRunning: boolean
   timer: Timer
+  _timerIndex: number
+  _finishDate: Date | null
 }
 
 export interface PomoContext {
   state: PomoState
   dispatch: React.Dispatch<PomoAction>
+}
+
+export enum PomoStorage {
+  CURRENT_TIME = 'pomotimer_current_time',
+  TIMER_INDEX = 'pomotimer_timer_index',
+  IS_RUNNING = 'pomotimer_is_running',
+  FINISH_DATE = 'pomotimer_finish_date',
 }
