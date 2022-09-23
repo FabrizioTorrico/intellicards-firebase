@@ -1,9 +1,16 @@
 import ReactMarkdown from 'react-markdown'
-import { chakra, Link, Table, TableContainer, Box } from '@chakra-ui/react'
+import {
+  chakra,
+  Link,
+  Table,
+  TableContainer,
+  Box,
+  Text,
+} from '@chakra-ui/react'
 import ChakraUIRenderer from 'chakra-ui-markdown-renderer'
 import { ExternalLinkIcon } from '@chakra-ui/icons'
 import remarkGfm from 'remark-gfm'
-import Image from './Image'
+import Image from '../lib/Image'
 
 const ChakraMarkDown = chakra(ReactMarkdown)
 
@@ -28,17 +35,16 @@ const markdownTheme = {
     )
   },
   img: (props) => {
-    return (
+    const domainAllowed = 'https://firebasestorage.googleapis.com'
+    const urlAllowed = props.src.indexOf(domainAllowed) !== -1
+
+    return urlAllowed ? (
       <Box boxSize={'xs'} pos="relative">
         <Image {...props} layout="fill" objectFit="contain" />
       </Box>
+    ) : (
+      <Text>This Image domain is not allowed!</Text>
     )
-    /* return <Image
-        src={downloadURL}
-        maxW={{ base: '0px', md: '128px' }}
-        maxH={'128px'}
-        alt=""
-      /> */
   },
 }
 

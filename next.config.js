@@ -5,6 +5,10 @@ module.exports = {
   }, */
   reactStrictMode: true,
   images: {
-    domains: ['images.unsplash.com', 'localhost'],
+    domains: [
+      'images.unsplash.com',
+      'localhost',
+      'firebasestorage.googleapis.com',
+    ],
   },
 }

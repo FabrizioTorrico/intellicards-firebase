@@ -12,10 +12,10 @@ import {
   Avatar,
   Textarea,
 } from '@chakra-ui/react'
-import { useAuth } from '../../firebase/auth'
+import { useAuth } from '@context/AuthContext'
 import { useForm } from 'react-hook-form'
-import Container from '../../hocs/Container'
-import { createFirestoreUser, usernameExists } from '../../firebase/firestore'
+import Container from '../../lib/Container'
+import { createFirestoreUser, usernameExists } from '../../database/firestore'
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import toast from 'react-hot-toast'

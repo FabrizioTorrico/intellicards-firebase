@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react'
 import { Button, InputGroup, Input, Spinner, Tooltip } from '@chakra-ui/react'
 import { IoCamera } from 'react-icons/io5'
-import { uploadImageToStorage } from '../firebase/storage'
+import { uploadImageToStorage } from '../database/storage'
 
 /**
  * reacts conditionally if there is a downloadURL, it allows uploading images and checking erros
@@ -46,7 +46,7 @@ export default function ImageUploader({ setError, clearErrors }) {
         <Button
           width={'100%'}
           onClick={() => {
-            navigator.clipboard.writeText(`![alt](${downloadURL})`)
+            navigator.clipboard.writeText(`![ Image Title ](${downloadURL})`)
             setCopied(true)
           }}
         >

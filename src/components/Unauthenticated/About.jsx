@@ -1,7 +1,7 @@
 import styles from '../../styles/Home.module.scss'
 import { Box, Stack, Flex, Heading, Button, Text } from '@chakra-ui/react'
-import Image from '../Image'
-import scroll from '../scroll'
+import Image from '../../lib/Image'
+import scroll from '../../utils/scroll'
 
 export default function About({ title, text }) {
   return (

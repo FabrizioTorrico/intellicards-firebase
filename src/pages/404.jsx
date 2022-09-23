@@ -1,4 +1,4 @@
-import Layout from "../hocs/Layout";
+import Layout from '../lib/Layout'
 export default function Custom404() {
-  return <Layout>404 - Page Not Found</Layout>;
+  return <Layout>404 - Page Not Found</Layout>
 }
