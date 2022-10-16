@@ -12,6 +12,7 @@ import {
   onSnapshot,
   increment,
   serverTimestamp,
+  updateDoc,
   /*  query,
   orderBy , */
 } from 'firebase/firestore'
@@ -128,10 +129,10 @@ export const deleteDeck = async (deckQuery) => {
   await deleteDoc(deckRef)
 }
 
-export const createCard = async (deckQuery, cardData) => {
+export const createCard = async (deckId, cardData) => {
   const { uid } = auth.currentUser
   const userRef = doc(db, 'users', uid)
-  const deckRef = doc(userRef, 'decks', deckQuery)
+  const deckRef = doc(userRef, 'decks', deckId)
   const cardsCollection = collection(deckRef, 'cards')
 
   await addDoc(cardsCollection, cardData)
@@ -146,14 +147,14 @@ export const deleteCard = async (deckId, cardId) => {
   await deleteDoc(cardRef)
 }
 
-/* export const updateCard = async (deckQuery, cardQuery, cardData) => {
-  const { uid } = auth.currentUser;
-  const userRef = doc(db, "users", uid);
-  const deckRef = doc(userRef, "decks", deckQuery);
-  const cardRef = doc(userRef, "cards", cardQuery);
+export const updateCard = async (deckId, cardId, newCard) => {
+  const { uid } = auth.currentUser
+  const userRef = doc(db, 'users', uid)
+  const deckRef = doc(userRef, 'decks', deckId)
+  const cardRef = doc(deckRef, 'cards', cardId)
 
-  await updateDoc(cardRef, cardData);
-}; */
+  await updateDoc(cardRef, newCard)
+}
 
 export const addHeart = async (deckUid, deckId) => {
   const { uid } = auth.currentUser

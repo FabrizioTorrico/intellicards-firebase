@@ -1,9 +1,9 @@
 import { AddIcon } from '@chakra-ui/icons'
 import { Flex, Text } from '@chakra-ui/react'
-import { useCard } from './../../context/CardContext'
+import { useCard } from '../../../context/CardContext'
 
 export default function CardPreview() {
-  const { setCreateCard } = useCard()
+  const { setCreateCard, setSelectedCard } = useCard()
 
   return (
     <Flex
@@ -19,7 +19,10 @@ export default function CardPreview() {
       cursor="pointer"
       transition={'0.3s'}
       _hover={{ bg: 'main.600' }}
-      onClick={() => setCreateCard(true)}
+      onClick={() => {
+        setCreateCard(true)
+        setSelectedCard(null)
+      }}
     >
       <Flex
         fontWeight={600}

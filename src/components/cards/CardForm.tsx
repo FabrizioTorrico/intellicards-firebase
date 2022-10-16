@@ -10,7 +10,7 @@ import {
   Flex,
   SimpleGrid,
 } from '@chakra-ui/react'
-import React, { useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import ImageUploader from '../ImageUploader'
 import toast from 'react-hot-toast'
 import { useRouter } from 'next/router'
@@ -21,13 +21,13 @@ import {
   FieldErrorsImpl,
   Control,
 } from 'react-hook-form'
-import { createCard } from '../../database/firestore'
+import { createCard, updateCard } from '../../database/firestore'
 import MarkDown from '../MarkDown'
 import MarkdownInput from '../MarkdownInput'
 import { Card } from '@models/cards'
+import { useCard } from '@context/CardContext'
 
 interface FormValues extends Card {
-  id?: string
   image?: string
 }
 
@@ -57,7 +57,8 @@ function CardFace(props: CardFaceProps) {
     <FormControl
       id={props.id}
       isInvalid={!!error}
-      hidden={props.id !== props.curFace}
+      position="absolute"
+      visibility={props.id !== props.curFace ? 'hidden' : 'visible'}
     >
       <Box
         mt={16}
@@ -80,9 +81,16 @@ function CardFace(props: CardFaceProps) {
           } is required.`,
         }}
         render={({ field }) => {
+          const onChange = useCallback(
+            (value: string) => {
+              field.onChange(value)
+            },
+            [props.curFace]
+          )
+
           return (
             <Box hidden={props.preview}>
-              <MarkdownInput value={field.value} onChange={field.onChange} />
+              <MarkdownInput value={field.value} onChange={onChange} />
             </Box>
           )
         }}
@@ -94,6 +102,8 @@ function CardFace(props: CardFaceProps) {
 }
 
 export default function CardForm() {
+  const { cards, selectedCard } = useCard()
+  const card = cards[selectedCard]
   const [triggerAnimation, setTriggerAnimation] = useState(false)
   const [curFace, setCurFace] = useState('front')
   const [preview, setPreview] = useState(false)
@@ -113,22 +123,42 @@ export default function CardForm() {
     getValues,
     control,
     formState: { errors },
-  } = useForm<FormValues>({ resolver })
+  } = useForm<FormValues>({
+    resolver,
+  })
+
+  useEffect(() => {
+    if (card) {
+      reset({ ...card })
+    } else {
+      reset({ front: '', back: '', type: 'basic' })
+    }
+  }, [selectedCard])
 
   const changeFace = () =>
     setCurFace((curFace) => (curFace === 'front' ? 'back' : 'front'))
 
-  const onSubmit = async (data) => {
-    toast
-      .promise(createCard(deckId, data), {
-        loading: <b>Creating card...</b>,
-        success: <b>Card created!</b>,
-        error: <b>Could not create.</b>,
-      })
-      .then(() => {
-        reset({ front: '', back: '', type: 'basic' })
-      })
-      .catch(() => null)
+  const onSubmit = async (data: FormValues) => {
+    if (card) {
+      toast
+        .promise(updateCard(deckId, card.cardId, data), {
+          loading: <b>Updating card...</b>,
+          success: <b>Card updated!</b>,
+          error: <b>Could not update.</b>,
+        })
+        .catch(() => null)
+    } else {
+      toast
+        .promise(createCard(deckId, data), {
+          loading: <b>Creating card...</b>,
+          success: <b>Card created!</b>,
+          error: <b>Could not create.</b>,
+        })
+        .then(() => {
+          reset({ front: '', back: '', type: 'basic' })
+        })
+        .catch(() => null)
+    }
   }
 
   return (
@@ -168,17 +198,19 @@ export default function CardForm() {
           </Text>
         </Flex>
 
-        {(['front', 'back'] as const).map((face) => (
-          <CardFace
-            key={face}
-            errors={errors}
-            id={face}
-            getValues={getValues}
-            curFace={curFace}
-            preview={preview}
-            control={control}
-          />
-        ))}
+        <Box position={'relative'}>
+          {(['front', 'back'] as const).map((face) => (
+            <CardFace
+              key={face}
+              errors={errors}
+              id={face}
+              getValues={getValues}
+              curFace={curFace}
+              preview={preview}
+              control={control}
+            />
+          ))}
+        </Box>
       </Box>
 
       <SimpleGrid mx={8} gap={4} columns={{ base: 2, md: 4 }}>
@@ -194,12 +226,11 @@ export default function CardForm() {
           <ImageUploader setError={setError} clearErrors={clearErrors} />
           <FormErrorMessage>{errors.image?.message}</FormErrorMessage>
         </FormControl>
-        {/* <GridItem alignSelf="end" colSpan={2}> */}
         <Button colorScheme="main" alignSelf="end" onClick={changeFace}>
-          Show {curFace === 'front' ? 'Back' : 'Front'}
+          Swap Face
         </Button>
         <Button colorScheme="main" type="submit" alignSelf="end">
-          Create
+          {card ? 'Update' : 'Create'}
         </Button>
       </SimpleGrid>
     </form>

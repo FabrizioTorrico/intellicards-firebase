@@ -6,7 +6,7 @@ import {
   getUidWithUsername,
 } from '../../../database/firestore'
 import { useAuth } from '@context/AuthContext'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 /* import usePlay from '../../../components/play/PlayContext'
 import PlayCard from '../../../components/play/PlayCard' */
 import CardContent from '../../../components/cards/CardContent'
@@ -17,11 +17,9 @@ import { useCard, useDeck } from 'src/context'
 
 export default function DeckId({ deckProps }) {
   const { deckData, deckCards, deckUid } = JSON.parse(deckProps)
-  const { setCards, createCard } = useCard()
+  const { cards, cardListOpen, setCards, createCard } = useCard()
   const { setDeckData } = useDeck()
-  const { currentUser } = useAuth()
-  const [admin, setAdmin] = useState(false)
-  const { cards, cardListOpen } = useCard()
+  const { currentUser, isAdmin, setAdmin } = useAuth()
 
   useEffect(() => {
     setCards(deckCards)
@@ -40,14 +38,14 @@ export default function DeckId({ deckProps }) {
         minH="85vh"
         position="relative"
       >
-        {admin &&
+        {isAdmin &&
         (createCard || (Array.isArray(cards) && cards.length === 0)) ? (
           <CardForm />
         ) : (
           <CardContent />
         )}
       </Box>
-      <CardList admin={admin} deckId={deckData.deckId} />
+      <CardList deckId={deckData.deckId} />
       {/* <DeckHeader deckData={deckData} deckUid={deckUid} admin={admin} /> */}
     </Layout>
   )
