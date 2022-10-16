@@ -14,17 +14,49 @@ import React, { useState } from 'react'
 import ImageUploader from '../ImageUploader'
 import toast from 'react-hot-toast'
 import { useRouter } from 'next/router'
-import { useForm, Controller } from 'react-hook-form'
+import {
+  useForm,
+  Controller,
+  Resolver,
+  FieldErrorsImpl,
+  Control,
+} from 'react-hook-form'
 import { createCard } from '../../database/firestore'
 import MarkDown from '../MarkDown'
 import MarkdownInput from '../MarkdownInput'
+import { Card } from '@models/cards'
 
-function CardFace(props) {
+interface FormValues extends Card {
+  id?: string
+  image?: string
+}
+
+const resolver: Resolver<FormValues> = async (values) => {
+  const errors = {}
+  !values.front?.trim() && (errors['front'] = { message: 'Front is required' })
+  !values.back?.trim() && (errors['back'] = { message: 'Back is required' })
+
+  return {
+    values,
+    errors,
+  }
+}
+
+interface CardFaceProps {
+  errors: FieldErrorsImpl<FormValues>
+  id: 'front' | 'back'
+  getValues: (x: string) => FormValues
+  curFace: string
+  preview: boolean
+  control: Control<FormValues>
+}
+
+function CardFace(props: CardFaceProps) {
   const error = props.errors.front?.message || props.errors.back?.message
   return (
     <FormControl
       id={props.id}
-      isInvalid={error}
+      isInvalid={!!error}
       hidden={props.id !== props.curFace}
     >
       <Box
@@ -81,10 +113,7 @@ export default function CardForm() {
     getValues,
     control,
     formState: { errors },
-  } = useForm({
-    front: '# Card Title',
-    back: '',
-  })
+  } = useForm<FormValues>({ resolver })
 
   const changeFace = () =>
     setCurFace((curFace) => (curFace === 'front' ? 'back' : 'front'))
@@ -139,7 +168,7 @@ export default function CardForm() {
           </Text>
         </Flex>
 
-        {['front', 'back'].map((face) => (
+        {(['front', 'back'] as const).map((face) => (
           <CardFace
             key={face}
             errors={errors}
@@ -160,7 +189,7 @@ export default function CardForm() {
             <option value="Perfect">Perfect</option>
           </Select>
         </FormControl>
-        <FormControl isInvalid={errors.image}>
+        <FormControl isInvalid={!!errors.image}>
           <FormLabel htmlFor="image">Image: </FormLabel>
           <ImageUploader setError={setError} clearErrors={clearErrors} />
           <FormErrorMessage>{errors.image?.message}</FormErrorMessage>

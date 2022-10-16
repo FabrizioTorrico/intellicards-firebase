@@ -12,7 +12,7 @@ import {
   Text,
   useDisclosure,
 } from '@chakra-ui/react'
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import toast from 'react-hot-toast'
 import { usePomodoro } from '../../context/PomoContext'
 import { PomoActions } from '../../models/pomotimer'
@@ -49,7 +49,9 @@ function Arrow({
     </Flex>
   )
 }
+
 export default function PomoTimer() {
+  const audioRef = useRef<HTMLAudioElement>(null)
   const { isOpen, onOpen, onClose } = useDisclosure()
   const {
     state: { currentTime, isRunning, timer },
@@ -65,6 +67,22 @@ export default function PomoTimer() {
       dispatch({ type: PomoActions.START })
     }
   }
+
+  useEffect(() => {
+    if (!isRunning) return
+    if (currentTime < 0) {
+      new Notification(timer.label)
+      toast.success(timer.label, {
+        icon: timer.icon,
+      })
+      audioRef.current.play()
+      dispatch({ type: PomoActions.RESET })
+    }
+    const interval = setInterval(() => {
+      dispatch({ type: PomoActions.DECREASE })
+    }, 1000)
+    return () => clearInterval(interval)
+  }, [currentTime, isRunning])
 
   function ActionButtons() {
     if (!currentTime)
@@ -93,23 +111,11 @@ export default function PomoTimer() {
     )
   }
 
-  useEffect(() => {
-    if (!isRunning) return
-    if (currentTime === 0) {
-      new Notification(timer.label)
-      toast.success(timer.label, {
-        icon: timer.icon,
-      })
-      dispatch({ type: PomoActions.RESET })
-    }
-    const interval = setInterval(() => {
-      dispatch({ type: PomoActions.DECREASE })
-    }, 1000)
-    return () => clearInterval(interval)
-  }, [currentTime, isRunning])
-
   return (
     <>
+      <audio id="timeoutSound" ref={audioRef}>
+        <source src={'/sounds/timeout.mp3'} type="audio/mpeg" />
+      </audio>
       <Button onClick={onOpen} pos="relative" colorScheme={'main'}>
         {formattedTime}
       </Button>

@@ -28,7 +28,7 @@
     "**/*.ts",
     "**/*.tsx",
     "src/lib/NavBar.tsx",
-    "src/components/cards/CardForm.jsx"
+    "src/components/cards/CardForm.tsx"
   ],
   "exclude": ["node_modules"]
 }

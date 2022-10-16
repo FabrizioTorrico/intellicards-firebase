@@ -16,7 +16,7 @@ const timers: Timer[] = [
     message: 'Time to Focus!',
   },
   {
-    time: 5,
+    time: 1,
     label: 'Time up! Back to work.',
     message: 'Time to Take a Break!',
   },
