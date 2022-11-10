@@ -55,6 +55,14 @@ export const dbCollection = <T = DocumentData>(
   return collection(reference, collectionName) as CollectionReference<T>
 }
 
+export const typedDoc = <T = DocumentData>(
+  reference: DocumentReference<DocumentData>,
+  collectionName: string,
+  id: string
+) => {
+  return doc(reference, collectionName, id) as DocumentReference<T>
+}
+
 export const dbDoc = <T = DocumentData>(
   reference: Firestore,
   collectionName: string,

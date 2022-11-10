@@ -1,8 +1,5 @@
-import {
-  getUidWithUsername,
-  getUserData,
-  getUserDecks,
-} from '../../database/firestore'
+import { getUidWithUsername, getUserData } from '@database/users'
+import { getUserDecks } from '@database/decks'
 import Layout from '../../lib/Layout'
 import Hero from '../../lib/Hero'
 import UserHeader from '../../components/UserHeader'

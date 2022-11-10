@@ -1,11 +1,9 @@
 import { db, auth, typedCollection, typedDoc } from './index'
 import {
-  addDoc,
   deleteDoc,
   doc,
   getDocs,
   onSnapshot,
-  updateDoc,
   collection,
   serverTimestamp,
   writeBatch,
