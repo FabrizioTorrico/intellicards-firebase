@@ -6,7 +6,7 @@ interface Hero {
   title: string | ReactNode
   secondary?: string
 }
-export default function Hero({ title, secondary }) {
+export default function Hero({ title, secondary }: Hero) {
   return (
     <Box bgGradient="linear(main.600, main.500)" w="100%">
       <Container maxW={{ base: 'md', md: '4xl' }}>

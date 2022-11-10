@@ -11,7 +11,7 @@ import { auth } from 'src/database/'
 interface AuthContextProps {
   currentUser: User | null
   currentUserData: UserData | null
-  refreshUserData: (uid: number) => void
+  refreshUserData: (uid: string) => void
   isAdmin: boolean
   setAdmin: (isAdmin: boolean) => void
 }
@@ -29,7 +29,7 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true)
   const [isAdmin, setAdmin] = useState(false)
 
-  async function refreshUserData(uid: number) {
+  async function refreshUserData(uid: string) {
     setCurrentUserData(await getUserData(uid))
   }
 

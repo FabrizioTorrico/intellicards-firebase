@@ -43,7 +43,7 @@ service cloud.firestore {
       
       function canUpdateCard(userId){
         let isOwner = request.auth.uid == userId;
-        let hasValidFields = request.resource.data.diff(resource.data).affectedKeys().hasOnly(['front', 'type', 'back']);
+        let hasValidFields = request.resource.data.diff(resource.data).affectedKeys().hasOnly(['front', 'type', 'back', 'image']);
 
         return isOwner && hasValidFields
       }

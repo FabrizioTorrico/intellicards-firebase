@@ -4,4 +4,5 @@ export interface Card {
   front: string
   back?: string
   updated_at: string
+  image?: boolean
 }

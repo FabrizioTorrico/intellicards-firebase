@@ -27,11 +27,7 @@ import { Card } from '@models/cards'
 import { useCard } from '@context/CardContext'
 import { useDeck } from '@context/DeckContext'
 
-interface FormValues extends Card {
-  image?: string
-}
-
-const resolver: Resolver<FormValues> = async (values) => {
+const resolver: Resolver<Card> = async (values) => {
   const errors = {}
   !values.front?.trim() && (errors['front'] = { message: 'Front is required' })
   !values.back?.trim() && (errors['back'] = { message: 'Back is required' })
@@ -43,12 +39,12 @@ const resolver: Resolver<FormValues> = async (values) => {
 }
 
 interface CardFaceProps {
-  errors: FieldErrorsImpl<FormValues>
+  errors: FieldErrorsImpl<Card>
   id: 'front' | 'back'
-  getValues: (x: string) => FormValues
+  getValues: (x: string) => Card
   curFace: string
   preview: boolean
-  control: Control<FormValues>
+  control: Control<Card>
 }
 
 function CardFace(props: CardFaceProps) {
@@ -122,7 +118,7 @@ export default function CardForm() {
     getValues,
     control,
     formState: { errors },
-  } = useForm<FormValues>({
+  } = useForm<Card>({
     resolver,
   })
 
@@ -137,15 +133,13 @@ export default function CardForm() {
   const changeFace = () =>
     setCurFace((curFace) => (curFace === 'front' ? 'back' : 'front'))
 
-  const onSubmit = async (data: FormValues) => {
+  const onSubmit = async (data: Card) => {
     if (card) {
-      toast
-        .promise(updateCard(deckData.deckId, card.cardId, data), {
-          loading: <b>Updating card...</b>,
-          success: <b>Card updated!</b>,
-          error: <b>Could not update.</b>,
-        })
-        .catch(() => null)
+      toast.promise(updateCard(deckData.deckId, card.cardId, data), {
+        loading: <b>Updating card...</b>,
+        success: <b>Card updated!</b>,
+        error: (err) => <b>Could not update. {err.toString()}</b>,
+      })
     } else {
       toast
         .promise(createCard(deckData.deckId, data), {

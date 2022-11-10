@@ -3,10 +3,12 @@ import { Text, Stack, Heading } from '@chakra-ui/react'
 import DeckPreview from './DeckPreview'
 import DeckForm from './DeckForm'
 import { useEffect } from 'react'
-import { getRealTimeDeckList } from '../../database/hearts'
+import { getRealTimeDeckList } from '../../database/decks'
 import { useDeck } from '@context/DeckContext'
+import { useAuth } from '@context/AuthContext'
 
-export default function DeckList({ userDecks, admin }) {
+export default function DeckList({ userDecks }) {
+  const { isAdmin } = useAuth()
   const { decks, setDecks } = useDeck()
 
   useEffect(() => {
@@ -14,10 +16,10 @@ export default function DeckList({ userDecks, admin }) {
   }, [])
 
   useEffect(() => {
-    if (admin) {
+    if (isAdmin) {
       return getRealTimeDeckList(setDecks)
     }
-  }, [admin])
+  }, [isAdmin])
 
   const renderDecks = () => {
     if (!decks || (Array.isArray(decks) && decks.length === 0))
@@ -38,7 +40,7 @@ export default function DeckList({ userDecks, admin }) {
         <Heading fontWeight={600} fontSize={'3xl'} lineHeight={'110%'}>
           Decks
         </Heading>
-        {admin && <DeckForm />}
+        {isAdmin && <DeckForm />}
         {renderDecks()}
       </Stack>
     </Container>

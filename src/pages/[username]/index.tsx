@@ -9,8 +9,7 @@ import { useEffect, useState } from 'react'
 
 export default function UserPage({ userProps }) {
   const { userData, userDecks, userId } = JSON.parse(userProps)
-  const [admin, setAdmin] = useState(false)
-  const { currentUser } = useAuth()
+  const { currentUser, setAdmin } = useAuth()
 
   useEffect(() => {
     setAdmin(userId === currentUser?.uid)
@@ -18,8 +17,8 @@ export default function UserPage({ userProps }) {
 
   return (
     <Layout priv>
-      <Hero title={<UserHeader user={userData} admin={admin} />} />
-      <DeckList userDecks={userDecks} admin={admin} />
+      <Hero title={<UserHeader user={userData} />} />
+      <DeckList userDecks={userDecks} />
     </Layout>
   )
 }

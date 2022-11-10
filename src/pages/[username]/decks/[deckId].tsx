@@ -1,6 +1,6 @@
 import Layout from '../../../lib/Layout'
 import CardList from '../../../components/cards/cardAside/CardList'
-import { getUidWithUsername } from '../../../database/hearts'
+import { getUidWithUsername } from '@database/users'
 import { getDeckCards } from '@database/cards'
 import { getDeckData } from '@database/decks'
 import { useAuth } from '@context/AuthContext'
