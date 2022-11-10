@@ -9,7 +9,7 @@ import {
   Text,
 } from '@chakra-ui/react'
 import { useAuth } from '@context/AuthContext'
-import { deleteCard } from '@database/firestore'
+import { deleteCard } from '@database/cards'
 import { Card } from '@models/cards'
 import { toast } from 'react-hot-toast'
 import { useCard } from '../../../context/CardContext'

@@ -15,7 +15,7 @@ import {
 import { useAuth } from '@context/AuthContext'
 import { useForm } from 'react-hook-form'
 import Container from '../../lib/Container'
-import { createFirestoreUser, usernameExists } from '../../database/firestore'
+import { createFirestoreUser, usernameExists } from '@database/users'
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import toast from 'react-hot-toast'

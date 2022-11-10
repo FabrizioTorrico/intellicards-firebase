@@ -1,10 +1,8 @@
 import Layout from '../../../lib/Layout'
 import CardList from '../../../components/cards/cardAside/CardList'
-import {
-  getDeckCards,
-  getDeckData,
-  getUidWithUsername,
-} from '../../../database/firestore'
+import { getUidWithUsername } from '../../../database/hearts'
+import { getDeckCards } from '@database/cards'
+import { getDeckData } from '@database/decks'
 import { useAuth } from '@context/AuthContext'
 import { useEffect } from 'react'
 /* import usePlay from '../../../components/play/PlayContext'

@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState } from 'react'
 
 import { User } from 'firebase/auth'
-import { getUserData } from 'src/database/firestore'
+import { getUserData } from '@database/users'
 import Layout from '../lib/Layout'
 import CompleteLogin from '../components/Unauthenticated/CompleteLogin'
 import { UserData } from '@models/users'

@@ -1,12 +1,14 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from 'firebase/app'
 import {
+  Firestore,
   getFirestore,
   connectFirestoreEmulator,
   collection,
   CollectionReference,
   DocumentData,
-  Firestore,
+  DocumentReference,
+  doc,
 } from 'firebase/firestore'
 import { getStorage, connectStorageEmulator } from 'firebase/storage'
 import { getAuth, connectAuthEmulator } from 'firebase/auth'
@@ -39,19 +41,24 @@ if (process.env.NODE_ENV === 'development') {
 }
 export { db, auth, storage }
 
-// TYPED COLLECTIONS
-import { UserData } from '@models/users'
-import { Deck } from '@models/decks'
-import { Card } from '@models/cards'
-
-const typedCollection = <T = DocumentData>(
-  reference: CollectionReference<UserData | Deck | Card> | Firestore,
+export const typedCollection = <T = DocumentData>(
+  reference: DocumentReference<DocumentData>,
   collectionName: string
 ) => {
-  return collection(db, collectionName) as CollectionReference<T>
+  return collection(reference, collectionName) as CollectionReference<T>
 }
 
-// export all your collections
-export const usersCol = typedCollection<UserData>(db, 'users')
-export const decksCol = typedCollection<Deck>(usersCol, 'authors')
-export const booksCol = typedCollection<Card>(decksCol, 'cards')
+export const dbCollection = <T = DocumentData>(
+  reference: Firestore,
+  collectionName: string
+) => {
+  return collection(reference, collectionName) as CollectionReference<T>
+}
+
+export const dbDoc = <T = DocumentData>(
+  reference: Firestore,
+  collectionName: string,
+  id: string
+) => {
+  return doc(reference, collectionName, id) as DocumentReference<T>
+}

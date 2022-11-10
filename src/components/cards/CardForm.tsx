@@ -13,7 +13,6 @@ import {
 import React, { useCallback, useEffect, useState } from 'react'
 import ImageUploader from '../ImageUploader'
 import toast from 'react-hot-toast'
-import { useRouter } from 'next/router'
 import {
   useForm,
   Controller,
@@ -21,11 +20,12 @@ import {
   FieldErrorsImpl,
   Control,
 } from 'react-hook-form'
-import { createCard, updateCard } from '../../database/firestore'
+import { createCard, updateCard } from '@database/cards'
 import MarkDown from '../MarkDown'
 import MarkdownInput from '../MarkdownInput'
 import { Card } from '@models/cards'
 import { useCard } from '@context/CardContext'
+import { useDeck } from '@context/DeckContext'
 
 interface FormValues extends Card {
   image?: string
@@ -102,6 +102,7 @@ function CardFace(props: CardFaceProps) {
 }
 
 export default function CardForm() {
+  const { deckData } = useDeck()
   const { cards, selectedCard } = useCard()
   const card = cards[selectedCard]
   const [triggerAnimation, setTriggerAnimation] = useState(false)
@@ -112,8 +113,6 @@ export default function CardForm() {
     borderBottom: '2px solid transparent',
     borderColor: 'main.500',
   }
-  const router = useRouter()
-  const { deckId } = router.query
   const {
     register,
     handleSubmit,
@@ -141,7 +140,7 @@ export default function CardForm() {
   const onSubmit = async (data: FormValues) => {
     if (card) {
       toast
-        .promise(updateCard(deckId, card.cardId, data), {
+        .promise(updateCard(deckData.deckId, card.cardId, data), {
           loading: <b>Updating card...</b>,
           success: <b>Card updated!</b>,
           error: <b>Could not update.</b>,
@@ -149,7 +148,7 @@ export default function CardForm() {
         .catch(() => null)
     } else {
       toast
-        .promise(createCard(deckId, data), {
+        .promise(createCard(deckData.deckId, data), {
           loading: <b>Creating card...</b>,
           success: <b>Card created!</b>,
           error: <b>Could not create.</b>,

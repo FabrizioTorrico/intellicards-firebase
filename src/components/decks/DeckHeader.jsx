@@ -42,7 +42,7 @@ function DeckStats({ deckUid, deckId, heartCount }) {
  * uses the deckData and deckUid to get real time deck data
  * @param {props} props
  */
-export default function DeckHeader({ deckData, deckUid, canPlay, admin }) {
+export default function DeckHeader({ deckData, deckUid, canPlay }) {
   const [realTimeDeck, setRealTimeDeck] = useState(deckData)
   const { title, username, heartCount, deckId } = realTimeDeck
 

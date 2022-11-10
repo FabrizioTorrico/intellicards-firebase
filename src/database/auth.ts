@@ -9,9 +9,7 @@ import {
 import { auth } from './index'
 
 export const loginWithGoogle = () => {
-  signInWithPopup(auth, new GoogleAuthProvider()).catch((error) =>
-    console.log(error)
-  )
+  signInWithPopup(auth, new GoogleAuthProvider()).catch(() => undefined)
 }
 
 export const createUserForAuth = (data) => {

@@ -5,7 +5,7 @@ import CardPreviewAdmin from './CardPreviewAdmin'
 import DeckAside from './CardAsideHeader'
 import { useCard } from '../../../context/CardContext'
 import { ArrowForwardIcon } from '@chakra-ui/icons'
-import { getRealTimeCardList } from '../../../database/firestore'
+import { getRealTimeCardList } from '@database/cards'
 import { useEffect } from 'react'
 import { useAuth } from '@context/AuthContext'
 
