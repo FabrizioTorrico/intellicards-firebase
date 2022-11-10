@@ -26,6 +26,12 @@ const theme = extendTheme({
     initialColorMode: 'light',
     useSystemColorMode: false,
   },
+  defaultProps: {
+    focusBorderColor: 'transparent',
+  },
+  shadows: {
+    outline: '0 0 0 3px var(--chakra-colors-mycolor-500)',
+  },
 })
 
 export default function ContextProviders({

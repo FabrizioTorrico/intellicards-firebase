@@ -41,6 +41,13 @@ service cloud.firestore {
         return isOwner && isValidContent
       }
       
+      function canUpdateCard(userId){
+        let isOwner = request.auth.uid == userId;
+        let hasValidFields = request.resource.data.diff(resource.data).affectedKeys().hasOnly(['front', 'type', 'back', 'image']);
+
+        return isOwner && hasValidFields
+      }
+
       function canUpdateDeckCount(userId){
         let isOwner = request.auth.uid == userId;
         let hasValidFields = request.resource.data.diff(resource.data).affectedKeys().hasOnly(['deck_count']);
@@ -88,6 +95,7 @@ service cloud.firestore {
         allow read;
         allow create: if canCreateCard(userId)
         allow delete: if request.auth.uid == userId;
+        allow update: if canUpdateCard(userId)
       }
 
       match /users/{userId}/decks/{deckId}/hearts/{heartId} {

@@ -1,24 +1,27 @@
 import animate from '@styles/Animations.module.scss'
 import { Box, Flex, Text } from '@chakra-ui/react'
-import CardPreview from '../CardPreview'
-import CardPreviewAdmin from '../CardPreviewAdmin'
+import CardPreview from './CardPreview'
+import CardPreviewAdmin from './CardPreviewAdmin'
 import DeckAside from './CardAsideHeader'
 import { useCard } from '../../../context/CardContext'
 import { ArrowForwardIcon } from '@chakra-ui/icons'
-import { getRealTimeCardList } from '../../../database/firestore'
-import { useEffect, useState } from 'react'
+import { getRealTimeCardList } from '@database/cards'
+import { useEffect } from 'react'
+import { useAuth } from '@context/AuthContext'
 
-export default function CardList({ deckId, admin }) {
+export default function CardList({ deckId }) {
   const { cards, setCards, cardListOpen } = useCard()
+  const { isAdmin } = useAuth()
+
   useEffect(() => {
-    if (admin) {
+    if (isAdmin) {
       return getRealTimeCardList(deckId, setCards)
     }
-  }, [admin])
+  }, [isAdmin])
 
   const renderCardList = () => {
     // no cards condition
-    if (admin && (!cards || (Array.isArray(cards) && cards.length === 0)))
+    if (isAdmin && (!cards || (Array.isArray(cards) && cards.length === 0)))
       return (
         <Flex flexDirection={'column'} alignItems={'center'} gap={6}>
           <Text color="gray.600" fontSize={{ base: 'lg', md: '2xl' }}>
@@ -35,7 +38,7 @@ export default function CardList({ deckId, admin }) {
 
     // deck with cards
     return cards.map((card, i) => (
-      <CardPreview key={i} index={i} cardData={card} />
+      <CardPreview key={i} index={i} card={card} deckId={deckId} />
     ))
   }
 
@@ -57,7 +60,7 @@ export default function CardList({ deckId, admin }) {
         <DeckAside />
         {cardListOpen && (
           <>
-            {admin && <CardPreviewAdmin />}
+            {isAdmin && <CardPreviewAdmin />}
             {renderCardList()}
           </>
         )}

@@ -1,7 +1,12 @@
 import { Box, Stack } from '@chakra-ui/react'
+import { ReactNode } from 'react'
 import Container from './Container'
 
-export default function Hero({ title, secondary }) {
+interface Hero {
+  title: string | ReactNode
+  secondary?: string
+}
+export default function Hero({ title, secondary }: Hero) {
   return (
     <Box bgGradient="linear(main.600, main.500)" w="100%">
       <Container maxW={{ base: 'md', md: '4xl' }}>
