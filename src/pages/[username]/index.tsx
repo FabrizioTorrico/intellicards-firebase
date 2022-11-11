@@ -5,7 +5,7 @@ import Hero from '../../lib/Hero'
 import UserHeader from '../../components/UserHeader'
 import DeckList from '../../components/decks/DeckList'
 import { useAuth } from '@context/AuthContext'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 
 export default function UserPage({ userProps }) {
   const { userData, userDecks, userId } = JSON.parse(userProps)
@@ -16,7 +16,7 @@ export default function UserPage({ userProps }) {
   }, [userId, currentUser?.uid])
 
   return (
-    <Layout priv>
+    <Layout>
       <Hero title={<UserHeader user={userData} />} />
       <DeckList userDecks={userDecks} />
     </Layout>

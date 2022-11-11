@@ -4,7 +4,7 @@ import CardPreview from './CardPreview'
 import CardPreviewAdmin from './CardPreviewAdmin'
 import DeckAside from './CardAsideHeader'
 import { useCard } from '../../../context/CardContext'
-import { ArrowForwardIcon } from '@chakra-ui/icons'
+import { ArrowForwardIcon, CloseIcon } from '@chakra-ui/icons'
 import { getRealTimeCardList } from '@database/cards'
 import { useEffect } from 'react'
 import { useAuth } from '@context/AuthContext'
@@ -21,8 +21,8 @@ export default function CardList({ deckId }) {
 
   const renderCardList = () => {
     // no cards condition
-    if (isAdmin && (!cards || (Array.isArray(cards) && cards.length === 0)))
-      return (
+    if (!cards || (Array.isArray(cards) && cards.length === 0)) {
+      return isAdmin ? (
         <Flex flexDirection={'column'} alignItems={'center'} gap={6}>
           <Text color="gray.600" fontSize={{ base: 'lg', md: '2xl' }}>
             Create your first card!
@@ -34,7 +34,15 @@ export default function CardList({ deckId }) {
             className={animate.bounceX}
           />
         </Flex>
+      ) : (
+        <Flex flexDirection={'column'} alignItems={'center'} gap={6}>
+          <Text color="gray.600" fontSize={{ base: 'lg', md: '2xl' }}>
+            This deck has no cards
+          </Text>
+          <CloseIcon color="gray.600" w={8} h={8} />
+        </Flex>
       )
+    }
 
     // deck with cards
     return cards.map((card, i) => (
