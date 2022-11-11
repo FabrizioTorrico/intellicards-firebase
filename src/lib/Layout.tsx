@@ -29,6 +29,7 @@ export default function Layout({
   const {
     state: { currentTime },
   } = usePomodoro()
+
   return (
     <>
       <Head>

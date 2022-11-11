@@ -72,32 +72,34 @@ function CardContent() {
         <MarkDown>{showBack ? card?.back : card?.front}</MarkDown>
       </Box>
       <Divider width="100%" borderWidth="2px" />
-      <Flex h="15vh" mx={8} alignItems="center">
-        <Button
-          colorScheme="main"
-          onClick={() => {
-            if (!triggerAnimation) {
-              setShowBack((state) => !state)
-              setTriggerAnimation(true)
-            }
-          }}
-        >
-          {showBack ? 'Show Front' : 'Show Back'}
-        </Button>
-        <Spacer />
-        {showBack && (
-          <Flex
-            alignItems={'center'}
-            gap={2}
-            className={triggerAnimation ? animate.fadeIn : ''}
+      {card?.back && (
+        <Flex h="15vh" mx={8} alignItems="center">
+          <Button
+            colorScheme="main"
+            onClick={() => {
+              if (!triggerAnimation) {
+                setShowBack((state) => !state)
+                setTriggerAnimation(true)
+              }
+            }}
           >
-            <Text>Do you know the answer ? </Text>
-            <Button colorScheme={'green'}>Yes</Button>
-            <Button colorScheme={'red'}>No</Button>
-            <Button colorScheme={'gray'}>Almost</Button>
-          </Flex>
-        )}
-      </Flex>
+            {showBack ? 'Show Front' : 'Show Back'}
+          </Button>
+          <Spacer />
+          {showBack && (
+            <Flex
+              alignItems={'center'}
+              gap={2}
+              className={triggerAnimation ? animate.fadeIn : ''}
+            >
+              <Text>Do you know the answer ? </Text>
+              <Button colorScheme={'green'}>Yes</Button>
+              <Button colorScheme={'red'}>No</Button>
+              <Button colorScheme={'gray'}>Almost</Button>
+            </Flex>
+          )}
+        </Flex>
+      )}
     </>
   )
 }

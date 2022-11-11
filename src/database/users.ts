@@ -1,4 +1,4 @@
-import { db, dbDoc } from './index'
+import { db, dbCollection, dbDoc } from './index'
 import {
   collection,
   doc,
@@ -41,6 +41,13 @@ export const getUserData = async (uid: string): Promise<UserData> => {
   const userData = userSnap.data()
 
   return userData
+}
+
+export const getUsers = async (): Promise<UserData[]> => {
+  const usersRef = dbCollection<UserData>(db, 'users')
+  const usersSnap = await getDocs(usersRef)
+
+  return usersSnap.docs?.map((doc) => ({ ...doc.data(), objectID: doc.id }))
 }
 
 export const getUsernamePaths = async () => {

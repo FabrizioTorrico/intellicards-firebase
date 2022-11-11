@@ -116,7 +116,7 @@ export default function CompleteLogin() {
           <Avatar
             size={'xl'}
             src={currentUser.photoURL}
-            alt={'Avatar Alt'}
+            alt={`${currentUser.username} avatar`}
             mb={4}
             pos={'relative'}
             _after={{

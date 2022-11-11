@@ -29,7 +29,7 @@ export default function DeckId({ deckProps }) {
   }, [deckUid, currentUser?.uid])
 
   return (
-    <Layout noFooter priv>
+    <Layout noFooter>
       <Box
         ml={{ md: cardListOpen ? 80 : 16 }}
         transition="margin-left 1s"

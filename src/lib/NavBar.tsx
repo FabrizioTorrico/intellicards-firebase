@@ -1,6 +1,5 @@
 import {
   Flex,
-  Spacer,
   Button,
   Heading,
   useDisclosure,
@@ -8,18 +7,16 @@ import {
   Stack,
   Link,
   Box,
-  InputGroup,
-  Input,
-  InputLeftElement,
   Tooltip,
   Text,
 } from '@chakra-ui/react'
-import { HamburgerIcon, CloseIcon, Search2Icon } from '@chakra-ui/icons'
+import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons'
 import NextLink from 'next/link'
 import scroll from '../utils/scroll'
 import { useAuth } from '@context/AuthContext'
 import { logout } from '@database/auth'
 import PomoTimer from '../components/pomodoro/PomoTimer'
+import Search from './Search'
 
 const NavLink = ({ children, link, disabled }) => (
   <Tooltip isDisabled={!disabled} label="Feature in progress 😊">
@@ -82,7 +79,7 @@ export default function NavBar({ home }: { home?: boolean }) {
 
   return (
     <Box
-      height={'var(--nav-height)'}
+      minHeight={'var(--nav-height)'}
       id="navbar"
       py={3}
       px={{ base: 6, md: 10 }}
@@ -103,16 +100,7 @@ export default function NavBar({ home }: { home?: boolean }) {
           </a>
         </NextLink>
 
-        {isAuthenticated ? (
-          <InputGroup mx="4rem">
-            <InputLeftElement pointerEvents="none">
-              <Search2Icon color="main.600" />
-            </InputLeftElement>
-            <Input type="search" placeholder="Search" />
-          </InputGroup>
-        ) : (
-          <Spacer />
-        )}
+        <Search />
 
         <IconButton
           size={'md'}
