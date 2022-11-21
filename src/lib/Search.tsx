@@ -1,6 +1,7 @@
-import { Search2Icon } from '@chakra-ui/icons'
+import { Search2Icon, SpinnerIcon } from '@chakra-ui/icons'
 import {
   Avatar,
+  Center,
   Input,
   InputGroup,
   InputLeftElement,
@@ -14,6 +15,7 @@ import { UserData } from '@models/users'
 import NextLink from 'next/link'
 import { useEffect, useState } from 'react'
 import useClickHandler from './ClickHandler'
+import animate from '@styles/Animations.module.scss'
 
 interface AlgoliaUser extends Partial<UserData> {
   objectID: string
@@ -21,27 +23,66 @@ interface AlgoliaUser extends Partial<UserData> {
 export default function Search() {
   const [query, setQuery] = useState('')
   const [results, setResults] = useState<AlgoliaUser[]>([])
+  const [isLoading, setLoading] = useState(false)
 
   const outsideRef = useClickHandler({
     onOutsideClick: () => setQuery(''),
   })
 
-  useEffect(() => {
-    const handleSearch = async (query: string) => {
-      if (query === '') {
-        setResults([])
-        return
-      }
-
+  const handleSearch = async (query: string) => {
+    if (query === '') {
+      setResults([])
+    } else {
       const { hits } = await algoliaIndex.search<AlgoliaUser>(query, {
         hitsPerPage: 5,
       })
 
       setResults(hits)
     }
+    setLoading(false)
+  }
 
-    handleSearch(query)
+  useEffect(() => {
+    setLoading(true)
+    const delay = setTimeout(() => {
+      handleSearch(query)
+    }, 500)
+
+    return () => clearTimeout(delay)
   }, [query])
+
+  const RenderSearch = () => {
+    if (isLoading)
+      return (
+        <Center>
+          <SpinnerIcon className={animate.rotate} />
+        </Center>
+      )
+
+    if (results.length === 0) return <Text>No users found</Text>
+
+    return (
+      <>
+        {results.map((user) => (
+          <NextLink href={user.objectID} key={user.objectID}>
+            <LinkBox
+              cursor={'pointer'}
+              borderRadius="md"
+              p={2}
+              _hover={{
+                bg: 'gray.200',
+              }}
+            >
+              <ListItem display={'flex'} alignItems="center" gap={4}>
+                <Avatar src={user.photo_URL} size="sm" name={user.username} />
+                {user.username}
+              </ListItem>
+            </LinkBox>
+          </NextLink>
+        ))}
+      </>
+    )
+  }
 
   return (
     <InputGroup mx="4rem" ref={outsideRef}>
@@ -64,31 +105,7 @@ export default function Search() {
           p={2}
           boxShadow={'lg'}
         >
-          {results.length === 0 ? (
-            <Text>No users found</Text>
-          ) : (
-            results.map((user) => (
-              <NextLink href={user.objectID} key={user.objectID}>
-                <LinkBox
-                  cursor={'pointer'}
-                  borderRadius="md"
-                  p={2}
-                  _hover={{
-                    bg: 'gray.200',
-                  }}
-                >
-                  <ListItem display={'flex'} alignItems="center" gap={4}>
-                    <Avatar
-                      src={user.photo_URL}
-                      size="sm"
-                      name={user.username}
-                    />
-                    {user.username}
-                  </ListItem>
-                </LinkBox>
-              </NextLink>
-            ))
-          )}
+          <RenderSearch />
         </List>
       )}
     </InputGroup>

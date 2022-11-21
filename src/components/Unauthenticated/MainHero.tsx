@@ -3,16 +3,17 @@ import scroll from '../../utils/scroll'
 
 export default function MainHero({ title, text }) {
   return (
-    <Container maxW={'5xl'} pt="7vh">
+    <Container maxW={'5xl'} pt={12} as={'section'}>
       <Stack
         textAlign={'center'}
         align={'center'}
         spacing={{ base: 8, md: 10 }}
-        py={{ base: 8, md: 14 }}
+        py={4}
       >
         <Heading
+          as={'h1'}
           fontWeight={600}
-          fontSize={{ base: '3xl', sm: '4xl', md: '6xl' }}
+          fontSize={{ sm: '4xl', md: '6xl' }}
           lineHeight={'110%'}
         >
           {title}

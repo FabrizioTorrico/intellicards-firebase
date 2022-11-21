@@ -40,7 +40,7 @@ export default function Layout({
         <meta name="copyright" content="© 2021 intellicards"></meta>
         <meta
           name="keywords"
-          content="intellicards, learn, study, efficient, easy"
+          content="pomodoro technique, education, flashcards online, efficient, easy, flash cards, free, online, flash card making"
         />
         <meta name="author" content="Fabrizio Torrico" />
         <meta name="description" content={description} />

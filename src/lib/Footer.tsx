@@ -4,10 +4,8 @@ import { FaInstagram, FaTwitter, FaYoutube } from 'react-icons/fa'
 export default function Footer() {
   return (
     <>
-      <Center bgGradient="linear(main.600, main.500)" h={200}>
-        {' '}
-      </Center>
-      <Box bg="gray.900" color="gray.200">
+      <Center bgGradient="linear(main.600, main.500)" h={200}></Center>
+      <Box bg="gray.900" color="gray.200" as={'footer'}>
         <Container
           as={Stack}
           maxW={'4xl'}
@@ -17,10 +15,7 @@ export default function Footer() {
           justify={{ base: 'center', md: 'space-between' }}
           align={{ base: 'center', md: 'center' }}
         >
-          <Text>
-            © 2022 Intellicards. All rights reserved. Web Design & Development
-            by Fabrizio Torrico.
-          </Text>
+          <Text>© 2022 Intellicards. All rights reserved</Text>
           <Stack direction={'row'} spacing={3} fontSize="3xl">
             <chakra.button
               _hover={{ color: 'twitter.400', transform: 'scale(1.2)' }}

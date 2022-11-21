@@ -15,10 +15,10 @@ import Image from '../lib/Image'
 const ChakraMarkDown = chakra(ReactMarkdown)
 
 const markdownTheme = {
-  a: ({ children }) => {
+  a: (props) => {
     return (
-      <Link href="https://chakra-ui.com" isExternal>
-        {children} <ExternalLinkIcon mx="2px" translateY={'10px'} />
+      <Link href={props.href} isExternal>
+        {props.children} <ExternalLinkIcon mx="2px" translateY={'10px'} />
       </Link>
     )
   },
