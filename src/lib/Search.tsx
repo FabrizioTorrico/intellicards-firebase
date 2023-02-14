@@ -20,6 +20,7 @@ import animate from '@styles/Animations.module.scss'
 interface AlgoliaUser extends Partial<UserData> {
   objectID: string
 }
+
 export default function Search() {
   const [query, setQuery] = useState('')
   const [results, setResults] = useState<AlgoliaUser[]>([])
@@ -64,7 +65,7 @@ export default function Search() {
     return (
       <>
         {results.map((user) => (
-          <NextLink href={user.objectID} key={user.objectID}>
+          <NextLink href={user.username} key={user.objectID}>
             <LinkBox
               cursor={'pointer'}
               borderRadius="md"
