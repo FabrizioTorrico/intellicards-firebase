@@ -8,10 +8,9 @@ import {
 } from 'firebase/auth'
 import { auth } from './index'
 
+// TODO: handle errors
 export const loginWithGoogle = () => {
-  signInWithPopup(auth, new GoogleAuthProvider()).catch((error) =>
-    console.log(error)
-  )
+  signInWithPopup(auth, new GoogleAuthProvider()).catch(() => undefined)
 }
 
 export const createUserForAuth = (data) => {
@@ -19,11 +18,9 @@ export const createUserForAuth = (data) => {
     .then((result) => {
       updateProfile(result.user, {
         displayName: `${data.first_name} ${data.last_name}`,
-      }).catch((err) => console.log(err))
+      }).catch(() => undefined)
     })
-    .catch((error) => {
-      console.log(error)
-    })
+    .catch(() => undefined)
 }
 
 export const loginWithEmail = async (email: string, password: string) => {

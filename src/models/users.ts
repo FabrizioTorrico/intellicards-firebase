@@ -6,3 +6,7 @@ export interface UserData {
   deck_count: number
   connection_count: number
 }
+
+export interface Usernames {
+  uid: string
+}

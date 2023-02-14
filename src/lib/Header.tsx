@@ -15,7 +15,6 @@ interface HeaderProps {
 export default function Header({
   title,
   secondary,
-  pb,
   py,
   textAlign,
 }: HeaderProps) {

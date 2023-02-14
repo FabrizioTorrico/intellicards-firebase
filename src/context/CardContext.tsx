@@ -2,8 +2,8 @@ import { createContext, Dispatch, useContext, useState } from 'react'
 import { Card } from 'src/models/cards'
 
 interface ContextProps {
-  selectedCard: number
-  setSelectedCard: (x: number) => void
+  selectedCard: number | null
+  setSelectedCard: Dispatch<React.SetStateAction<number>>
   cards: Card[]
   setCards: (x: Card[]) => void
   createCard: boolean
@@ -23,7 +23,7 @@ const CardContext = createContext<ContextProps>({
 })
 
 export const CardProvider = ({ children }) => {
-  const [selectedCard, setSelectedCard] = useState(0)
+  const [selectedCard, setSelectedCard] = useState<number | null>(0)
   const [cards, setCards] = useState<Card[]>([])
   const [createCard, setCreateCard] = useState(false)
   const [cardListOpen, setCardListOpen] = useState(true)

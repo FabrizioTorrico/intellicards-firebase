@@ -10,6 +10,7 @@ export default function About({ title, text }) {
       w="100%"
       color="white"
       id="about"
+      as={'section'}
     >
       <div className={styles.wave}>
         <svg
@@ -49,7 +50,7 @@ export default function About({ title, text }) {
             fontWeight={600}
             fontSize={{ base: '3xl', sm: '4xl', lg: '6xl' }}
           >
-            <div>{title}</div>
+            {title}
           </Heading>
           <Text fontSize="lg">{text}</Text>
           <Stack

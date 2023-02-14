@@ -1,25 +1,28 @@
 import animate from '@styles/Animations.module.scss'
 import { Box, Flex, Text } from '@chakra-ui/react'
-import CardPreview from '../CardPreview'
-import CardPreviewAdmin from '../CardPreviewAdmin'
+import CardPreview from './CardPreview'
+import CardPreviewAdmin from './CardPreviewAdmin'
 import DeckAside from './CardAsideHeader'
 import { useCard } from '../../../context/CardContext'
-import { ArrowForwardIcon } from '@chakra-ui/icons'
-import { getRealTimeCardList } from '../../../database/firestore'
-import { useEffect, useState } from 'react'
+import { ArrowForwardIcon, CloseIcon } from '@chakra-ui/icons'
+import { getRealTimeCardList } from '@database/cards'
+import { useEffect } from 'react'
+import { useAuth } from '@context/AuthContext'
 
-export default function CardList({ deckId, admin }) {
+export default function CardList({ deckId }) {
   const { cards, setCards, cardListOpen } = useCard()
+  const { isAdmin } = useAuth()
+
   useEffect(() => {
-    if (admin) {
+    if (isAdmin) {
       return getRealTimeCardList(deckId, setCards)
     }
-  }, [admin])
+  }, [isAdmin])
 
   const renderCardList = () => {
     // no cards condition
-    if (admin && (!cards || (Array.isArray(cards) && cards.length === 0)))
-      return (
+    if (!cards || (Array.isArray(cards) && cards.length === 0)) {
+      return isAdmin ? (
         <Flex flexDirection={'column'} alignItems={'center'} gap={6}>
           <Text color="gray.600" fontSize={{ base: 'lg', md: '2xl' }}>
             Create your first card!
@@ -31,11 +34,19 @@ export default function CardList({ deckId, admin }) {
             className={animate.bounceX}
           />
         </Flex>
+      ) : (
+        <Flex flexDirection={'column'} alignItems={'center'} gap={6}>
+          <Text color="gray.600" fontSize={{ base: 'lg', md: '2xl' }}>
+            This deck has no cards
+          </Text>
+          <CloseIcon color="gray.600" w={8} h={8} />
+        </Flex>
       )
+    }
 
     // deck with cards
     return cards.map((card, i) => (
-      <CardPreview key={i} index={i} cardData={card} />
+      <CardPreview key={i} index={i} card={card} deckId={deckId} />
     ))
   }
 
@@ -57,7 +68,7 @@ export default function CardList({ deckId, admin }) {
         <DeckAside />
         {cardListOpen && (
           <>
-            {admin && <CardPreviewAdmin />}
+            {isAdmin && <CardPreviewAdmin />}
             {renderCardList()}
           </>
         )}

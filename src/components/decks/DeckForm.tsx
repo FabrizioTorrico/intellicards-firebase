@@ -8,7 +8,7 @@ import {
 } from '@chakra-ui/react'
 import { useState } from 'react'
 import { useAuth } from '@context/AuthContext'
-import { createDeck } from '../../database/firestore'
+import { createDeck } from '@database/decks'
 import toast from 'react-hot-toast'
 import { useDeck } from '@context/DeckContext'
 

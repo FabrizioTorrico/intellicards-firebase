@@ -1,28 +1,24 @@
-import {
-  getUidWithUsername,
-  getUserData,
-  getUserDecks,
-} from '../../database/firestore'
+import { getUidWithUsername, getUserData } from '@database/users'
+import { getUserDecks } from '@database/decks'
 import Layout from '../../lib/Layout'
 import Hero from '../../lib/Hero'
 import UserHeader from '../../components/UserHeader'
 import DeckList from '../../components/decks/DeckList'
 import { useAuth } from '@context/AuthContext'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 
 export default function UserPage({ userProps }) {
   const { userData, userDecks, userId } = JSON.parse(userProps)
-  const [admin, setAdmin] = useState(false)
-  const { currentUser } = useAuth()
+  const { currentUser, setAdmin } = useAuth()
 
   useEffect(() => {
     setAdmin(userId === currentUser?.uid)
   }, [userId, currentUser?.uid])
 
   return (
-    <Layout priv>
-      <Hero title={<UserHeader user={userData} admin={admin} />} />
-      <DeckList userDecks={userDecks} admin={admin} />
+    <Layout>
+      <Hero title={<UserHeader user={userData} />} />
+      <DeckList userDecks={userDecks} />
     </Layout>
   )
 }

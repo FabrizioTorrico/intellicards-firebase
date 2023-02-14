@@ -10,22 +10,51 @@ import {
   Flex,
   SimpleGrid,
 } from '@chakra-ui/react'
-import React, { useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import ImageUploader from '../ImageUploader'
 import toast from 'react-hot-toast'
-import { useRouter } from 'next/router'
-import { useForm, Controller } from 'react-hook-form'
-import { createCard } from '../../database/firestore'
+import {
+  useForm,
+  Controller,
+  Resolver,
+  FieldErrorsImpl,
+  Control,
+} from 'react-hook-form'
+import { createCard, updateCard } from '@database/cards'
 import MarkDown from '../MarkDown'
 import MarkdownInput from '../MarkdownInput'
+import { Card } from '@models/cards'
+import { useCard } from '@context/CardContext'
+import { useDeck } from '@context/DeckContext'
 
-function CardFace(props) {
+const resolver: Resolver<Card> = async (values) => {
+  const errors = {}
+  !values.front?.trim() && (errors['front'] = { message: 'Front is required' })
+  !values.back?.trim() && (errors['back'] = { message: 'Back is required' })
+
+  return {
+    values,
+    errors,
+  }
+}
+
+interface CardFaceProps {
+  errors: FieldErrorsImpl<Card>
+  id: 'front' | 'back'
+  getValues: (x: string) => Card
+  curFace: string
+  preview: boolean
+  control: Control<Card>
+}
+
+function CardFace(props: CardFaceProps) {
   const error = props.errors.front?.message || props.errors.back?.message
   return (
     <FormControl
       id={props.id}
-      isInvalid={error}
-      hidden={props.id !== props.curFace}
+      isInvalid={!!error}
+      position="absolute"
+      visibility={props.id !== props.curFace ? 'hidden' : 'visible'}
     >
       <Box
         mt={16}
@@ -48,9 +77,16 @@ function CardFace(props) {
           } is required.`,
         }}
         render={({ field }) => {
+          const onChange = useCallback(
+            (value: string) => {
+              field.onChange(value)
+            },
+            [props.curFace]
+          )
+
           return (
             <Box hidden={props.preview}>
-              <MarkdownInput value={field.value} onChange={field.onChange} />
+              <MarkdownInput value={field.value} onChange={onChange} />
             </Box>
           )
         }}
@@ -62,6 +98,9 @@ function CardFace(props) {
 }
 
 export default function CardForm() {
+  const { deckData } = useDeck()
+  const { cards, selectedCard } = useCard()
+  const card = cards[selectedCard]
   const [triggerAnimation, setTriggerAnimation] = useState(false)
   const [curFace, setCurFace] = useState('front')
   const [preview, setPreview] = useState(false)
@@ -70,8 +109,6 @@ export default function CardForm() {
     borderBottom: '2px solid transparent',
     borderColor: 'main.500',
   }
-  const router = useRouter()
-  const { deckId } = router.query
   const {
     register,
     handleSubmit,
@@ -81,25 +118,40 @@ export default function CardForm() {
     getValues,
     control,
     formState: { errors },
-  } = useForm({
-    front: '# Card Title',
-    back: '',
+  } = useForm<Card>({
+    resolver,
   })
+
+  useEffect(() => {
+    if (card) {
+      reset({ ...card })
+    } else {
+      reset({ front: '', back: '', type: 'flashCard' })
+    }
+  }, [selectedCard])
 
   const changeFace = () =>
     setCurFace((curFace) => (curFace === 'front' ? 'back' : 'front'))
 
-  const onSubmit = async (data) => {
-    toast
-      .promise(createCard(deckId, data), {
-        loading: <b>Creating card...</b>,
-        success: <b>Card created!</b>,
-        error: <b>Could not create.</b>,
+  const onSubmit = async (data: Card) => {
+    if (card) {
+      toast.promise(updateCard(deckData.deckId, card.cardId, data), {
+        loading: <b>Updating card...</b>,
+        success: <b>Card updated!</b>,
+        error: (err) => <b>Could not update. {err.toString()}</b>,
       })
-      .then(() => {
-        reset({ front: '', back: '', type: 'basic' })
-      })
-      .catch(() => null)
+    } else {
+      toast
+        .promise(createCard(deckData.deckId, data), {
+          loading: <b>Creating card...</b>,
+          success: <b>Card created!</b>,
+          error: <b>Could not create.</b>,
+        })
+        .then(() => {
+          reset({ front: '', back: '', type: 'flashCard' })
+        })
+        .catch(() => null)
+    }
   }
 
   return (
@@ -139,38 +191,39 @@ export default function CardForm() {
           </Text>
         </Flex>
 
-        {['front', 'back'].map((face) => (
-          <CardFace
-            key={face}
-            errors={errors}
-            id={face}
-            getValues={getValues}
-            curFace={curFace}
-            preview={preview}
-            control={control}
-          />
-        ))}
+        <Box position={'relative'}>
+          {(['front', 'back'] as const).map((face) => (
+            <CardFace
+              key={face}
+              errors={errors}
+              id={face}
+              getValues={getValues}
+              curFace={curFace}
+              preview={preview}
+              control={control}
+            />
+          ))}
+        </Box>
       </Box>
 
       <SimpleGrid mx={8} gap={4} columns={{ base: 2, md: 4 }}>
         <FormControl>
           <FormLabel htmlFor="type">Type: </FormLabel>
           <Select id="type" {...register('type')}>
-            <option value="basic">Basic</option>
-            <option value="Perfect">Perfect</option>
+            <option value="flashCard">Flash Card</option>
+            {/* <option value="Perfect">Perfect</option> */}
           </Select>
         </FormControl>
-        <FormControl isInvalid={errors.image}>
+        <FormControl isInvalid={!!errors.image}>
           <FormLabel htmlFor="image">Image: </FormLabel>
           <ImageUploader setError={setError} clearErrors={clearErrors} />
           <FormErrorMessage>{errors.image?.message}</FormErrorMessage>
         </FormControl>
-        {/* <GridItem alignSelf="end" colSpan={2}> */}
         <Button colorScheme="main" alignSelf="end" onClick={changeFace}>
-          Show {curFace === 'front' ? 'Back' : 'Front'}
+          Swap Face
         </Button>
         <Button colorScheme="main" type="submit" alignSelf="end">
-          Create
+          {card ? 'Update' : 'Create'}
         </Button>
       </SimpleGrid>
     </form>
