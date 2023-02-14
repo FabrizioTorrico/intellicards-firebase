@@ -57,6 +57,7 @@ export default function Login() {
   return (
     <>
       <Flex
+        as={'section'}
         minH={'100vh'}
         align={'center'}
         justify={'center'}
@@ -127,7 +128,9 @@ export default function Login() {
                       Remember me
                     </Checkbox>
                     <NextLink href="/#">
-                      <Link color={'main.600'}>Forgot password?</Link>
+                      <Link color={'main.600'} href={'/#'}>
+                        Forgot password?
+                      </Link>
                     </NextLink>
                   </Stack>
                   <Button

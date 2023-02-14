@@ -4,6 +4,9 @@
 .fadeIn {
   animation: fadeIn 0.5s;
 }
+.rotate {
+  animation: rotate 1.2s linear infinite;
+}
 
 @keyframes bounce-x {
   0% {
@@ -23,5 +26,14 @@
   }
   100% {
     opacity: 1;
+  }
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
   }
 }

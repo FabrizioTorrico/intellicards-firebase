@@ -4,6 +4,7 @@ import FeatureCard from './FeatureCard'
 export default function Features({ title, text, featureCardsText }) {
   return (
     <Box
+      as={'section'}
       position={'relative'}
       _before={{
         content: "''",

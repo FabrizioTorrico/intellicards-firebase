@@ -126,7 +126,7 @@ export default function CardForm() {
     if (card) {
       reset({ ...card })
     } else {
-      reset({ front: '', back: '', type: 'basic' })
+      reset({ front: '', back: '', type: 'flashCard' })
     }
   }, [selectedCard])
 
@@ -148,7 +148,7 @@ export default function CardForm() {
           error: <b>Could not create.</b>,
         })
         .then(() => {
-          reset({ front: '', back: '', type: 'basic' })
+          reset({ front: '', back: '', type: 'flashCard' })
         })
         .catch(() => null)
     }
@@ -210,8 +210,8 @@ export default function CardForm() {
         <FormControl>
           <FormLabel htmlFor="type">Type: </FormLabel>
           <Select id="type" {...register('type')}>
-            <option value="basic">Basic</option>
-            <option value="Perfect">Perfect</option>
+            <option value="flashCard">Flash Card</option>
+            {/* <option value="Perfect">Perfect</option> */}
           </Select>
         </FormControl>
         <FormControl isInvalid={!!errors.image}>

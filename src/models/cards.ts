@@ -1,6 +1,6 @@
 export interface Card {
   cardId: string
-  type: string
+  type: 'flashCard' | 'basic'
   front: string
   back?: string
   updated_at: string

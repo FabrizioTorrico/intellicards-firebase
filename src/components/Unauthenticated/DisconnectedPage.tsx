@@ -15,10 +15,10 @@ import Login from './Login'
 export default function DisconnectedPage({ loading }: { loading?: boolean }) {
   const featureCardsText = [
     'Create and Edit Flash Cards',
-    'Share and download summaries',
+    'Share summaries with one click',
     'Pomodoro technique',
-    'Communities for your subjects',
-    'Markdown on every card type',
+    'Lightweight text editor',
+    'Connect with friends and passionate users (soon)',
   ]
 
   return (
@@ -32,8 +32,8 @@ export default function DisconnectedPage({ loading }: { loading?: boolean }) {
             </Text>
           </>
         }
-        text="A simple and light web application to learn getting fun"
-      ></MainHero>
+        text="A simple and light app to learning and mastering any subject or skill quickly by getting fun and using the practical knowledge of neuroscience."
+      />
 
       <About
         title="Use the best part of yourself "
@@ -50,10 +50,11 @@ Our specialists modeled tools to improve your ability to establish and remember 
             </Text>
           </>
         }
-        text="We dispose of a lot of useful features you can opt to get your
-results faster!"
+        text="Our team is always up to date with what's new in learning.
+        use these techniques while we implement new features!"
         featureCardsText={featureCardsText}
       />
+
       <Login />
 
       <Modal isOpen={loading} onClose={() => null} isCentered>

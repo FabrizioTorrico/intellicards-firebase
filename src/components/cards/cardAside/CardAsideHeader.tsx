@@ -15,7 +15,7 @@ export default function CardNavBar() {
           cursor="pointer"
           onClick={() => router.back()}
         >
-          <Link>Go back to User</Link>
+          <Link as="span">Go back to User</Link>
         </Flex>
       )}
       <div></div>
